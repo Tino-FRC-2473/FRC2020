@@ -7,15 +7,38 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import frc.robot.Constants;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
+public class TestMotorSubsystem extends SubsystemBase {
 	/**
 	 * Creates a new ExampleSubsystem.
 	 */
-	public ExampleSubsystem() {
+	CANSparkMax testMotor; 
+	public TestMotorSubsystem() {
+		testMotor = new CANSparkMax(Constants.TEST_PORT, MotorType.kBrushless); 
+
 
 	}
+
+	public void drive(double inches){
+		
+		double startPosition = testMotor.getEncoder().getPosition(); 
+		double targetPosition = startPosition + (inches * Constants.ENCODER_INCHES_TO_TICKS); 
+
+		testMotor.getEncoder().setPosition(targetPosition); 
+	}
+
+	public void setPower(double power){
+		testMotor.set(power);
+	}
+
+	
 
 	@Override
 	public void periodic() {

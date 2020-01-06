@@ -18,4 +18,7 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final int TEST_PORT = 1; 
+    public static final double ENCODER_INCHES_TO_TICKS = 1; 
 }
