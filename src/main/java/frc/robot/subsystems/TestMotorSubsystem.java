@@ -20,18 +20,24 @@ public class TestMotorSubsystem extends SubsystemBase {
 	 * Creates a new ExampleSubsystem.
 	 */
 	CANSparkMax testMotor; 
+	double lastReference;
+
 	public TestMotorSubsystem() {
 		testMotor = new CANSparkMax(Constants.TEST_PORT, MotorType.kBrushless); 
-
+		testMotor.getPIDController().setP(0.1);
 
 	}
 
 	public void drive(double ticks){
-		
 		double startPosition = testMotor.getEncoder().getPosition(); 
 		double targetPosition = startPosition + ticks; 
 
-		testMotor.getEncoder().setPosition(targetPosition); 
+		lastReference = targetPosition;
+		testMotor.getPIDController().setReference(targetPosition, ControlType.kPosition);
+	}
+
+	public boolean isAtReferencePosition() {
+		return Math.abs(testMotor.getEncoder().getPosition() - lastReference) < 0.1;
 	}
 
 	public void setPower(double power){

@@ -8,9 +8,9 @@ public class TestMotorCommand extends SequentialCommandGroup {
     public TestMotorCommand(TestMotorSubsystem subsystem){
         addCommands(new TestMotorByTimeCommand(subsystem, 0.3).withTimeout(3),
                     new WaitCommand(1), 
-                    new TestMotorByTimeCommand(subsystem, -0.1).withTimeout(4),
+                    new TestMotorByTimeCommand(subsystem, -0.1).withTimeout(3),
                     new WaitCommand(1),
-                    new TestMotorByTimeCommand(subsystem, 0.2).withTimeout(1),
+                    new TestMotorByTimeCommand(subsystem, 0.2).withTimeout(3),
                     new WaitCommand(1),
                     new TestMotorEncoderCommand(subsystem, 3),
                     new WaitCommand(1),
