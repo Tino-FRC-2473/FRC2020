@@ -19,6 +19,6 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final int TEST_PORT = 1; 
+    public static final int TEST_PORT = 11; 
     public static final double ENCODER_INCHES_TO_TICKS = 1; 
 }

@@ -26,10 +26,10 @@ public class TestMotorSubsystem extends SubsystemBase {
 
 	}
 
-	public void drive(double inches){
+	public void drive(double ticks){
 		
 		double startPosition = testMotor.getEncoder().getPosition(); 
-		double targetPosition = startPosition + (inches * Constants.ENCODER_INCHES_TO_TICKS); 
+		double targetPosition = startPosition + ticks; 
 
 		testMotor.getEncoder().setPosition(targetPosition); 
 	}
