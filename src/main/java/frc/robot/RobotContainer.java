@@ -9,11 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+
 import frc.robot.commands.TestMotorByTimeCommand;
 import frc.robot.commands.TestMotorCommand;
 import frc.robot.commands.TestMotorEncoderCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.DriveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -25,8 +28,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
 	private final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
-
 	private final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
+  
+	private final DriveSubsystem driveSubsystem = new DriveSubsystem(); 
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -51,9 +55,7 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		// An ExampleCommand will run in autonomous
-		
-		
+		// An ExampleCommand will run in autonomous		
 		
 		return testMotorCommand;
 		// return testMotorEncoderCommand;
