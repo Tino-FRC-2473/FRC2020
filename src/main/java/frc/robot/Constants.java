@@ -18,6 +18,10 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final int TEST_PORT = 11; 
+    public static final double ENCODER_INCHES_TO_TICKS = 1; 
+
     public static final int SPARK_FRONT_LEFT_ID = 1; 
     public static final int SPARK_BACK_LEFT_ID = 2; 
     public static final int SPARK_FRONT_RIGHT_ID = 3; 
@@ -28,4 +32,5 @@ public final class Constants {
    public static final double DRIVE_D = 0; 
 
    public static final double DRIVE_TICKS_PER_INCH = 1; 
+
 }
