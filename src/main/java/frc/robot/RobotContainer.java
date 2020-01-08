@@ -9,14 +9,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-
 import frc.robot.commands.TestMotorByTimeCommand;
 import frc.robot.commands.TestMotorCommand;
 import frc.robot.commands.TestMotorEncoderCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 
 /**
@@ -40,6 +39,8 @@ public class RobotContainer {
 
 	private Joystick joystick1; 
 	private Joystick joystick2;
+	private JoystickButton button1;
+	private JoystickButton button2;
 
 	public RobotContainer() {
 		// Configure the button bindings
