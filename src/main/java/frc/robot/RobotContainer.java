@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
 import frc.robot.commands.TestMotorByTimeCommand;
@@ -34,10 +35,23 @@ public class RobotContainer {
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
+	 * 
 	 */
+
+	private Joystick joystick1; 
+	private Joystick joystick2;
+
 	public RobotContainer() {
 		// Configure the button bindings
 		configureButtonBindings();
+	}
+
+	public Joystick getJoystick1() {
+		return joystick1; 
+	}
+
+	public Joystick getJoystick2() {
+		return joystick2; 
 	}
 
 	/**
@@ -47,6 +61,8 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+		joystick1 = new Joystick(Constants.JOYSTICK_1_PORT); 
+		joystick2 = new Joystick(Constants.JOYSTICK_2_PORT); 
 	}
 
 	/**

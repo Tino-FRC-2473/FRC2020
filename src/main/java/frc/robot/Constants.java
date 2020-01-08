@@ -33,4 +33,7 @@ public final class Constants {
 
    public static final double DRIVE_TICKS_PER_INCH = 1; 
 
+   public static final int JOYSTICK_1_PORT = 1; 
+   public static final int JOYSTICK_2_PORT = 2; 
+
 }

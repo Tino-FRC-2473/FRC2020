@@ -25,7 +25,7 @@ import frc.robot.subsystems.TestMotorSubsystem;
 public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 
-	private RobotContainer robotContainer; 
+	public static RobotContainer robotContainer;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 		robotContainer = new RobotContainer();
-		//motor = new CANSparkMax(Constants.TEST_PORT, MotorType.kBrushless); 
+
 	}
 
 	/**

@@ -13,6 +13,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveSubsystem extends SubsystemBase {
 	/**
@@ -24,6 +27,9 @@ public class DriveSubsystem extends SubsystemBase {
 	CANSparkMax frontRightMotor; 
 	CANSparkMax backRightMotor; 
 
+	SpeedControllerGroup leftSpeedControllerGroup;
+	SpeedControllerGroup rightSpeedControllerGroup; 
+	DifferentialDrive differentialDrive;
 
 	public DriveSubsystem() {
 
@@ -32,19 +38,17 @@ public class DriveSubsystem extends SubsystemBase {
 		frontRightMotor = new CANSparkMax(Constants.SPARK_FRONT_RIGHT_ID, MotorType.kBrushless);  
 		backRightMotor = new CANSparkMax(Constants.SPARK_BACK_RIGHT_ID, MotorType.kBrushless);  
 
-		backLeftMotor.follow(frontLeftMotor);
-		backRightMotor.follow(frontRightMotor);  
-
-		initPID();
+		leftSpeedControllerGroup = new SpeedControllerGroup(frontLeftMotor, backLeftMotor); 
+		rightSpeedControllerGroup = new SpeedControllerGroup(frontRightMotor, backRightMotor);
 		
-
+		differentialDrive = new DifferentialDrive(leftSpeedControllerGroup, rightSpeedControllerGroup); 
+		
+		initPID();
 	}
 
-	public void drive(double leftPower, double rightPower) { 
-		frontLeftMotor.set(leftPower); 
-		frontRightMotor.set(rightPower);
-	
-
+	public void powerDrive(double leftPower, double rightPower) { 
+		leftSpeedControllerGroup.set(leftPower); 
+		rightSpeedControllerGroup.set(rightPower);
 	}
 
 	public void drivePID(double leftInches, double rightInches) {
@@ -71,6 +75,17 @@ public class DriveSubsystem extends SubsystemBase {
 		setPID(backLeftMotor, Constants.DRIVE_P, Constants.DRIVE_I, Constants.DRIVE_D);
 		setPID(backRightMotor, Constants.DRIVE_P, Constants.DRIVE_I, Constants.DRIVE_D);
 	}
+
+	public void tankDrive(){
+		differentialDrive.tankDrive(Robot.robotContainer.getJoystick1().getY(), Robot.robotContainer.getJoystick2().getY()) ;
+
+	}
+
+	public void stop() {
+		differentialDrive.stopMotor();
+	}
+
+	
 
 	@Override
 	public void periodic() {
