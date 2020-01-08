@@ -30,10 +30,20 @@ public class RobotContainer {
 	 * 
 	 */
 
-	Joystick j1 = new Joystick(1);
+	private Joystick joystick1; 
+	private Joystick joystick2;
+
 	public RobotContainer() {
 		// Configure the button bindings
 		configureButtonBindings();
+	}
+
+	public Joystick getJoystick1() {
+		return joystick1; 
+	}
+
+	public Joystick getJoystick2() {
+		return joystick2; 
 	}
 
 	/**
@@ -43,6 +53,8 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+		joystick1 = new Joystick(Constants.JOYSTICK_1_PORT); 
+		joystick2 = new Joystick(Constants.JOYSTICK_2_PORT); 
 	}
 
 	/**
