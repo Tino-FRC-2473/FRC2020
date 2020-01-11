@@ -29,7 +29,7 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
-	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	// private final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 
 	// private final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
@@ -51,6 +51,7 @@ public class RobotContainer {
 	private JoystickButton button2;
 	private JoystickButton button4;
 	private JoystickButton button6;
+	private JoystickButton button8;
 
 	public RobotContainer() {
 		// Configure the button bindings
@@ -80,8 +81,8 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		joystick1 = new Joystick(Constants.JOYSTICK_1_PORT);
-		joystick2 = new Joystick(Constants.JOYSTICK_2_PORT);
+		// joystick1 = new Joystick(Constants.JOYSTICK_1_PORT);
+		// joystick2 = new Joystick(Constants.JOYSTICK_2_PORT);
 		throttle = new Joystick(Constants.THROTTLE_PORT);
 
 		buttonPanel = new Joystick(Constants.BUTTON_PANEL_PORT);
@@ -89,10 +90,12 @@ public class RobotContainer {
 		button2 = new JoystickButton(buttonPanel, 2);
 		button4 = new JoystickButton(buttonPanel, 4);
 		button6 = new JoystickButton(buttonPanel, 6);
+		button8 = new JoystickButton(buttonPanel, 8);
 
 		button2.whenReleased(() -> shooterSubsystem.setFeederPosition(0));
 		button4.whenReleased(() -> shooterSubsystem.setFeederPosition(0.5));
-		button6.whenReleased(() -> shooterSubsystem.setFeederPosition(1));
+		button6.whenReleased(() -> shooterSubsystem.setFeederPosition(0.7));
+		button8.whenReleased(() -> shooterSubsystem.setFeederPosition(1));
 	}
 
 	/**

@@ -22,7 +22,8 @@ public class RunShooterCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		double throttlePower = Robot.robotContainer.getThrottle().getZ();
+		double throttlePower = -Robot.robotContainer.getThrottle().getZ();
+		System.out.println(throttlePower);
 		shooterSubsystem.run(throttlePower);
 	}
 
