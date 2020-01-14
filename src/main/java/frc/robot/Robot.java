@@ -7,13 +7,10 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.TestMotorSubsystem;
+import frc.robot.commands.ServoControlCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -59,6 +56,7 @@ public class Robot extends TimedRobot {
 		// robot's periodic
 		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
+
 	}
 
 	/**
@@ -102,6 +100,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		(new ServoControlCommand()).schedule();
 	}
 
 	/**

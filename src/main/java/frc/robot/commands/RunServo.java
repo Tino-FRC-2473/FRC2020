@@ -12,39 +12,39 @@ import frc.robot.subsystems.ServoSubsystem;
 
 public class RunServo extends CommandBase {
 
-  private double targetPosition;
-  ServoSubsystem servoSubsystem;
+	private double targetPosition;
+	ServoSubsystem servoSubsystem;
 
-  /**
-   * Creates a new RunServo.
-   */
-  public RunServo(double position, ServoSubsystem subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
-    targetPosition = position;
-    servoSubsystem = subsystem;
-  }
+	/**
+	 * Creates a new RunServo.
+	 */
+	public RunServo(double position, ServoSubsystem subsystem) {
+		// Use addRequirements() here to declare subsystem dependencies.
+		addRequirements(subsystem);
+		targetPosition = position;
+		servoSubsystem = subsystem;
+	}
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    servoSubsystem.setServoAngle(targetPosition);
-  }
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		servoSubsystem.setServoAngle(targetPosition);
+	}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+	}
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    servoSubsystem.stop();
-  }
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+		servoSubsystem.stop();
+	}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
 }

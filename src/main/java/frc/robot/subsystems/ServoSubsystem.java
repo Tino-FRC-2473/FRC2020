@@ -43,11 +43,14 @@ public class ServoSubsystem extends SubsystemBase {
     testServo.setSpeed(speed);
   }
 
+  public void setServo(double target) {
+    testServo.set(target);
+  }
+
   public Servo getServo() {
     return testServo;
   }
 
   public void stop() {
-    testServo.setSpeed(0);
   }
 }
