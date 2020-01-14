@@ -35,6 +35,14 @@ public class ShooterSubsystem extends SubsystemBase {
 		bottomMotor.set(-power);
 	}	
 
+	public void runTopMotor(double power){
+		topMotor.set(power); 
+	}
+
+	public void runBottomMotor(double power){
+		bottomMotor.set(power);
+	}
+
 	public void setFeederPosition(double position) {
 		feeder.set(position);
 	}

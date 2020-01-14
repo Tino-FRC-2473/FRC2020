@@ -41,5 +41,6 @@ public final class Constants {
    public static final int JOYSTICK_2_PORT = 2;
    public static final int BUTTON_PANEL_PORT = 3; 
    public static final int THROTTLE_PORT = 4;
+   public static final int BUTTON_PANEL_PORT_SHOOTER = 1;
 
 }

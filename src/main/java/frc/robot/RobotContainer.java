@@ -47,11 +47,15 @@ public class RobotContainer {
 
 	private Joystick throttle;
 	private Joystick buttonPanel;
+	private Joystick buttonPanelShooter; 
 
 	private JoystickButton button2;
 	private JoystickButton button4;
 	private JoystickButton button6;
 	private JoystickButton button8;
+
+	private JoystickButton buttonShooterTop; 
+	private JoystickButton buttonShooterBottom; 
 
 	public RobotContainer() {
 		// Configure the button bindings
@@ -60,7 +64,7 @@ public class RobotContainer {
 
 	public Joystick getJoystick1() {
 		return joystick1;
-	}
+}
 
 	public Joystick getJoystick2() {
 		return joystick2;
@@ -72,6 +76,10 @@ public class RobotContainer {
 
 	public Joystick getButtonPanel() {
 		return buttonPanel;
+	}
+
+	public Joystick getButtonPanelShooter(){
+		return buttonPanelShooter; 
 	}
 
 	/**
@@ -86,16 +94,25 @@ public class RobotContainer {
 		throttle = new Joystick(Constants.THROTTLE_PORT);
 
 		buttonPanel = new Joystick(Constants.BUTTON_PANEL_PORT);
+		buttonPanelShooter = new Joystick(Constants.BUTTON_PANEL_PORT_SHOOTER);
+
+
 
 		button2 = new JoystickButton(buttonPanel, 2);
 		button4 = new JoystickButton(buttonPanel, 4);
 		button6 = new JoystickButton(buttonPanel, 6);
 		button8 = new JoystickButton(buttonPanel, 8);
 
+		buttonShooterTop = new JoystickButton(buttonPanelShooter, 2);
+		buttonShooterBottom = new JoystickButton(buttonPanelShooter, 4);
+
 		button2.whenReleased(() -> shooterSubsystem.setFeederPosition(0));
 		button4.whenReleased(() -> shooterSubsystem.setFeederPosition(0.5));
 		button6.whenReleased(() -> shooterSubsystem.setFeederPosition(0.7));
 		button8.whenReleased(() -> shooterSubsystem.setFeederPosition(1));
+		buttonShooterTop.whileHeld(() -> shooterSubsystem.runTopMotor(0.8));
+		buttonShooterBottom.whileHeld(() -> shooterSubsystem.runBottomMotor(0.8));
+		
 	}
 
 	/**
