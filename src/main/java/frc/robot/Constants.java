@@ -43,4 +43,8 @@ public final class Constants {
    public static final int THROTTLE_PORT = 4;
    public static final int BUTTON_PANEL_PORT_SHOOTER = 1;
 
+   public static final int FORWARD_SOLENOID_PORT = 0;
+   public static final int REVERSE_SOLENOID_PORT = 1; 
+  
+
 }

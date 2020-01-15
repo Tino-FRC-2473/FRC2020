@@ -54,8 +54,17 @@ public class RobotContainer {
 	private JoystickButton button6;
 	private JoystickButton button8;
 
+	private JoystickButton button1;
+	private JoystickButton button3;
+	private JoystickButton button5;
+	private JoystickButton button7;
+
+	private JoystickButton stopButton;
+
 	private JoystickButton buttonShooterTop; 
 	private JoystickButton buttonShooterBottom; 
+
+	
 
 	public RobotContainer() {
 		// Configure the button bindings
@@ -94,7 +103,8 @@ public class RobotContainer {
 		throttle = new Joystick(Constants.THROTTLE_PORT);
 
 		buttonPanel = new Joystick(Constants.BUTTON_PANEL_PORT);
-		buttonPanelShooter = new Joystick(Constants.BUTTON_PANEL_PORT_SHOOTER);
+		// buttonPanelShooter = new Joystick(Constants.BUTTON_PANEL_PORT_SHOOTER);
+		// System.out.println("Button Pannel Shooter Port: " + Constants.BUTTON_PANEL_PORT_SHOOTER);
 
 
 
@@ -103,15 +113,54 @@ public class RobotContainer {
 		button6 = new JoystickButton(buttonPanel, 6);
 		button8 = new JoystickButton(buttonPanel, 8);
 
-		buttonShooterTop = new JoystickButton(buttonPanelShooter, 2);
-		buttonShooterBottom = new JoystickButton(buttonPanelShooter, 4);
+		button1 = new JoystickButton(buttonPanel, 1);
+		button3 = new JoystickButton(buttonPanel, 3);
+		button5 = new JoystickButton(buttonPanel, 5);
+		button7 = new JoystickButton(buttonPanel, 7);
 
-		button2.whenReleased(() -> shooterSubsystem.setFeederPosition(0));
-		button4.whenReleased(() -> shooterSubsystem.setFeederPosition(0.5));
-		button6.whenReleased(() -> shooterSubsystem.setFeederPosition(0.7));
-		button8.whenReleased(() -> shooterSubsystem.setFeederPosition(1));
-		buttonShooterTop.whileHeld(() -> shooterSubsystem.runTopMotor(0.8));
-		buttonShooterBottom.whileHeld(() -> shooterSubsystem.runBottomMotor(0.8));
+		stopButton = new JoystickButton(throttle, 7);
+
+		// buttonShooterTop = new JoystickButton(buttonPanelShooter, 2);
+		// System.out.println("Top Shooter Motor Button Port:  2");
+		
+		
+		// buttonShooterBottom = new JoystickButton(buttonPanelShooter, 4);
+		// System.out.println("Bottom Shooter Motor Button Port: 4");
+		
+
+		// button2.whenReleased(() -> shooterSubsystem.setFeederPosition(0));
+		// button4.whenReleased(() -> shooterSubsystem.setFeederPosition(0.5));
+		// button6.whenReleased(() -> shooterSubsystem.setFeederPosition(0.7));
+		// button8.whenReleased(() -> shooterSubsystem.setFeederPosition(1));
+
+		button2.whenReleased(() -> shooterSubsystem.extendFeeder());
+		button4.whenReleased(() -> shooterSubsystem.retractFeeder());
+		button6.whenReleased(() -> shooterSubsystem.offFeeder());
+		button8.whenReleased(() -> shooterSubsystem.testFeeder());
+
+		button1.whenPressed(() -> shooterSubsystem.run(0.5));
+		button3.whenPressed(() -> shooterSubsystem.run(0.65));
+		button5.whenPressed(() -> shooterSubsystem.run(0.75));
+		button7.whenPressed(() -> shooterSubsystem.run(0.8));
+
+		stopButton.whenPressed(() -> shooterSubsystem.run(0));
+
+		// 0.6, 0.8
+		// 0.7, 0.8
+		// 0.8, 0.6
+		// 0.8, 0.7
+
+		// button1.whenPressed(() -> shooterSubsystem.runDifferentSpeeds(0.6, 0.8));
+		// button3.whenPressed(() -> shooterSubsystem.runDifferentSpeeds(0.7, 0.8));
+		// button5.whenPressed(() -> shooterSubsystem.runDifferentSpeeds(0.8, 0.6));
+		// button7.whenPressed(() -> shooterSubsystem.runDifferentSpeeds(0.8, 0.7));
+
+
+
+
+
+		// buttonShooterTop.whileHeld(() ->  shooterSubsystem.runTopMotor(0.8));
+		// buttonShooterBottom.whileHeld(() -> shooterSubsystem.runBottomMotor(0.8));
 		
 	}
 
