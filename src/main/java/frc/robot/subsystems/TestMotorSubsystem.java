@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -20,10 +21,13 @@ public class TestMotorSubsystem extends SubsystemBase {
 	 * Creates a new ExampleSubsystem.
 	 */
 	CANSparkMax testMotor; 
+	WPI_TalonSRX testMotorT; 
 	double lastReference;
 
 	public TestMotorSubsystem() {
 		testMotor = new CANSparkMax(Constants.TEST_PORT, MotorType.kBrushless); 
+		testMotorT = new WPI_TalonSRX(Constants.TEST_PORT_TALON); 
+	
 		testMotor.getPIDController().setP(0.1);
 
 	}
@@ -42,6 +46,10 @@ public class TestMotorSubsystem extends SubsystemBase {
 
 	public void setPower(double power){
 		testMotor.set(power);
+	}
+
+	public void setPowerTalon(double power){
+		testMotorT.set(power); 
 	}
 
 	

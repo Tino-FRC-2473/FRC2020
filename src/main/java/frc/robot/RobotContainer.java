@@ -8,12 +8,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.TestMotorByTimeCommand;
 import frc.robot.commands.TestMotorCommand;
 import frc.robot.commands.TestMotorEncoderCommand;
+import frc.robot.commands.TestMotorTeleopCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -21,8 +24,16 @@ import edu.wpi.first.wpilibj2.command.Command;
  * actually be handled in the {@link Robot} periodic methods (other than the
  * scheduler calls). Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
+ * 
+ * 
  */
+
+
 public class RobotContainer {
+	//private Joystick joystick1; 
+	private JoystickButton button1; 
+	private JoystickButton button3; 
+	private Joystick buttonPanel; 
 	// The robot's subsystems and commands are defined here...
 	private final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 
@@ -43,6 +54,11 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+		buttonPanel = new Joystick(Constants.JOYSTICK_BUTTON_PANEL); 
+		button1 = new JoystickButton(buttonPanel, 1); 
+		button3 = new JoystickButton(buttonPanel, 3); 
+		button1.whenPressed(new TestMotorTeleopCommand(testMotorSubsystem, 0.8)); 
+		button3.whenPressed(new TestMotorTeleopCommand(testMotorSubsystem, 0)); 
 	}
 
 	/**
