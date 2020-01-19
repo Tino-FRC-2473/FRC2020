@@ -16,6 +16,7 @@ import frc.robot.commands.TestMotorEncoderCommand;
 import frc.robot.commands.TestMotorTeleopCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -71,7 +72,7 @@ public class RobotContainer {
 		
 		
 		
-		return testMotorCommand;
+		return new InstantCommand(() -> testMotorSubsystem.setPower(-0.5), testMotorSubsystem);
 		// return testMotorEncoderCommand;
 	}
 }
