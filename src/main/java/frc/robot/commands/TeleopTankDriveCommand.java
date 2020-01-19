@@ -3,12 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class TeleopCommand extends CommandBase {
+public class TeleopTankDriveCommand extends CommandBase {
 
     DriveSubsystem driveSubsystem;
 
 
-    public TeleopCommand(DriveSubsystem subsystem) {
+    public TeleopTankDriveCommand(DriveSubsystem subsystem) {
         driveSubsystem = subsystem;
         addRequirements(subsystem);
 
