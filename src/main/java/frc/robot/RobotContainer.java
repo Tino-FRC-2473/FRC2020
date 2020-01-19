@@ -29,7 +29,7 @@ public class RobotContainer {
 	public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
-	//public final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -39,6 +39,8 @@ public class RobotContainer {
 
 	private Joystick joystick1;
 	private Joystick joystick2;
+	private Joystick wheel;
+	private Joystick throttle;
 	private Joystick buttonPanel;
 	private JoystickButton buttonPanel2;
 	private JoystickButton buttonPanel4;
@@ -57,6 +59,14 @@ public class RobotContainer {
 		return joystick2;
 	}
 
+	public Joystick getWheel() {
+		return wheel;
+	}
+
+	public Joystick getThrottle() {
+		return throttle;
+	}
+
 	/**
 	 * Use this method to define your button->command mappings. Buttons can be
 	 * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -66,6 +76,9 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		joystick1 = new Joystick(Constants.JOYSTICK_1_PORT);
 		joystick2 = new Joystick(Constants.JOYSTICK_2_PORT);
+		wheel = new Joystick(Constants.WHEEL_PORT);
+		throttle = new Joystick(Constants.THROTTLE_PORT);
+
 		buttonPanel = new Joystick(Constants.BUTTON_PANEL_PORT);
 		buttonPanel2 = new JoystickButton(buttonPanel, 2);
 		buttonPanel4 = new JoystickButton(buttonPanel, 4);
