@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -16,6 +17,10 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 
 public class DriveSubsystem extends SubsystemBase {
 	/**
@@ -31,6 +36,10 @@ public class DriveSubsystem extends SubsystemBase {
 	SpeedControllerGroup rightSpeedControllerGroup; 
 	DifferentialDrive differentialDrive;
 
+	AHRS gyro;
+
+	DifferentialDriveOdometry odometry;
+
 	public DriveSubsystem() {
 
 		frontLeftMotor = new CANSparkMax(Constants.SPARK_FRONT_LEFT_ID, MotorType.kBrushless);
@@ -42,13 +51,20 @@ public class DriveSubsystem extends SubsystemBase {
 		rightSpeedControllerGroup = new SpeedControllerGroup(frontRightMotor, backRightMotor);
 		
 		differentialDrive = new DifferentialDrive(leftSpeedControllerGroup, rightSpeedControllerGroup); 
-		
+		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+		gyro = new AHRS();
+
 		initPID();
 	}
 
 	public void powerDrive(double leftPower, double rightPower) { 
 		leftSpeedControllerGroup.set(leftPower); 
 		rightSpeedControllerGroup.set(rightPower);
+	}
+
+	public void tankDriveVolts(double leftVolts, double rightVolts) {
+		leftSpeedControllerGroup.setVoltage(leftVolts);
+		rightSpeedControllerGroup.setVoltage(rightVolts);
 	}
 
 	public void drivePID(double leftInches, double rightInches) {
@@ -89,11 +105,34 @@ public class DriveSubsystem extends SubsystemBase {
 		differentialDrive.stopMotor();
 	}
 
-	
+	public double getLeftEncoderPosition() {
+		return frontLeftMotor.getEncoder().getPosition();
+	}
+
+	public double getRightEncoderPosition() {
+		return frontRightMotor.getEncoder().getPosition();
+	}
+
+	// Trajectory methods
+
+	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+		double leftRateMetersPerSecond = frontLeftMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION;
+		double rightRateMetersPerSecond = frontRightMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION;
+				
+		return new DifferentialDriveWheelSpeeds(leftRateMetersPerSecond, rightRateMetersPerSecond);
+	}
+
+	public double getHeading() {
+		return Math.IEEEremainder(gyro.getAngle(), 360);
+	}
 
 	@Override
 	public void periodic() {
-
 		// This method will be called once per scheduler run
+		odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderPosition(), getRightEncoderPosition());
+	}
+
+	public Pose2d getPose() {
+		return odometry.getPoseMeters();
 	}
 }
