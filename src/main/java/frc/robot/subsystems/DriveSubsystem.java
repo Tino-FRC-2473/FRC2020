@@ -48,12 +48,12 @@ public class DriveSubsystem extends SubsystemBase {
 		frontRightMotor = new CANSparkMax(Constants.SPARK_FRONT_RIGHT_ID, MotorType.kBrushless);  
 		backRightMotor = new CANSparkMax(Constants.SPARK_BACK_RIGHT_ID, MotorType.kBrushless);  
 
-		leftSpeedControllerGroup = new SpeedControllerGroup(frontLeftMotor, backLeftMotor); 
+		leftSpeedControllerGroup = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
 		rightSpeedControllerGroup = new SpeedControllerGroup(frontRightMotor, backRightMotor);
 		
+		gyro = new AHRS(SPI.Port.kMXP);
 		differentialDrive = new DifferentialDrive(leftSpeedControllerGroup, rightSpeedControllerGroup); 
 		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-		gyro = new AHRS(SPI.Port.kMXP);
 
 
 

@@ -39,11 +39,11 @@ import frc.robot.subsystems.ServoSubsystem;
  */
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
-	public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
-	public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
+	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
+	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
 	public final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public final ServoSubsystem servoSubsystem = new ServoSubsystem();
+	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
