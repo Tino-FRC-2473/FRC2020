@@ -22,6 +22,11 @@ public class TeleopArcadeDriveCommand extends CommandBase {
     @Override
     public void execute() {
         driveSubsystem.arcadeDrive();
+        // System.out.println(driveSubsystem.getHeading());
+        // System.out.println(driveSubsystem.getLeftEncoderPosition() + " " + driveSubsystem.getRightEncoderPosition());
+        // System.out.println(driveSubsystem.getWheelSpeeds());
+    
+        System.out.println(driveSubsystem.getPose());
     }
 
     @Override

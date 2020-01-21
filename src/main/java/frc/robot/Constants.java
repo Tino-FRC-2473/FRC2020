@@ -35,7 +35,7 @@ public final class Constants {
 
     public static final double DRIVE_TICKS_PER_INCH = 1;
     // TODO: Change constants
-    public static final double DRIVE_METERS_PER_ROTATION = 0;
+    public static final double DRIVE_METERS_PER_ROTATION = 0.0631;
 
 	public static final int WHEEL_PORT = 0;
     public static final int JOYSTICK_1_PORT = 1;
@@ -52,17 +52,19 @@ public final class Constants {
     // Trajectory constants. TODO: Change
     public static final double KS_VOLTS = 0.147;
     public static final double KV_VOLT_SECONDS_PER_METER = 1.92;
-    public static final double KA_VOLD_SECONDS_SQUARED_PER_METER = 0.255;
+    public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.255;
 
-    public static final double KP_DRIVE_VEL = 17.2;
+    public static final double KP_DRIVE_VEL = 0.5;
     //17.265
+
+    // 10.4
 
     public static final double K_TRACK_WIDTH_METERS = 0.447675;
     public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = 
         new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
     
     public static final double K_MAX_SPEED_METERS_PER_SECOND = 3;
-    public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
+    public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1.5;
 
     public static final double K_RAMSETE_B = 2;
     public static final double K_RAMSETE_ZETA = 0.7;

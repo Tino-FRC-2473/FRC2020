@@ -51,13 +51,16 @@ public class DriveSubsystem extends SubsystemBase {
 		leftSpeedControllerGroup = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
 		rightSpeedControllerGroup = new SpeedControllerGroup(frontRightMotor, backRightMotor);
 		
+		leftSpeedControllerGroup.setInverted(true);
+		rightSpeedControllerGroup.setInverted(true);
+
 		gyro = new AHRS(SPI.Port.kMXP);
 		differentialDrive = new DifferentialDrive(leftSpeedControllerGroup, rightSpeedControllerGroup); 
-		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), new Pose2d(0, 0, new Rotation2d(0)));
 
+		resetPose();
 
-
-		initPID();
+		// initPID();
 	}
 
 	public void powerDrive(double leftPower, double rightPower) { 
@@ -67,7 +70,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
 		leftSpeedControllerGroup.setVoltage(leftVolts);
-		rightSpeedControllerGroup.setVoltage(rightVolts);
+		rightSpeedControllerGroup.setVoltage(-rightVolts);
 	}
 
 	public void drivePID(double leftInches, double rightInches) {
@@ -101,7 +104,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void arcadeDrive() {
-		differentialDrive.arcadeDrive(Robot.robotContainer.getThrottle().getZ(), -Robot.robotContainer.getWheel().getX());
+		differentialDrive.arcadeDrive(-Robot.robotContainer.getThrottle().getZ(), Robot.robotContainer.getWheel().getX());
 	}
 
 	public void stop() {
@@ -109,30 +112,46 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public double getLeftEncoderPosition() {
-		return frontLeftMotor.getEncoder().getPosition();
+		return -frontLeftMotor.getEncoder().getPosition();
 	}
 
 	public double getRightEncoderPosition() {
 		return frontRightMotor.getEncoder().getPosition();
 	}
 
+	public void resetEncoders() {
+		frontLeftMotor.getEncoder().setPosition(0);
+		frontRightMotor.getEncoder().setPosition(0);
+	}
+
+	public void resetGyro() {
+		gyro.reset();
+	}
+
+	public void resetPose() {
+		resetGyro();
+		resetEncoders();
+		odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), Rotation2d.fromDegrees(getHeading()));
+	}
+
 	// Trajectory methods
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-		double leftRateMetersPerSecond = frontLeftMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION;
-		double rightRateMetersPerSecond = frontRightMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION;
-				
+		double leftRateMetersPerSecond = -frontLeftMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION / 60;
+		double rightRateMetersPerSecond = -frontRightMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION / 60;
+
 		return new DifferentialDriveWheelSpeeds(leftRateMetersPerSecond, rightRateMetersPerSecond);
 	}
 
 	public double getHeading() {
-		return Math.IEEEremainder(gyro.getAngle(), 360);
+		return -Math.IEEEremainder(gyro.getAngle(), 360);
 	}
 
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
 		odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderPosition(), getRightEncoderPosition());
+		System.out.println(getPose());
 	}
 
 	public Pose2d getPose() {
