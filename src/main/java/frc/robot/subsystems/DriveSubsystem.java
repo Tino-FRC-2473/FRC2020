@@ -111,12 +111,12 @@ public class DriveSubsystem extends SubsystemBase {
 		differentialDrive.stopMotor();
 	}
 
-	public double getLeftEncoderPosition() {
-		return -frontLeftMotor.getEncoder().getPosition();
+	public double getLeftEncoderDistance() {
+		return -frontLeftMotor.getEncoder().getPosition() * Constants.DRIVE_METERS_PER_ROTATION;
 	}
 
-	public double getRightEncoderPosition() {
-		return frontRightMotor.getEncoder().getPosition();
+	public double getRightEncoderDistance() {
+		return frontRightMotor.getEncoder().getPosition() * Constants.DRIVE_METERS_PER_ROTATION;
 	}
 
 	public void resetEncoders() {
@@ -138,7 +138,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 	public DifferentialDriveWheelSpeeds getWheelSpeeds() {
 		double leftRateMetersPerSecond = -frontLeftMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION / 60;
-		double rightRateMetersPerSecond = -frontRightMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION / 60;
+		double rightRateMetersPerSecond = frontRightMotor.getEncoder().getVelocity() * Constants.DRIVE_METERS_PER_ROTATION / 60;
 
 		return new DifferentialDriveWheelSpeeds(leftRateMetersPerSecond, rightRateMetersPerSecond);
 	}
@@ -150,8 +150,8 @@ public class DriveSubsystem extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
-		odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderPosition(), getRightEncoderPosition());
-		System.out.println(getPose());
+		odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderDistance(), getRightEncoderDistance());
+		// System.out.println(getPose());
 	}
 
 	public Pose2d getPose() {
