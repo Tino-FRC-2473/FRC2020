@@ -134,8 +134,8 @@ public class RobotContainer {
 			new Pose2d(0, 0, new Rotation2d(0)),
 			// Pass through these two interior waypoints, making an 's' curve path
 			List.of(
-			    new Translation2d(1, 1),
-			    new Translation2d(2, -1)
+			    // new Translation2d(1, 1),
+			    // new Translation2d(2, -1)
 			),
 			// End 3 meters straight ahead of where we started, facing forward
 			new Pose2d(3, 0, new Rotation2d(0)),
@@ -152,8 +152,8 @@ public class RobotContainer {
 									Constants.KA_VOLT_SECONDS_SQUARED_PER_METER),
 			Constants.K_DRIVE_KINEMATICS,
 			driveSubsystem::getWheelSpeeds,
-			new PIDController(Constants.KP_DRIVE_VEL, 0, 0),
-			new PIDController(Constants.KP_DRIVE_VEL, 0, 0),
+			new PIDController(Constants.KP_DRIVE_VEL, 0, Constants.KD_DRIVE_VEL),
+			new PIDController(Constants.KP_DRIVE_VEL, 0, Constants.KD_DRIVE_VEL),
 			// RamseteCommand passes volts to the callback
 			driveSubsystem::tankDriveVolts,
 			driveSubsystem

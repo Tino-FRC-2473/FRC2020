@@ -54,7 +54,8 @@ public final class Constants {
     public static final double KV_VOLT_SECONDS_PER_METER = 1.92;
     public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.255;
 
-    public static final double KP_DRIVE_VEL = 10.4;
+	public static final double KP_DRIVE_VEL = 10.4;
+	public static final double KD_DRIVE_VEL = 0.08;
     //17.265
 
     // 10.4
