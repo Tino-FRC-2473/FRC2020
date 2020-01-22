@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.JoystickConstants;
@@ -132,19 +134,34 @@ public class RobotContainer {
 				.addConstraint(autoVoltageConstraint);
 
 		// An example trajectory to follow.  All units in meters.
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-			// Start at the origin facing the +X direction
-			new Pose2d(0, 0, new Rotation2d(0)),
-			// Pass through these two interior waypoints, making an 's' curve path
-			List.of(
-			    // new Translation2d(1, 1),
-			    // new Translation2d(2, -1)
-			),
-			// End 3 meters straight ahead of where we started, facing forward
-			new Pose2d(3, 0, new Rotation2d(0)),
-			// Pass config
-			config
-		);
+		// Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+		// 	// Start at the origin facing the +X direction
+		// 	new Pose2d(0, 0, new Rotation2d(0)),
+		// 	// Pass through these two interior waypoints, making an 's' curve path
+		// 	List.of(
+		// 	    new Translation2d(1, 1),
+		// 	    new Translation2d(3, -1)
+		// 	),
+		// 	// End 3 meters straight ahead of where we started, facing forward
+		// 	new Pose2d(4, 0, new Rotation2d(0)),
+		// 	// Pass config
+		// 	config
+		// );
+
+		ArrayList<Pose2d> trajArray = new ArrayList<Pose2d>();
+		trajArray.add(new Pose2d(0, 0, new Rotation2d(0)));
+		trajArray.add(new Pose2d(1, 0, new Rotation2d(0)));
+		trajArray.add(new Pose2d(3, -2, new Rotation2d(-90)));
+		
+		// trajArray.add(new Pose2d(3, 0, new Rotation2d(0)));
+
+		// trajArray.add(new Pose2d(0, 0, new Rotation2d(0)));
+		// trajArray.add(new Pose2d(1, 0, new Rotation2d(0)));
+		// trajArray.add(new Pose2d(0, Units.inchesToMeters(8), new Rotation2d(-90)));
+		
+
+
+		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(trajArray, config);
 
 		RamseteCommand ramseteCommand = new RamseteCommand(
 			exampleTrajectory,

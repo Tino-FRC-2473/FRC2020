@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		System.out.println(robotContainer.driveSubsystem.getPose());
+		// System.out.println(robotContainer.driveSubsystem.getPose());
 	}
 
 	@Override
