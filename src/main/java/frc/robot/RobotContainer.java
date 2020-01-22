@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.TestMotorCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
 
@@ -87,12 +90,12 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		joystick1 = new Joystick(Constants.JOYSTICK_1_PORT);
-		joystick2 = new Joystick(Constants.JOYSTICK_2_PORT);
-		wheel = new Joystick(Constants.WHEEL_PORT);
-		throttle = new Joystick(Constants.THROTTLE_PORT);
+		joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
+		joystick2 = new Joystick(JoystickConstants.JOYSTICK_2_PORT);
+		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
+		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
 
-		buttonPanel = new Joystick(Constants.BUTTON_PANEL_PORT);
+		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 		buttonPanel2 = new JoystickButton(buttonPanel, 2);
 		buttonPanel4 = new JoystickButton(buttonPanel, 4);
 		buttonPanel6 = new JoystickButton(buttonPanel, 6);
@@ -113,18 +116,18 @@ public class RobotContainer {
 
 		var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(Constants.KS_VOLTS,
-                                       Constants.KV_VOLT_SECONDS_PER_METER,
-                                       Constants.KA_VOLT_SECONDS_SQUARED_PER_METER),
-            Constants.K_DRIVE_KINEMATICS,
-            10);
+            new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+										DriveConstants.KV_VOLT_SECONDS_PER_METER,
+										DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+										DriveConstants.K_DRIVE_KINEMATICS,
+           								10);
 
 		// Create config for trajectory
 		TrajectoryConfig config =
-			new TrajectoryConfig(Constants.K_MAX_SPEED_METERS_PER_SECOND,
-								Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+			new TrajectoryConfig(AutoConstants.K_MAX_SPEED_METERS_PER_SECOND,
+				AutoConstants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
 				// Add kinematics to ensure max speed is actually obeyed
-				.setKinematics(Constants.K_DRIVE_KINEMATICS)
+				.setKinematics(DriveConstants.K_DRIVE_KINEMATICS)
 				// Apply the voltage constraint
 				.addConstraint(autoVoltageConstraint);
 
@@ -146,14 +149,14 @@ public class RobotContainer {
 		RamseteCommand ramseteCommand = new RamseteCommand(
 			exampleTrajectory,
 			driveSubsystem::getPose,
-			new RamseteController(Constants.K_RAMSETE_B, Constants.K_RAMSETE_ZETA),
-			new SimpleMotorFeedforward(Constants.KS_VOLTS,
-									Constants.KV_VOLT_SECONDS_PER_METER,
-									Constants.KA_VOLT_SECONDS_SQUARED_PER_METER),
-			Constants.K_DRIVE_KINEMATICS,
-			driveSubsystem::getWheelSpeeds,
-			new PIDController(Constants.KP_DRIVE_VEL, 0, Constants.KD_DRIVE_VEL),
-			new PIDController(Constants.KP_DRIVE_VEL, 0, Constants.KD_DRIVE_VEL),
+			new RamseteController(AutoConstants.K_RAMSETE_B, AutoConstants.K_RAMSETE_ZETA),
+			new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+									DriveConstants.KV_VOLT_SECONDS_PER_METER,
+									DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+									DriveConstants.K_DRIVE_KINEMATICS,
+									driveSubsystem::getWheelSpeeds,
+			new PIDController(DriveConstants.KP_DRIVE_VEL, DriveConstants.KI_DRIVE_VEL, DriveConstants.KD_DRIVE_VEL),
+			new PIDController(DriveConstants.KP_DRIVE_VEL, DriveConstants.KI_DRIVE_VEL, DriveConstants.KD_DRIVE_VEL),
 			// RamseteCommand passes volts to the callback
 			driveSubsystem::tankDriveVolts,
 			driveSubsystem
