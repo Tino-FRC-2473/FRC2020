@@ -14,12 +14,12 @@ package frc.robot;
  * not put anything functional in this class.
  *
  * <p>
- * It is advised to statically import this class (or one of its inner classes)
+ * It is advised to statically import this class (or one of its inner\ classes)
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
 
-    public static final int TEST_PORT = 11; 
+    public static final int TEST_PORT = 3; 
     public static final int TEST_PORT_TALON = 13; 
     public static final double ENCODER_INCHES_TO_TICKS = 1; 
     public static final int JOYSTICK_PORT = 1; 
