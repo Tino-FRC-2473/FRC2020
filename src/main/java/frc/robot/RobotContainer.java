@@ -12,25 +12,13 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.util.Units;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.TestMotorCommand;
+import frc.robot.commands.auto.HorizontalShiftCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
-
+import frc.robot.trajectory.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ServoSubsystem;
@@ -47,7 +35,7 @@ public class RobotContainer {
 	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
-	public final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
 	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -109,78 +97,15 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		// An ExampleCommand will run in autonomous
-
-		//return testMotorCommand;
-
-		// return testMotorEncoderCommand;
+		// Run path following command, then stop at the end.
 		driveSubsystem.resetPose();
 
-		var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
-										DriveConstants.KV_VOLT_SECONDS_PER_METER,
-										DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
-										DriveConstants.K_DRIVE_KINEMATICS,
-           								10);
-
-		// Create config for trajectory
-		TrajectoryConfig config =
-			new TrajectoryConfig(AutoConstants.K_MAX_SPEED_METERS_PER_SECOND,
-				AutoConstants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-				// Add kinematics to ensure max speed is actually obeyed
-				.setKinematics(DriveConstants.K_DRIVE_KINEMATICS)
-				// Apply the voltage constraint
-				.addConstraint(autoVoltageConstraint);
-
-		// An example trajectory to follow.  All units in meters.
-		// Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-		// 	// Start at the origin facing the +X direction
-		// 	new Pose2d(0, 0, new Rotation2d(0)),
-		// 	// Pass through these two interior waypoints, making an 's' curve path
-		// 	List.of(
-		// 	    new Translation2d(1, 1),
-		// 	    new Translation2d(3, -1)
-		// 	),
-		// 	// End 3 meters straight ahead of where we started, facing forward
-		// 	new Pose2d(4, 0, new Rotation2d(0)),
-		// 	// Pass config
-		// 	config
-		// );
-
-		ArrayList<Pose2d> trajArray = new ArrayList<Pose2d>();
-		trajArray.add(new Pose2d(0, 0, new Rotation2d(0)));
-		trajArray.add(new Pose2d(1, 0, new Rotation2d(0)));
-		trajArray.add(new Pose2d(3, -2, new Rotation2d(-90)));
-		
-		// trajArray.add(new Pose2d(3, 0, new Rotation2d(0)));
-
-		// trajArray.add(new Pose2d(0, 0, new Rotation2d(0)));
-		// trajArray.add(new Pose2d(1, 0, new Rotation2d(0)));
-		// trajArray.add(new Pose2d(0, Units.inchesToMeters(8), new Rotation2d(-90)));
-		
-
-
-		Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(trajArray, config);
-
-		RamseteCommand ramseteCommand = new RamseteCommand(
-			exampleTrajectory,
-			driveSubsystem::getPose,
-			new RamseteController(AutoConstants.K_RAMSETE_B, AutoConstants.K_RAMSETE_ZETA),
-			new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
-									DriveConstants.KV_VOLT_SECONDS_PER_METER,
-									DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
-									DriveConstants.K_DRIVE_KINEMATICS,
-									driveSubsystem::getWheelSpeeds,
-			new PIDController(DriveConstants.KP_DRIVE_VEL, DriveConstants.KI_DRIVE_VEL, DriveConstants.KD_DRIVE_VEL),
-			new PIDController(DriveConstants.KP_DRIVE_VEL, DriveConstants.KI_DRIVE_VEL, DriveConstants.KD_DRIVE_VEL),
-			// RamseteCommand passes volts to the callback
-			driveSubsystem::tankDriveVolts,
-			driveSubsystem
-		);
-
-		// Run path following command, then stop at the end.
-		return ramseteCommand.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
+		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
+		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
+		return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
+		// return new HorizontalShiftCommand(-3)
+		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
+					.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
 	}
 
 	public Joystick getButtonPanel() {
