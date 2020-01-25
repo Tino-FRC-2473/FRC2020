@@ -2,6 +2,7 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.trajectory.*;
 
 public class HorizontalShiftCommand extends SequentialCommandGroup {
@@ -11,16 +12,27 @@ public class HorizontalShiftCommand extends SequentialCommandGroup {
 	 */
 	public HorizontalShiftCommand(double shift) {
 		double convertedShift = Units.feetToMeters(shift);
-		addCommands(
-			new TwoWaypointTrajectory(TrajectoryBuilder.Position.ABSOLUTE, 
-								TrajectoryBuilder.Direction.FORWARD, 
-								new Waypoint(0, 0, 0), 
-								new Waypoint(2, convertedShift, 0)).getCommand(),
 
-			new TwoWaypointTrajectory(TrajectoryBuilder.Position.ABSOLUTE, 
-								TrajectoryBuilder.Direction.REVERSE, 
-								new Waypoint(2, convertedShift, 0), 
-								new Waypoint(0, convertedShift, 0)).getCommand()
+		TrajectoryBuilder forwardBuilder = new TrajectoryBuilder(TrajectoryBuilder.Type.QUINTIC, TrajectoryBuilder.Position.ABSOLUTE,
+				TrajectoryBuilder.Direction.FORWARD);
+		forwardBuilder.add(new Waypoint(0, 0, 0));
+		forwardBuilder.add(new Waypoint(Units.feetToMeters(4), convertedShift/2, 0));
+		// forwardBuilder.add(new Waypoint(Units.feetToMeters(6), convertedShift/2, 0));
+
+		TrajectoryBuilder backwardBuilder = new TrajectoryBuilder(TrajectoryBuilder.Type.QUINTIC, TrajectoryBuilder.Position.ABSOLUTE,
+				TrajectoryBuilder.Direction.REVERSE);
+		backwardBuilder.add(new Waypoint(Units.feetToMeters(4), convertedShift/2, 0));
+		backwardBuilder.add(new Waypoint(Units.feetToMeters(0), convertedShift, 0));
+		// backwardBuilder.add(new Waypoint(0, convertedShift, 0));
+
+
+
+
+
+		addCommands(
+			forwardBuilder.getRamseteCommand(),
+			// new WaitCommand(1),
+			backwardBuilder.getRamseteCommand()
 		);
 	}
 }

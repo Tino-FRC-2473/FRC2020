@@ -73,7 +73,8 @@ public class DriveSubsystem extends SubsystemBase {
 		leftSpeedControllerGroup.setVoltage(leftVolts);
 		rightSpeedControllerGroup.setVoltage(-rightVolts);
 
-		System.out.println(leftVolts);
+		// System.out.println(leftVolts);
+		System.out.println(System.currentTimeMillis() + "," + getHeading());
 	}
 
 	public void tankDrive(){
@@ -117,7 +118,7 @@ public class DriveSubsystem extends SubsystemBase {
 		double leftRateMetersPerSecond = -frontLeftMotor.getEncoder().getVelocity() * DriveConstants.DRIVE_METERS_PER_ROTATION / 60;
 		double rightRateMetersPerSecond = frontRightMotor.getEncoder().getVelocity() * DriveConstants.DRIVE_METERS_PER_ROTATION / 60;
 
-		System.out.print(System.currentTimeMillis() + "," + leftRateMetersPerSecond + ",");
+		// System.out.print(System.currentTimeMillis() + "," + leftRateMetersPerSecond + ",");
 
 		return new DifferentialDriveWheelSpeeds(leftRateMetersPerSecond, rightRateMetersPerSecond);
 	}
