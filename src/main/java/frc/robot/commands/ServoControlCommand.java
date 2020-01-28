@@ -26,9 +26,9 @@ public class ServoControlCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.robotContainer.getButtonPanel2().whenReleased(new RunServo(0, Robot.robotContainer.servoSubsystem));
-    Robot.robotContainer.getButtonPanel4().whenReleased(new RunServo(90, Robot.robotContainer.servoSubsystem));
-    Robot.robotContainer.getButtonPanel6().whenReleased(new RunServo(180, Robot.robotContainer.servoSubsystem));
+    // Robot.robotContainer.getButtonPanel2().whenReleased(new RunServo(0, Robot.robotContainer.servoSubsystem));
+    // Robot.robotContainer.getButtonPanel4().whenReleased(new RunServo(90, Robot.robotContainer.servoSubsystem));
+    // Robot.robotContainer.getButtonPanel6().whenReleased(new RunServo(180, Robot.robotContainer.servoSubsystem));
   }
   
   // Called once the command ends or is interrupted.

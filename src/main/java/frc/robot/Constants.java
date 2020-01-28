@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -20,27 +22,58 @@ package frc.robot;
 public final class Constants {
 
     public static final int TEST_PORT = 11;
-    public static final double ENCODER_INCHES_TO_TICKS = 1;
+	public static final double ENCODER_INCHES_TO_TICKS = 1;
+	public static final int SERVO_PORT = 0;
 
-    public static final int SPARK_FRONT_LEFT_ID = 3; 
-    public static final int SPARK_BACK_LEFT_ID = 4; 
-    public static final int SPARK_FRONT_RIGHT_ID = 1; 
-    public static final int SPARK_BACK_RIGHT_ID = 2;  
+	public static final class DriveConstants {
 
-    public static final double DRIVE_P = 5e-4;
-    public static final double DRIVE_I = 0;
-    public static final double DRIVE_D = 0;
+		public static final int SPARK_FRONT_LEFT_ID = 3; 
+		public static final int SPARK_BACK_LEFT_ID = 4; 
+		public static final int SPARK_FRONT_RIGHT_ID = 1; 
+		public static final int SPARK_BACK_RIGHT_ID = 2;  
+	
+		public static final double DRIVE_METERS_PER_ROTATION = 0.0631 * 0.93220339;
+	
+		public static final double KS_VOLTS = 0.147;
+		public static final double KV_VOLT_SECONDS_PER_METER = 1.92;
+		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.255;
+		
+		// old pid constants
+		public static final double KP_DRIVE_VEL = 0.003861;
+		public static final double KI_DRIVE_VEL = 0.000149;
+		public static final double KD_DRIVE_VEL = 0.024936;
 
-    public static final double DRIVE_TICKS_PER_INCH = 1;
+		// new pid constants
+		// public static final double KP_DRIVE_VEL = 0.008459;
+		// public static final double KI_DRIVE_VEL = 0.000326;
+		// public static final double KD_DRIVE_VEL = 0.054780;
+		//17.265
+	
+		// P used to be 10.4
 
-	public static final int WHEEL_PORT = 0;
-    public static final int JOYSTICK_1_PORT = 1;
-	public static final int THROTTLE_PORT = 2;
-    public static final int BUTTON_PANEL_PORT = 3;
-    public static final int JOYSTICK_2_PORT = 4;
+		public static final double K_TRACK_WIDTH_METERS = 0.447675;
+    	public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = 
+        	new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
+	}
 
-    public static final int SERVO_PORT = 0;
+	public static final class JoystickConstants {
+		public static final int WHEEL_PORT = 0;
+		public static final int JOYSTICK_1_PORT = 1;
+		public static final int THROTTLE_PORT = 2;
+		public static final int BUTTON_PANEL_PORT = 3;
+		public static final int JOYSTICK_2_PORT = 4;
+	
+		public static final int BUTTON_1_PORT = 1;
+		public static final int BUTTON_2_PORT = 2;
+	}
 
-    public static final int BUTTON_1_PORT = 1;
-    public static final int BUTTON_2_PORT = 2;
+	public static final class AutoConstants {
+		public static final double K_MAX_SPEED_METERS_PER_SECOND = 2;
+		public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 4;
+	
+		public static final double K_RAMSETE_B = 2;
+		public static final double K_RAMSETE_ZETA = 0.7;
+	}
+    
+    
 }

@@ -7,11 +7,17 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.util.Units;
+import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.TestMotorCommand;
+import frc.robot.commands.auto.HorizontalShiftCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
-
+import frc.robot.trajectory.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
@@ -26,11 +32,11 @@ import frc.robot.subsystems.ServoSubsystem;
  */
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
-	public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
-	public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
+	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
+	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
-	public final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public final ServoSubsystem servoSubsystem = new ServoSubsystem();
+	public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
+	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -74,12 +80,12 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		joystick1 = new Joystick(Constants.JOYSTICK_1_PORT);
-		joystick2 = new Joystick(Constants.JOYSTICK_2_PORT);
-		wheel = new Joystick(Constants.WHEEL_PORT);
-		throttle = new Joystick(Constants.THROTTLE_PORT);
+		joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
+		joystick2 = new Joystick(JoystickConstants.JOYSTICK_2_PORT);
+		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
+		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
 
-		buttonPanel = new Joystick(Constants.BUTTON_PANEL_PORT);
+		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 		buttonPanel2 = new JoystickButton(buttonPanel, 2);
 		buttonPanel4 = new JoystickButton(buttonPanel, 4);
 		buttonPanel6 = new JoystickButton(buttonPanel, 6);
@@ -91,10 +97,15 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		// An ExampleCommand will run in autonomous
+		// Run path following command, then stop at the end.
+		driveSubsystem.resetPose();
 
-		return testMotorCommand;
-		// return testMotorEncoderCommand;
+		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
+		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
+		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
+		return new HorizontalShiftCommand(-5)
+		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
+					.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
 	}
 
 	public Joystick getButtonPanel() {
