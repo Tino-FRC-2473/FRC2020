@@ -31,6 +31,8 @@ public final class Constants {
 		public static final int SPARK_BACK_LEFT_ID = 4; 
 		public static final int SPARK_FRONT_RIGHT_ID = 1; 
 		public static final int SPARK_BACK_RIGHT_ID = 2;  
+
+		public static final double CAMERA_TO_CENTER_DISTANCE_INCHES = 10;
 	
 		public static final double DRIVE_METERS_PER_ROTATION = 0.0631 * 0.93220339;
 	

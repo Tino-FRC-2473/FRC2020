@@ -66,7 +66,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 	public void powerDrive(double leftPower, double rightPower) { 
 		leftSpeedControllerGroup.set(leftPower); 
-		rightSpeedControllerGroup.set(rightPower);
+		rightSpeedControllerGroup.set(-rightPower);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {

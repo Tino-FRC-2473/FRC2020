@@ -15,7 +15,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.TestMotorCommand;
+import frc.robot.commands.auto.CVDriveCommand;
 import frc.robot.commands.auto.HorizontalShiftCommand;
+import frc.robot.cv.CVTrajectory;
 import frc.robot.subsystems.TestMotorSubsystem;
 import frc.robot.trajectory.*;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -103,7 +105,8 @@ public class RobotContainer {
 		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
 		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
 		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-		return new HorizontalShiftCommand(-5)
+		// return new HorizontalShiftCommand(-5)
+		return new CVDriveCommand(0)
 		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
 					.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
 	}
