@@ -42,9 +42,9 @@ public final class Constants {
 
 		// 7.579754294
 	
-		public static final double KS_VOLTS = 0.132; // 0.147
-		public static final double KV_VOLT_SECONDS_PER_METER = 2.03; // 1.92
-		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.257; // 0.255
+		public static final double KS_VOLTS = 0.132; // 0.147, 0.132
+		public static final double KV_VOLT_SECONDS_PER_METER = 2.03; // 1.92, 2.03
+		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.257; // 0.255, 0.257
 		
 		// old pid constants
 		public static final double KP_DRIVE_VEL = 0.003861;
@@ -59,7 +59,7 @@ public final class Constants {
 	
 		// P used to be 10.4
 
-		public static final double K_TRACK_WIDTH_METERS = 0.447675;
+		public static final double K_TRACK_WIDTH_METERS = 0.447675; // 0.447675
     	public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = 
         	new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 	}

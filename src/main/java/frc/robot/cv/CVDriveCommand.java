@@ -1,6 +1,7 @@
 package frc.robot.cv;
 
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
@@ -22,6 +23,7 @@ public class CVDriveCommand extends SequentialCommandGroup {
 		CVTrajectory trajectory = new CVTrajectory(distFromWallInches, cvData, angleToTargetDegrees, straightDriveDistFeet);
 
 		addCommands(
+			new InstantCommand(() -> RobotContainer.driveSubsystem.resetPose()),
 			turn,
 			new WaitCommand(0.1),
 			trajectory.getCommand()

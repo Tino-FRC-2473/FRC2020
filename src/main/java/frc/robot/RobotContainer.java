@@ -100,10 +100,9 @@ public class RobotContainer {
 	 */
 	public Command getAutonomousCommand() {
 		// Run path following command, then stop at the end.
-		driveSubsystem.resetPose();
 
 		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
-		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
+		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(8), 0, 0)).getCommand()
 		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
 		// return new HorizontalShiftCommand(-5)
 		return new CVDriveCommand(0)
