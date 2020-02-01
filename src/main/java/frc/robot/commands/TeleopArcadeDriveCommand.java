@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopArcadeDriveCommand extends CommandBase {
@@ -22,6 +23,8 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
+        // System.out.println(Robot.robotContainer.getThrottle().getZ());
+        // System.out.println(Robot.robotContainer.getWheel().getX());
         driveSubsystem.arcadeDrive();
         // System.out.println(driveSubsystem.getHeading());
         // System.out.println(driveSubsystem.getLeftEncoderDistance() + " " + driveSubsystem.getRightEncoderDistance());

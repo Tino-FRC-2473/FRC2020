@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.TestMotorCommand;
-import frc.robot.commands.auto.CVDriveCommand;
+import frc.robot.cv.CVDriveCommand;
 import frc.robot.commands.auto.HorizontalShiftCommand;
 import frc.robot.cv.CVTrajectory;
 import frc.robot.subsystems.TestMotorSubsystem;

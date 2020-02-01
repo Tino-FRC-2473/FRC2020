@@ -15,7 +15,7 @@ public class CVTrajectory implements TrajectoryContainer {
 	 * 
 	 * @param distFromWallInches distance of camera from wall in inches
 	 */
-	public CVTrajectory(double distFromWallInches, CVData cvData, double angleToTargetDegrees) {
+	public CVTrajectory(double distFromWallInches, CVData cvData, double angleToTargetDegrees, double straightDriveDistFeet) {
 
 		double convertedDist = Units.inchesToMeters(distFromWallInches);
 		trajectory = new TrajectoryBuilder(TrajectoryBuilder.Type.QUINTIC, TrajectoryBuilder.Position.ABSOLUTE);
@@ -24,7 +24,7 @@ public class CVTrajectory implements TrajectoryContainer {
 		// trajectory.add(new Waypoint(2, convertedShift/2));
 		// CVData cvData = Robot.jetson.getCVData();
 
-		trajectory.add(new Waypoint(cvData.getDX() - convertedDist - Units.feetToMeters(2), cvData.getDY(), 0));
+		trajectory.add(new Waypoint(cvData.getDX() - convertedDist - Units.feetToMeters(straightDriveDistFeet), cvData.getDY(), 0));
 		trajectory.add(new Waypoint(cvData.getDX() - convertedDist, cvData.getDY(), 0));
 	}
 

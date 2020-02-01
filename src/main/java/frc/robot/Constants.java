@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -34,11 +35,16 @@ public final class Constants {
 
 		public static final double CAMERA_TO_CENTER_DISTANCE_INCHES = 10;
 	
-		public static final double DRIVE_METERS_PER_ROTATION = 0.0631 * 0.93220339;
+		public static final double DRIVE_WHEEL_CIRCUMFRENCE_INCHES = 23.8125;
+		public static final double GEAR_RATIO = 10.1111;
+		public static final double DRIVE_METERS_PER_ROTATION = Units.inchesToMeters(DRIVE_WHEEL_CIRCUMFRENCE_INCHES / GEAR_RATIO);
+		// 0.0631 * 0.93220339;
+
+		// 7.579754294
 	
-		public static final double KS_VOLTS = 0.147;
-		public static final double KV_VOLT_SECONDS_PER_METER = 1.92;
-		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.255;
+		public static final double KS_VOLTS = 0.132; // 0.147
+		public static final double KV_VOLT_SECONDS_PER_METER = 2.03; // 1.92
+		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.257; // 0.255
 		
 		// old pid constants
 		public static final double KP_DRIVE_VEL = 0.003861;
