@@ -22,6 +22,7 @@ public class ShooterSubsystem extends SubsystemBase {
 	 */
 	CANSparkMax topMotor;
 	CANSparkMax bottomMotor;
+	CANSparkMax intakeMotor;
 
 	Servo servoFeeder;
 
@@ -30,10 +31,11 @@ public class ShooterSubsystem extends SubsystemBase {
 	public ShooterSubsystem() {
 		topMotor = new CANSparkMax(Constants.SPARK_SHOOTER_TOP, MotorType.kBrushless); 
 		bottomMotor = new CANSparkMax(Constants.SPARK_SHOOTER_BOTTOM, MotorType.kBrushless);
+		intakeMotor = new CANSparkMax(Constants.SPARK_INTAKE, MotorType.kBrushless);
 
 		servoFeeder = new Servo(Constants.SERVO_SHOOTER_FEEDER);
 
-		pistonFeeder = new DoubleSolenoid(Constants.FORWARD_SOLENOID_PORT,Constants.REVERSE_SOLENOID_PORT); 
+		// pistonFeeder = new DoubleSolenoid(Constants.FORWARD_SOLENOID_PORT,Constants.REVERSE_SOLENOID_PORT); 
 	}
 
 	public void run(double power){
@@ -54,33 +56,41 @@ public class ShooterSubsystem extends SubsystemBase {
 		bottomMotor.set(power);
 	}
 
-	public void setFeederPosition(double position) {
-		servoFeeder.set(position);
+	public void runIntake(double power) {
+		intakeMotor.set(power);
 	}
 
-	public void extendFeeder(){
+	public void stopIntake() {
+		intakeMotor.set(0);
+	}
+
+	// public void setFeederPosition(double position) {
+	// 	servoFeeder.set(position);
+	// }
+
+	// public void extendFeeder() {
+	// 	pistonFeeder.set(Value.kOff);
+	// 	pistonFeeder.set(Value.kForward); 
 		
-		pistonFeeder.set(Value.kOff);
-		pistonFeeder.set(Value.kForward); 
-		
-	}
-	public void retractFeeder(){
-		pistonFeeder.set(Value.kOff);
-		pistonFeeder.set(Value.kReverse);
+	// }
 
-	}
+	// public void retractFeeder() {
+	// 	pistonFeeder.set(Value.kOff);
+	// 	pistonFeeder.set(Value.kReverse);
 
-	public void offFeeder(){
-		pistonFeeder.set(Value.kOff); 
-	}
+	// }
 
-	public void testFeeder(){
-		pistonFeeder.set(Value.kOff);
-		pistonFeeder.set(Value.kForward);
-		pistonFeeder.set(Value.kOff);
-		pistonFeeder.set(Value.kReverse);
-		pistonFeeder.set(Value.kOff);
-	}
+	// public void offFeeder() {
+	// 	pistonFeeder.set(Value.kOff); 
+	// }
+
+	// public void testFeeder() {
+	// 	pistonFeeder.set(Value.kOff);
+	// 	pistonFeeder.set(Value.kForward);
+	// 	pistonFeeder.set(Value.kOff);
+	// 	pistonFeeder.set(Value.kReverse);
+	// 	pistonFeeder.set(Value.kOff);
+	// }
 
 	@Override
 	public void periodic() {

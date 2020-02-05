@@ -26,8 +26,9 @@ public final class Constants {
     public static final int SPARK_BACK_LEFT_ID = 2; 
     public static final int SPARK_FRONT_RIGHT_ID = 3; 
     public static final int SPARK_BACK_RIGHT_ID = 4; 
-    public static final int SPARK_SHOOTER_TOP = 6;
-    public static final int SPARK_SHOOTER_BOTTOM = 11;
+    public static final int SPARK_SHOOTER_TOP = 7;
+    public static final int SPARK_SHOOTER_BOTTOM = 6;
+    public static final int SPARK_INTAKE = 11;
 
     public static final int SERVO_SHOOTER_FEEDER = 0;
 
@@ -40,7 +41,7 @@ public final class Constants {
    public static final int JOYSTICK_1_PORT = 1; 
    public static final int JOYSTICK_2_PORT = 2;
    public static final int BUTTON_PANEL_PORT = 3; 
-   public static final int THROTTLE_PORT = 4;
+   public static final int THROTTLE_PORT = 2;
    public static final int BUTTON_PANEL_PORT_SHOOTER = 1;
 
    public static final int FORWARD_SOLENOID_PORT = 0;
