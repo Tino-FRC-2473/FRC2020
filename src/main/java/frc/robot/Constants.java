@@ -28,7 +28,7 @@ public final class Constants {
     public static final int SPARK_BACK_RIGHT_ID = 4; 
     public static final int SPARK_SHOOTER_TOP = 7;
     public static final int SPARK_SHOOTER_BOTTOM = 6;
-    public static final int SPARK_INTAKE = 11;
+    public static final int SPARK_INTAKE = 8;
 
     public static final int SERVO_SHOOTER_FEEDER = 0;
 

@@ -95,5 +95,7 @@ public class ShooterSubsystem extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
+		if (topMotor.getEncoder().getVelocity() != 0)
+		System.out.println("topMotor: " + topMotor.getEncoder().getVelocity() + " bottomMotor: " + bottomMotor.getEncoder().getVelocity());
 	}
 }

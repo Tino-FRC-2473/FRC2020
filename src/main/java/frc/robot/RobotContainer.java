@@ -138,11 +138,11 @@ public class RobotContainer {
 		// button6.whenReleased(() -> shooterSubsystem.offFeeder());
 		// button8.whenReleased(() -> shooterSubsystem.testFeeder());
 
-		button2.whenPressed(() -> shooterSubsystem.runIntake(0.5));
+		button2.whenPressed(() -> shooterSubsystem.runIntake(0.6));
 		button2.whenReleased(() -> shooterSubsystem.stopIntake());
 		button4.whenReleased(() -> shooterSubsystem.stopIntake());
 
-		button1.whenPressed(() -> shooterSubsystem.run(0.42));
+		button1.whenPressed(() -> shooterSubsystem.run(0.52));
 		button1.whenReleased(() -> shooterSubsystem.run(0));
 		// button3.whenPressed(() -> shooterSubsystem.run(0.65));
 		// button5.whenPressed(() -> shooterSubsystem.run(0.75));
