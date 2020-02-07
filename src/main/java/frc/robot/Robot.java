@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 		robotContainer = new RobotContainer();
-		// jetson = new Jetson(9600, Port.kUSB);
+		jetson = new Jetson(9600, Port.kUSB);
 	}
 
 	/**
@@ -106,7 +106,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		(new TeleopArcadeDriveCommand(robotContainer.driveSubsystem)).schedule();
+		System.out.println("new");
+		// (new TeleopArcadeDriveCommand(robotContainer.driveSubsystem)).schedule();
 	}
 
 	/**
@@ -114,6 +115,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		jetson.updateVisionValues();
 	}
 
 	@Override

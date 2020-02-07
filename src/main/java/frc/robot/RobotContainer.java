@@ -37,7 +37,9 @@ public class RobotContainer {
 	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
-	public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
+	// public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
+	
+	public final static DriveSubsystem driveSubsystem = null;
 	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -82,15 +84,15 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
-		joystick2 = new Joystick(JoystickConstants.JOYSTICK_2_PORT);
-		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
-		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
+		// joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
+		// joystick2 = new Joystick(JoystickConstants.JOYSTICK_2_PORT);
+		// wheel = new Joystick(JoystickConstants.WHEEL_PORT);
+		// throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
 
-		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
-		buttonPanel2 = new JoystickButton(buttonPanel, 2);
-		buttonPanel4 = new JoystickButton(buttonPanel, 4);
-		buttonPanel6 = new JoystickButton(buttonPanel, 6);
+		// buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
+		// buttonPanel2 = new JoystickButton(buttonPanel, 2);
+		// buttonPanel4 = new JoystickButton(buttonPanel, 4);
+		// buttonPanel6 = new JoystickButton(buttonPanel, 6);
 	}
 
 	/**
