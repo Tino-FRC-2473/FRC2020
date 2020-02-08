@@ -73,6 +73,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		jetson.updateVisionValues();
 	}
 
 	/**
@@ -115,7 +116,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		jetson.updateVisionValues();
 	}
 
 	@Override
