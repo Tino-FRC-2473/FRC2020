@@ -25,6 +25,9 @@ public final class Constants {
 	public static final double ENCODER_INCHES_TO_TICKS = 1;
 	public static final int SERVO_PORT = 0;
 	public static final int LIFT_MOTOR_PORT = 5;
+	public static final double INITIAL_HORIZONTAL_POS_LIFT = 21.88;
+	public static final double DISTANCE_OPP_PIVOT_POINTS = 22.0; 
+	public static final double HOOK_HEIGHT = 3.0;
 
 	public static final class DriveConstants {
 

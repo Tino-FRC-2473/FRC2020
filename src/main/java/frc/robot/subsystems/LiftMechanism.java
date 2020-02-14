@@ -11,43 +11,34 @@ import frc.robot.Constants;
 
 public class LiftMechanism {
 
-
     public CANSparkMax liftMotor;
-    public double initHeight = 0; 
+    public double initHeight; 
     public double initEncoderPosition; 
 
     public LiftMechanism() {
         liftMotor = new CANSparkMax(Constants.LIFT_MOTOR_PORT, MotorType.kBrushless); 
         initEncoderPosition = liftMotor.getEncoder().getPosition(); 
+        initHeight = 0; 
     }
 
-    public void setInitHeight(double height){
-        //liftMotor = new CANSparkMax(Constants.LIFT_MOTOR_PORT); 
-       
+
+    public void setInitHeight(double height){ 
         this.initHeight = height; 
     }
 
-    // public void runToHeight(double height){
-    //     double horizontalDistance = 0; 
-    //     double overallHeight = initHeight + 3.5*Math.sqrt((22.0*22.0) - (horizontalDistance*horizontalDistance)); 
-    // }
-
-    public double getHorizontalPosition(){
-       double currentEncoderPos = liftMotor.getEncoder().getPosition()-initEncoderPosition; 
+    //the horizontal displacement from the initial x, around 21.88
+    public double getHorizontalPosition() {
+       double currentEncoderPos = liftMotor.getEncoder().getPosition() - initEncoderPosition; //Check for signs
        double revs = currentEncoderPos/42.0; 
-       return 21.88 + 24.0*revs; 
+       return Constants.INITIAL_HORIZONTAL_POS_LIFT + revs/24.0; 
     }
 
-    public double getCurrentHeight(){
-        double overallHeight = initHeight + 3.5*Math.sqrt((22.0*22.0) - (getHorizontalPosition()*getHorizontalPosition())); 
-        return overallHeight; 
-
-
+    public double getCurrentHeight() {
+        double overallHeight = Constants.HOOK_HEIGHT + initHeight + 3.5 * Math.sqrt((Math.pow(Constants.DISTANCE_OPP_PIVOT_POINTS, 2) - Math.pow(getHorizontalPosition(), 2))); 
+        return overallHeight;
     }
 
-    public void setPower(double power){
+    public void setPower(double power) {
         liftMotor.set(power);
     }
-
-    
 }

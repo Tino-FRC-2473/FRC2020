@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.commands.LiftRunToHeight;
 import frc.robot.commands.TestMotorCommand;
 import frc.robot.commands.auto.HorizontalShiftCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
@@ -103,8 +104,8 @@ public class RobotContainer {
 		
 		// Run path following command, then stop at the end.
 		//driveSubsystem.resetPose();
-
-		return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand();
+		return new  LiftRunToHeight(liftMech, 4.5, 0.1); 
+		//return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand();
 		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
 		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
 		//return new HorizontalShiftCommand(-5)

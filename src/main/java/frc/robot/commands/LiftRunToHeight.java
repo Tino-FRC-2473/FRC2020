@@ -13,7 +13,7 @@ import frc.robot.subsystems.LiftMechanism;
 
 public class LiftRunToHeight extends CommandBase {
 
-    LiftMechanism liftMech = new LiftMechanism(); 
+    LiftMechanism liftMech; 
     /**
      * Creates a new Teleop.
      */
@@ -21,37 +21,32 @@ public class LiftRunToHeight extends CommandBase {
     public double goHeight; 
     public double initHeight; 
     public double power; 
-    public LiftRunToHeight(double goHeight, double power) {
+    public LiftRunToHeight(LiftMechanism liftMech, double goHeight, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.goHeight = goHeight; 
-    this.initHeight = liftMech.getCurrentHeight(); 
-    this.power = power; 
-    this.overallHeight = initHeight; 
-    
-  
+        this.liftMech = liftMech; 
+        this.goHeight = goHeight; 
+        this.initHeight = liftMech.getCurrentHeight(); 
+        this.power = power; 
+        this.overallHeight = initHeight; 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
       liftMech.setInitHeight(initHeight);
-
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    overallHeight = initHeight + 3.5*Math.sqrt((22.0*22.0) - (liftMech.getHorizontalPosition()*liftMech.getHorizontalPosition())); 
+    overallHeight = liftMech.getCurrentHeight(); 
+    // initHeight + 3.5*Math.sqrt((22.0*22.0) - (liftMech.getHorizontalPosition()*liftMech.getHorizontalPosition())); 
       if (overallHeight < goHeight){
         liftMech.setPower(power); 
-
       } else {
           end(true);
       }
-    // Robot.robotContainer.getButtonPanel2().whenReleased(new RunServo(0, Robot.robotContainer.servoSubsystem));
-    // Robot.robotContainer.getButtonPanel4().whenReleased(new RunServo(90, Robot.robotContainer.servoSubsystem));
-    // Robot.robotContainer.getButtonPanel6().whenReleased(new RunServo(180, Robot.robotContainer.servoSubsystem));
+
   }
   
   // Called once the command ends or is interrupted.
