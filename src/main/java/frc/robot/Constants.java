@@ -24,6 +24,7 @@ public final class Constants {
     public static final int TEST_PORT = 11;
 	public static final double ENCODER_INCHES_TO_TICKS = 1;
 	public static final int SERVO_PORT = 0;
+	public static final int LIFT_MOTOR_PORT = 5;
 
 	public static final class DriveConstants {
 
@@ -42,6 +43,8 @@ public final class Constants {
 		public static final double KP_DRIVE_VEL = 0.003861;
 		public static final double KI_DRIVE_VEL = 0.000149;
 		public static final double KD_DRIVE_VEL = 0.024936;
+
+		 
 
 		// new pid constants
 		// public static final double KP_DRIVE_VEL = 0.008459;

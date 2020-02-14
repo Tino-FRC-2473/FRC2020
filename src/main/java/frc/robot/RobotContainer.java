@@ -19,8 +19,10 @@ import frc.robot.commands.auto.HorizontalShiftCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
 import frc.robot.trajectory.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LiftMechanism;
 import frc.robot.subsystems.ServoSubsystem;
 
 /**
@@ -36,6 +38,7 @@ public class RobotContainer {
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
 	public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public final static LiftMechanism liftMech = new LiftMechanism();
 	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -97,15 +100,16 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
+		
 		// Run path following command, then stop at the end.
-		driveSubsystem.resetPose();
+		//driveSubsystem.resetPose();
 
-		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
+		return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand();
 		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
 		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-		return new HorizontalShiftCommand(-5)
+		//return new HorizontalShiftCommand(-5)
 		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-					.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
+				//	.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
 	}
 
 	public Joystick getButtonPanel() {
