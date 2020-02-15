@@ -17,6 +17,8 @@ public class TurnDegreesCommand extends CommandBase {
 	private final double power = 0.1;
 	private final double marginOfError = 3;
 
+	private double finalHeading;
+
 	public TurnDegreesCommand(double angle, DriveSubsystem driveSubsystem) {
 		this.angle = angle;
 		this.driveSubsystem = driveSubsystem;
@@ -25,6 +27,14 @@ public class TurnDegreesCommand extends CommandBase {
 	@Override
 	public void initialize() {
 		initialGyroHeading = driveSubsystem.getHeading();
+		
+		finalHeading = initialGyroHeading + angle;
+		
+		if (finalHeading < -179) {
+			finalHeading += 180;
+		} else if (finalHeading > 179) {
+			finalHeading -= 180;
+		}
 	}
 
 	@Override
@@ -38,7 +48,7 @@ public class TurnDegreesCommand extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return Math.abs(driveSubsystem.getHeading() - (initialGyroHeading + angle)) < marginOfError;
+		return Math.abs(driveSubsystem.getHeading() - finalHeading) < marginOfError;
 	}
 
 	@Override

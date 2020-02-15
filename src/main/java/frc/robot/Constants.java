@@ -66,13 +66,8 @@ public final class Constants {
 
 	public static final class JoystickConstants {
 		public static final int WHEEL_PORT = 0;
-		public static final int JOYSTICK_1_PORT = 1;
 		public static final int THROTTLE_PORT = 2;
 		public static final int BUTTON_PANEL_PORT = 3;
-		public static final int JOYSTICK_2_PORT = 4;
-	
-		public static final int BUTTON_1_PORT = 1;
-		public static final int BUTTON_2_PORT = 2;
 	}
 
 	public static final class AutoConstants {

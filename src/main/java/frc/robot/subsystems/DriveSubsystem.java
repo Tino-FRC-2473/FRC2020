@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -62,6 +63,8 @@ public class DriveSubsystem extends SubsystemBase {
 		differentialDrive.setSafetyEnabled(false);
 
 		resetPose();
+
+		setDefaultCommand(new TeleopArcadeDriveCommand(Robot.robotContainer.getDriveSubsystem()));
 	}
 
 	public void powerDrive(double leftPower, double rightPower) { 
@@ -74,11 +77,11 @@ public class DriveSubsystem extends SubsystemBase {
 		rightSpeedControllerGroup.setVoltage(-rightVolts);
 
 		// System.out.println(leftVolts);
-		System.out.println(System.currentTimeMillis() + "," + getHeading());
+		// System.out.println(System.currentTimeMillis() + "," + getHeading());
 	}
 
 	public void tankDrive(){
-		differentialDrive.tankDrive(Robot.robotContainer.getJoystick1().getY(), Robot.robotContainer.getJoystick2().getY(), true);
+		// differentialDrive.tankDrive(Robot.robotContainer.getJoystick1().getY(), Robot.robotContainer.getJoystick2().getY(), true);
 	}
 
 	public void arcadeDrive() {

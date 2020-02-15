@@ -23,7 +23,7 @@ public class Jetson extends SerialPort {
 		super(baudRate, port);
 	}
 
-	// "S XXXX XXXX +XXXX E"
+	// "S +XXXX +XXXX +XXXX E"
 	public void updateVisionValues() {
 		// get values from serial, store them into the three variables
 		try {
@@ -42,16 +42,15 @@ public class Jetson extends SerialPort {
 				// System.out.println(rawData+ "/" + rawData.length());
 				buffer = buffer.substring(buffer.lastIndexOf(END) + 1);
 
-				if (rawData.length() == 19) {
+				if (rawData.length() == 21) {
 					System.out.println(rawData);
 
-					String dxString = rawData.substring(2, 6);
-					String dyString = rawData.substring(7, 11);
+					String dxString = rawData.substring(2, 7);
+					String dyString = rawData.substring(8, 13);
 
-					char alphaSignChar = rawData.charAt(12);
-					String alphaString = rawData.substring(13, 17);
+					String alphaString = rawData.substring(14, 19);
 
-					if (dxString.equals("9999") || dyString.equals("9999") || alphaString.equals("9999")) {
+					if (dxString.equals("+9999") || dyString.equals("+9999") || alphaString.equals("+9999")) {
 						canSeeTarget = false;
 						d_x = 99.99;
 						d_y = 99.99;
@@ -63,8 +62,6 @@ public class Jetson extends SerialPort {
 						d_y = Integer.parseInt(dyString) / 100.0;
 
 						alpha = Integer.parseInt(alphaString) / 10.0;
-
-						alpha *= (alphaSignChar == '+') ? 1 : -1;
 					}
 					// System.out.printf("dX: %f\ndY: %f\na: %f\n\n", d_x, d_y, alpha);
 				}
@@ -74,6 +71,10 @@ public class Jetson extends SerialPort {
 			buffer = "";
 			first = true;
 		}
+	}
+
+	public boolean canSeeTarget() {
+		return canSeeTarget;
 	}
 
 	public CVData getCVData() {

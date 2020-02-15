@@ -37,9 +37,8 @@ public class RobotContainer {
 	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
-	// public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
+	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	
-	public final static DriveSubsystem driveSubsystem = null;
 	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -47,10 +46,11 @@ public class RobotContainer {
 	 * 
 	 */
 
-	private Joystick joystick1;
-	private Joystick joystick2;
 	private Joystick wheel;
+	private JoystickButton cvButton;
+
 	private Joystick throttle;
+
 	private Joystick buttonPanel;
 	private JoystickButton buttonPanel2;
 	private JoystickButton buttonPanel4;
@@ -61,55 +61,20 @@ public class RobotContainer {
 		configureButtonBindings();
 	}
 
-	public Joystick getJoystick1() {
-		return joystick1;
-	}
-
-	public Joystick getJoystick2() {
-		return joystick2;
+	public DriveSubsystem getDriveSubsystem() {
+		return driveSubsystem;
 	}
 
 	public Joystick getWheel() {
 		return wheel;
 	}
 
+	public JoystickButton getCVButton() {
+		return cvButton;
+	}
+
 	public Joystick getThrottle() {
 		return throttle;
-	}
-
-	/**
-	 * Use this method to define your button->command mappings. Buttons can be
-	 * created by instantiating a {@link GenericHID} or one of its subclasses
-	 * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-	 */
-	private void configureButtonBindings() {
-		// joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
-		// joystick2 = new Joystick(JoystickConstants.JOYSTICK_2_PORT);
-		// wheel = new Joystick(JoystickConstants.WHEEL_PORT);
-		// throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
-
-		// buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
-		// buttonPanel2 = new JoystickButton(buttonPanel, 2);
-		// buttonPanel4 = new JoystickButton(buttonPanel, 4);
-		// buttonPanel6 = new JoystickButton(buttonPanel, 6);
-	}
-
-	/**
-	 * Use this to pass the autonomous command to the main {@link Robot} class.
-	 *
-	 * @return the command to run in autonomous
-	 */
-	public Command getAutonomousCommand() {
-		// Run path following command, then stop at the end.
-
-		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
-		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(8), 0, 0)).getCommand()
-		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-		// return new HorizontalShiftCommand(-5)
-		return new CVDriveCommand(0)
-		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-					.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
 	}
 
 	public Joystick getButtonPanel() {
@@ -126,5 +91,45 @@ public class RobotContainer {
 
 	public JoystickButton getButtonPanel6() {
 		return buttonPanel6;
+	}
+
+	/**
+	 * Use this method to define your button->command mappings. Buttons can be
+	 * created by instantiating a {@link GenericHID} or one of its subclasses
+	 * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+	 */
+	private void configureButtonBindings() {
+		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
+		cvButton = new JoystickButton(wheel, 7);
+
+		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
+
+		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
+		buttonPanel2 = new JoystickButton(buttonPanel, 2);
+		buttonPanel4 = new JoystickButton(buttonPanel, 4);
+		buttonPanel6 = new JoystickButton(buttonPanel, 6);
+		
+		cvButton.whenHeld(new CVDriveCommand(6, driveSubsystem), true);
+	}
+
+	/**
+	 * Use this to pass the autonomous command to the main {@link Robot} class.
+	 *
+	 * @return the command to run in autonomous
+	 */
+	public Command getAutonomousCommand() {
+		// Run path following command, then stop at the end.
+
+		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
+		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(8), 0, 0)).getCommand()
+		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
+		// return new HorizontalShiftCommand(-5)
+		
+		// return new CVDriveCommand(0, driveSubsystem)
+		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
+					// .andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
+
+		return null;
 	}
 }

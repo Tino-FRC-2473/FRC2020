@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -25,7 +26,10 @@ public class TeleopArcadeDriveCommand extends CommandBase {
     public void execute() {
         // System.out.println(Robot.robotContainer.getThrottle().getZ());
         // System.out.println(Robot.robotContainer.getWheel().getX());
-        driveSubsystem.arcadeDrive();
+        if (RobotState.isOperatorControl()) {
+            driveSubsystem.arcadeDrive();
+        }
+        
         // System.out.println(driveSubsystem.getHeading());
         // System.out.println(driveSubsystem.getLeftEncoderDistance() + " " + driveSubsystem.getRightEncoderDistance());
         // System.out.println(driveSubsystem.getWheelSpeeds());
