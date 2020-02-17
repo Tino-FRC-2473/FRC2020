@@ -7,51 +7,54 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
 import frc.robot.Robot;
 import frc.robot.subsystems.LiftMechanism;
 
-public class LiftRunToHeight extends CommandBase {
+public class WinchDriveCommand extends CommandBase {
 
-    LiftMechanism liftMech; 
+    public LiftMechanism liftMech;
+    
     /**
      * Creates a new Teleop.
      */
-    public double overallHeight; 
-    public double goHeight; 
-    public double initHeight; 
-    public double power; 
-    public LiftRunToHeight(LiftMechanism liftMech, double goHeight, double power) {
+ 
+    public double power;
+
+    public WinchDriveCommand(LiftMechanism liftMech, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
         this.liftMech = liftMech; 
-        this.goHeight = goHeight; 
-        this.initHeight = liftMech.getCurrentHeight(); 
         this.power = power; 
-        this.overallHeight = initHeight; 
+        
+       
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      liftMech.setInitHeight(initHeight);
+     liftMech.runWinch(0); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    overallHeight = liftMech.getCurrentHeight();  // initHeight + 3.5*Math.sqrt((22.0*22.0) - (liftMech.getHorizontalPosition()*liftMech.getHorizontalPosition())); 
-      if (overallHeight < goHeight){
-        liftMech.setPower(power); 
+      if (liftMech.isWinchStop()){
+        liftMech.runWinch(power);
+
       } else {
-          end(true);
+          end(true); 
       }
+    
+
 
   }
   
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      liftMech.setPower(0);
+      liftMech.runWinch(0);
   }
 
   // Returns true when the command should end.
