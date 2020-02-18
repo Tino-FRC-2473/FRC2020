@@ -105,20 +105,20 @@ public class RobotContainer {
 		
 		// Run path following command, then stop at the end.
 		//driveSubsystem.resetPose();
-		//to 4ft 3 inches, -105.5 encoder ticks
-	  //return new  LiftRunToHeight(liftMech, 89, -0.1); //20.5 27 31.5 1 + 0.25 + 0.125 //1.75
+	
 
 		//liftMech.liftMotor.getEncoder().setPosition(0);
 		return new InstantCommand(() -> liftMech.setPower(0.1));
 		//liftMech.liftMotor.getEncoder().setPosition(0); 
 		//return new LiftRunToEncoder(liftMech, -533.91, -0.1); 
+
 		//return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand();
 		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
 		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
 		//return new HorizontalShiftCommand(-5)
 		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
 				//	.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
-				//-108.76
+				//-108.76 for runTO
 				//-229.581146
 				//-533.91
 

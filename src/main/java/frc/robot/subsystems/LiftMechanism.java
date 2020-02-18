@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 
 
 
@@ -36,14 +37,11 @@ public class LiftMechanism {
     //the horizontal displacement from the initial x, around 21.88
     public double getHorizontalPosition() {
        double currentEncoderPos = liftMotor.getEncoder().getPosition() - initEncoderPosition; //(y2-y1) IT WORKS
-       double revolutions = currentEncoderPos/4096; 
-
-  
-       return Constants.INITIAL_HORIZONTAL_POS_LIFT + revolutions/24.0; 
+       return Constants.INITIAL_HORIZONTAL_POS_LIFT + currentEncoderPos/42.0; //(-18), if (-15), divide by ~ 33.5 
     }
 
     public double getCurrentHeight() {
-        double overallHeight = Constants.HOOK_HEIGHT + initHeight + (3 * Math.sqrt((Math.pow(Constants.DISTANCE_OPP_PIVOT_POINTS, 2) - Math.pow(getHorizontalPosition(), 2)))); 
+        double overallHeight = Constants.HOOK_HEIGHT + Constants.INIT_HEIGHT + (3 * Math.sqrt((Math.pow(Constants.DISTANCE_OPP_PIVOT_POINTS, 2) - Math.pow(getHorizontalPosition(), 2)))); 
         return overallHeight;
     }
 
@@ -61,6 +59,16 @@ public class LiftMechanism {
         }
 
 
+    }
+
+    public boolean runDown(double power){
+        if (liftMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen).isLimitSwitchEnabled()){
+            liftMotor.set(0);
+            return true; 
+          } else {
+              liftMotor.set(power);
+              return false; 
+          }
     }
 
     public boolean isWinchStop(){

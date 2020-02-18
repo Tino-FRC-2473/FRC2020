@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.LiftMechanism;
@@ -33,17 +35,16 @@ public class LiftRunToHeight extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      
-      System.out.println(liftMech.liftMotor.getEncoder().getCountsPerRevolution());
-      //liftMech.liftMotor.getEncoder().setPosition(0); 
        
       
-      liftMech.setInitHeight(13.75); //25.75
+     
+      liftMech.setPower(0.1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+   
     // if (liftMech.liftMotor.getEncoder().getPosition() > -108.5){
     //   liftMech.setPower(-0.1);
     // } else {
