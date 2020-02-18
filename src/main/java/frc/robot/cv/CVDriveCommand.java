@@ -19,18 +19,27 @@ public class CVDriveCommand extends SequentialCommandGroup {
 
 		// CVData cvData = new CVData(true, Units.feetToMeters(8), Units.feetToMeters(-3), 0);
 		CVData cvData = Robot.jetson.getCVData();
+		double dy = cvData.getDY();
+		double dx = cvData.getDX();
+		double angle = cvData.getAngle();
 
-		double signOfDY = (cvData.getDY() < 0) ? -1 : 1;
-		double angleToStraightDriveDegrees = signOfDY * (90.0 - Math.abs(Units.radiansToDegrees(Math.atan((cvData.getDX() - Units.feetToMeters(straightDriveDistFeet)) / cvData.getDY()))));
+		// double signOfDY = (cvData.getDY() < 0) ? -1 : 1;
+
+		// for the following variables, refer to https://www.desmos.com/calculator/hhdwjepfxd
+		double thetaStraight = Units.radiansToDegrees(Math.acos(-dy / Math.sqrt(dy*dy + dx*dx)));
+		double thetaRobotToWall = angle;
+		double thetaRobotToStraight = -(90 - thetaStraight - thetaRobotToWall);
+
+		// double angleToStraightDriveDegrees = signOfDY * (90.0 - Math.abs(Units.radiansToDegrees(Math.atan((cvData.getDX() - Units.feetToMeters(straightDriveDistFeet)) / cvData.getDY()))));
 		// angleToTargetDegrees -= 10;
 		// double angleToTargetDegrees = -90;
-		TurnDegreesCommand turn = new TurnDegreesCommand(angleToStraightDriveDegrees, driveSubsystem);
-		CVTrajectory trajectory = new CVTrajectory(distFromWallInches, cvData, angleToStraightDriveDegrees, straightDriveDistFeet);
+		TurnDegreesCommand turn = new TurnDegreesCommand(thetaRobotToStraight, driveSubsystem);
+		CVTrajectory trajectory = new CVTrajectory(distFromWallInches, cvData, thetaRobotToStraight, straightDriveDistFeet);
 
 		addCommands(
-			new InstantCommand(() -> Robot.robotContainer.getDriveSubsystem().resetPose()),
 			turn,
 			new WaitCommand(0.1),
+			new InstantCommand(() -> Robot.robotContainer.getDriveSubsystem().resetPose()),
 			trajectory.getCommand()
 		);
 	}

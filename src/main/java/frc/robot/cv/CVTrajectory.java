@@ -19,12 +19,12 @@ public class CVTrajectory implements TrajectoryContainer {
 		double convertedDist = Units.inchesToMeters(distFromWallInches);
 		trajectory = new TrajectoryBuilder(TrajectoryBuilder.Type.QUINTIC, TrajectoryBuilder.Position.ABSOLUTE);
 
-		trajectory.add(new Waypoint(0, 0, angleToTargetDegrees));
+		trajectory.add(new Waypoint(0, 0, 0));
 		// trajectory.add(new Waypoint(2, convertedShift/2));
 		// CVData cvData = Robot.jetson.getCVData();
 
-		trajectory.add(new Waypoint(cvData.getDX() - convertedDist - Units.feetToMeters(straightDriveDistFeet), cvData.getDY(), 0));
-		trajectory.add(new Waypoint(cvData.getDX() - convertedDist, cvData.getDY(), 0));
+		trajectory.add(new Waypoint(cvData.getDX() - convertedDist - Units.feetToMeters(straightDriveDistFeet), cvData.getDY(), -angleToTargetDegrees));
+		trajectory.add(new Waypoint(cvData.getDX() - convertedDist, cvData.getDY(), -angleToTargetDegrees));
 	}
 
 	@Override
