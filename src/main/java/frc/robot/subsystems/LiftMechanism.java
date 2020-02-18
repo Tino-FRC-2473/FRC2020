@@ -36,16 +36,19 @@ public class LiftMechanism {
     //the horizontal displacement from the initial x, around 21.88
     public double getHorizontalPosition() {
        double currentEncoderPos = liftMotor.getEncoder().getPosition() - initEncoderPosition; //(y2-y1) IT WORKS
-       double revs = currentEncoderPos/42.0; 
-       return Constants.INITIAL_HORIZONTAL_POS_LIFT + revs/24.0; 
+       double revolutions = currentEncoderPos/4096; 
+
+  
+       return Constants.INITIAL_HORIZONTAL_POS_LIFT + revolutions/24.0; 
     }
 
     public double getCurrentHeight() {
-        double overallHeight = Constants.HOOK_HEIGHT + initHeight + 3 * Math.sqrt((Math.pow(Constants.DISTANCE_OPP_PIVOT_POINTS, 2) - Math.pow(getHorizontalPosition(), 2))); 
+        double overallHeight = Constants.HOOK_HEIGHT + initHeight + (3 * Math.sqrt((Math.pow(Constants.DISTANCE_OPP_PIVOT_POINTS, 2) - Math.pow(getHorizontalPosition(), 2)))); 
         return overallHeight;
     }
 
     public void setPower(double power) {
+        System.out.println(liftMotor.getEncoder().getPosition());
         liftMotor.set(power);
     }
 

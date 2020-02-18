@@ -33,18 +33,40 @@ public class LiftRunToHeight extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      liftMech.setInitHeight(initHeight);
+      
+      System.out.println(liftMech.liftMotor.getEncoder().getCountsPerRevolution());
+      //liftMech.liftMotor.getEncoder().setPosition(0); 
+       
+      
+      liftMech.setInitHeight(13.75); //25.75
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    overallHeight = liftMech.getCurrentHeight();  // initHeight + 3.5*Math.sqrt((22.0*22.0) - (liftMech.getHorizontalPosition()*liftMech.getHorizontalPosition())); 
-      if (overallHeight < goHeight){
-        liftMech.setPower(power); 
-      } else {
-          end(true);
-      }
+    // if (liftMech.liftMotor.getEncoder().getPosition() > -108.5){
+    //   liftMech.setPower(-0.1);
+    // } else {
+    //   liftMech.setPower(0);
+    // }
+    // overallHeight = liftMech.getCurrentHeight(); 
+    // System.out.println("Init Height: " + liftMech.initHeight + "OH:" + overallHeight + " GH: " + goHeight + " Horizontal: " + liftMech.getHorizontalPosition());
+    // //19.21 54 54 horizontal 19.94 4096
+    // //about 4
+       //initHeight + 3.5*Math.sqrt((22.0*22.0) - (liftMech.getHorizontalPosition()*liftMech.getHorizontalPosition())); 
+      //  if (overallHeight < goHeight){
+      //   System.out.println(liftMech.liftMotor.getEncoder().getPosition());
+        
+      //   liftMech.setPower(power);
+      //   System.out.println("Power being sent");
+        
+      // } else {
+      //   liftMech.setPower(0);
+      // }
+      System.out.println(liftMech.liftMotor.getEncoder().getPosition());
+      
+
+
 
   }
   
