@@ -2,7 +2,6 @@ package frc.robot.cv;
 
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.robot.Robot;
 import frc.robot.trajectory.TrajectoryBuilder;
 import frc.robot.trajectory.TrajectoryContainer;
 import frc.robot.trajectory.Waypoint;

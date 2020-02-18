@@ -9,10 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ServoControlCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import frc.robot.cv.Jetson;
 
@@ -108,7 +106,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 		System.out.println("new");
-		// (new TeleopArcadeDriveCommand(robotContainer.driveSubsystem)).schedule();
+		(new TeleopArcadeDriveCommand(robotContainer.getDriveSubsystem())).schedule();
 	}
 
 	/**

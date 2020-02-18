@@ -7,23 +7,13 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.JoystickConstants;
-import frc.robot.commands.TestMotorCommand;
 import frc.robot.cv.CVDriveCommand;
-import frc.robot.commands.auto.HorizontalShiftCommand;
-import frc.robot.cv.CVTrajectory;
-import frc.robot.subsystems.TestMotorSubsystem;
-import frc.robot.trajectory.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ServoSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

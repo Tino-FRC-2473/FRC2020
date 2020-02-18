@@ -1,8 +1,6 @@
 package frc.robot.cv;
 
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.util.Units;
-import frc.robot.Constants.DriveConstants;
 
 public class Jetson extends SerialPort {
 
