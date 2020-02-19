@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.cv.CVDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopArcadeDriveCommand extends CommandBase {
@@ -26,6 +28,11 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         // System.out.println(Robot.robotContainer.getWheel().getX());
         if (RobotState.isOperatorControl()) {
             driveSubsystem.arcadeDrive();
+        }
+
+        if (Robot.robotContainer.getCVButton().get()) {
+            new CVDriveCommand(12, Robot.robotContainer.getDriveSubsystem()).schedule();
+            end(true);
         }
         
         // System.out.println(driveSubsystem.getHeading());

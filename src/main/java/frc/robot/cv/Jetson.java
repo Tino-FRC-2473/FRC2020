@@ -41,7 +41,7 @@ public class Jetson extends SerialPort {
 				buffer = buffer.substring(buffer.lastIndexOf(END) + 1);
 
 				if (rawData.length() == 21) {
-					System.out.println(rawData);
+					// System.out.println(rawData);
 
 					String dxString = rawData.substring(2, 7);
 					String dyString = rawData.substring(8, 13);

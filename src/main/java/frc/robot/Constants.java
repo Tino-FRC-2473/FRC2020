@@ -72,7 +72,7 @@ public final class Constants {
 
 	public static final class AutoConstants {
 		public static final double K_MAX_SPEED_METERS_PER_SECOND = 2;
-		public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 4;
+		public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
 	
 		public static final double K_RAMSETE_B = 2;
 		public static final double K_RAMSETE_ZETA = 0.7;

@@ -14,17 +14,20 @@ public class CVTrajectory implements TrajectoryContainer {
 	 * 
 	 * @param distFromWallInches distance of camera from wall in inches
 	 */
-	public CVTrajectory(double distFromWallInches, CVData cvData, double angleToTargetDegrees, double straightDriveDistFeet) {
+	public CVTrajectory(CVData cvData, double thetaRobotToStraight, double straightDriveDistFeet, double y_straight, double x_straight) {
 
-		double convertedDist = Units.inchesToMeters(distFromWallInches);
+		double straightDriveMeters = Units.feetToMeters(straightDriveDistFeet);
 		trajectory = new TrajectoryBuilder(TrajectoryBuilder.Type.QUINTIC, TrajectoryBuilder.Position.ABSOLUTE);
 
-		trajectory.add(new Waypoint(0, 0, 0));
+		trajectory.add(new Waypoint(0, 0, thetaRobotToStraight));
 		// trajectory.add(new Waypoint(2, convertedShift/2));
 		// CVData cvData = Robot.jetson.getCVData();
 
-		trajectory.add(new Waypoint(cvData.getDX() - convertedDist - Units.feetToMeters(straightDriveDistFeet), cvData.getDY(), -angleToTargetDegrees));
-		trajectory.add(new Waypoint(cvData.getDX() - convertedDist, cvData.getDY(), -angleToTargetDegrees));
+		double x_end = x_straight + straightDriveMeters * Math.cos(Units.degreesToRadians(cvData.getAngle()));
+		double y_end = y_straight - straightDriveMeters * Math.sin(Units.degreesToRadians(cvData.getAngle()));
+
+		trajectory.add(new Waypoint(x_straight, y_straight, -cvData.getAngle()));
+		trajectory.add(new Waypoint(x_end, y_end, -cvData.getAngle()));
 	}
 
 	@Override

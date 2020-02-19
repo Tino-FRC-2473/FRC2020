@@ -62,7 +62,6 @@ public class DriveSubsystem extends SubsystemBase {
 
 		resetPose();
 
-		setDefaultCommand(new TeleopArcadeDriveCommand(Robot.robotContainer.getDriveSubsystem()));
 	}
 
 	public void powerDrive(double leftPower, double rightPower) { 
@@ -111,6 +110,13 @@ public class DriveSubsystem extends SubsystemBase {
 		resetGyro();
 		resetEncoders();
 		odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), Rotation2d.fromDegrees(getHeading()));
+	}
+
+	public void resetPoseWithAngle(double angle) {
+		resetGyro();
+		gyro.setAngleAdjustment(angle);
+		resetEncoders();
+		odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(angle)), Rotation2d.fromDegrees(getHeading()));
 	}
 
 	// Trajectory methods

@@ -37,4 +37,13 @@ public class CVData {
 	public double getAngle() {
 		return alpha;
 	}
+
+	public boolean canSeeTarget() {
+		return canSeeTarget;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("dX: %.2f   dY: %.2f   angle: %.1f", d_x, d_y, alpha);
+	}
 }

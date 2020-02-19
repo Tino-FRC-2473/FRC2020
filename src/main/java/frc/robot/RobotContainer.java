@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.commands.TeleopArcadeDriveCommand;
 import frc.robot.cv.CVDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -49,6 +50,7 @@ public class RobotContainer {
 	public RobotContainer() {
 		// Configure the button bindings
 		configureButtonBindings();
+		driveSubsystem.setDefaultCommand(new TeleopArcadeDriveCommand(driveSubsystem));
 	}
 
 	public DriveSubsystem getDriveSubsystem() {
@@ -91,17 +93,20 @@ public class RobotContainer {
 	 */
 	private void configureButtonBindings() {
 		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
-		cvButton = new JoystickButton(wheel, 7);
+		cvButton = new JoystickButton(wheel, 6);
 
 		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
 
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 		buttonPanel2 = new JoystickButton(buttonPanel, 2);
 		buttonPanel4 = new JoystickButton(buttonPanel, 4);
-		buttonPanel6 = new JoystickButton(buttonPanel, 6);
-		
-		cvButton.whenHeld(new CVDriveCommand(6, driveSubsystem), true);
+		buttonPanel6 = new JoystickButton(buttonPanel, 6);		
 	}
+
+	public void addButtonActions() {
+		// cvButton.whenHeld(new CVDriveCommand(6, driveSubsystem), true);
+	}
+
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
