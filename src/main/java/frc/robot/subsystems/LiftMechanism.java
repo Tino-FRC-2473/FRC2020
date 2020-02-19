@@ -61,14 +61,10 @@ public class LiftMechanism {
 
     }
 
-    public boolean runDown(double power){
-        if (liftMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen).isLimitSwitchEnabled()){
-            liftMotor.set(0);
-            return true; 
-          } else {
-              liftMotor.set(power);
-              return false; 
-          }
+    public boolean isRunDown(){
+        return liftMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen).isLimitSwitchEnabled(); 
+        
+     
     }
 
     public boolean isWinchStop(){
