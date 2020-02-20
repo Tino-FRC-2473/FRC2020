@@ -33,7 +33,7 @@ public final class Constants {
 		public static final int SPARK_FRONT_RIGHT_ID = 1; 
 		public static final int SPARK_BACK_RIGHT_ID = 2;  
 
-		public static final double CAMERA_TO_CENTER_DISTANCE_INCHES = 10;
+		public static final double CAMERA_TO_FRONT_DISTANCE_INCHES = 22;
 	
 		public static final double DRIVE_WHEEL_CIRCUMFRENCE_INCHES = 23.8125;
 		public static final double GEAR_RATIO = 10.1111;

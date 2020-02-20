@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.cv.CVDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -31,7 +32,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         }
 
         if (Robot.robotContainer.getCVButton().get()) {
-            new CVDriveCommand(36, Robot.robotContainer.getDriveSubsystem()).schedule();
+            new CVDriveCommand(8 + DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES, Robot.robotContainer.getDriveSubsystem()).schedule();
             end(true);
         }
         
