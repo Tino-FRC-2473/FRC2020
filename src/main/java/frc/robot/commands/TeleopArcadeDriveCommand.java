@@ -31,7 +31,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         }
 
         if (Robot.robotContainer.getCVButton().get()) {
-            new CVDriveCommand(12, Robot.robotContainer.getDriveSubsystem()).schedule();
+            new CVDriveCommand(36, Robot.robotContainer.getDriveSubsystem()).schedule();
             end(true);
         }
         

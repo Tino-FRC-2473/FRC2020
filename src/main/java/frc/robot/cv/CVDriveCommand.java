@@ -54,7 +54,7 @@ public class CVDriveCommand extends SequentialCommandGroup {
 		double straightDriveDistFeet = 3;
 
 		// CVData cvData = new CVData(true, Units.feetToMeters(8), Units.feetToMeters(-3), 0);
-		double dy = cvData.getDY() - 0.3;
+		double dy = cvData.getDY();
 		double dx = cvData.getDX();
 		double angle = cvData.getAngle();
 
@@ -78,6 +78,7 @@ public class CVDriveCommand extends SequentialCommandGroup {
 		// double angleToStraightDriveDegrees = signOfDY * (90.0 - Math.abs(Units.radiansToDegrees(Math.atan((cvData.getDX() - Units.feetToMeters(straightDriveDistFeet)) / cvData.getDY()))));
 		// angleToTargetDegrees -= 10;
 		// double angleToTargetDegrees = -90;
+		// thetaRobotToStraight *= 1.4;
 		turn = new TurnDegreesCommand(thetaRobotToStraight, driveSubsystem);
 		trajectory = new CVTrajectory(cvData, thetaRobotToStraight, straightDriveDistFeet, (a + dy), (b + dx));
 	

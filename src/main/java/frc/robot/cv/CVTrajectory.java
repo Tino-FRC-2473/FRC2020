@@ -19,13 +19,13 @@ public class CVTrajectory implements TrajectoryContainer {
 		double straightDriveMeters = Units.feetToMeters(straightDriveDistFeet);
 		trajectory = new TrajectoryBuilder(TrajectoryBuilder.Type.QUINTIC, TrajectoryBuilder.Position.ABSOLUTE);
 
-		trajectory.add(new Waypoint(0, 0, thetaRobotToStraight));
-		// trajectory.add(new Waypoint(2, convertedShift/2));
-		// CVData cvData = Robot.jetson.getCVData();
-
 		double x_end = x_straight + straightDriveMeters * Math.cos(Units.degreesToRadians(cvData.getAngle()));
 		double y_end = y_straight - straightDriveMeters * Math.sin(Units.degreesToRadians(cvData.getAngle()));
 
+
+		trajectory.add(new Waypoint(0, 0, thetaRobotToStraight));
+		// trajectory.add(new Waypoint(2, convertedShift/2));
+		// CVData cvData = Robot.jetson.getCVData();
 		trajectory.add(new Waypoint(x_straight, y_straight, -cvData.getAngle()));
 		trajectory.add(new Waypoint(x_end, y_end, -cvData.getAngle()));
 	}
