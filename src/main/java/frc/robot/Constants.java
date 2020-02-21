@@ -42,13 +42,21 @@ public final class Constants {
 
 		// 7.579754294
 	
-		public static final double KS_VOLTS = 0.132; // 0.147, 0.132
-		public static final double KV_VOLT_SECONDS_PER_METER = 2.03; // 1.92, 2.03
-		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.257; // 0.255, 0.257
+		public static final double KS_VOLTS = 0.139;
+		public static final double KV_VOLT_SECONDS_PER_METER = 2.02;
+		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.321;
+
+		// public static final double KS_VOLTS = 0.132; // 0.147, 0.132
+		// public static final double KV_VOLT_SECONDS_PER_METER = 2.03; // 1.92, 2.03
+		// public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.257; // 0.255, 0.257
 		
 		// old pid constants
-		public static final double KP_DRIVE_VEL = 0.003861;
-		public static final double KI_DRIVE_VEL = 0.000149;
+		// public static final double KP_DRIVE_VEL = 12.5;
+		// public static final double KI_DRIVE_VEL = 0;
+		// public static final double KD_DRIVE_VEL = 0;
+
+		public static final double KP_DRIVE_VEL = 0.013861; // 0.003861
+		public static final double KI_DRIVE_VEL = 0.000149; // 0.000149
 		public static final double KD_DRIVE_VEL = 0.024936;
 
 		// new pid constants
@@ -71,8 +79,8 @@ public final class Constants {
 	}
 
 	public static final class AutoConstants {
-		public static final double K_MAX_SPEED_METERS_PER_SECOND = 2;
-		public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
+		public static final double K_MAX_SPEED_METERS_PER_SECOND = 1.5; // 2
+		public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 2; // 3
 	
 		public static final double K_RAMSETE_B = 2;
 		public static final double K_RAMSETE_ZETA = 0.7;

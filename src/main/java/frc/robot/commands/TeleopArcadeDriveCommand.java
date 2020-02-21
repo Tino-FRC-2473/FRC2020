@@ -32,7 +32,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         }
 
         if (Robot.robotContainer.getCVButton().get()) {
-            new CVDriveCommand(8 + DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES, Robot.robotContainer.getDriveSubsystem()).schedule();
+            new CVDriveCommand(DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES, Robot.robotContainer.getDriveSubsystem()).schedule();
             end(true);
         }
         

@@ -59,6 +59,8 @@ public class Jetson extends SerialPort {
 						d_x = Integer.parseInt(dxString) / 100.0;
 						d_y = Integer.parseInt(dyString) / 100.0;
 
+						d_y -= 0.1;
+
 						alpha = Integer.parseInt(alphaString) / 10.0;
 						// alpha *= -1;
 					}

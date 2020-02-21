@@ -54,7 +54,7 @@ public class CVDriveCommand extends SequentialCommandGroup {
 		double straightDriveDistFeet = 3;
 
 		// CVData cvData = new CVData(true, Units.feetToMeters(8), Units.feetToMeters(-3), 0);
-		double dy = cvData.getDY() - 0.3;
+		double dy = cvData.getDY();
 		double dx = cvData.getDX();
 		double angle = cvData.getAngle();
 
@@ -64,23 +64,28 @@ public class CVDriveCommand extends SequentialCommandGroup {
 
 		// for the following variables, refer to https://www.desmos.com/calculator/hhdwjepfxd
 		double d = Units.inchesToMeters(distFromWallInches) + Units.feetToMeters(straightDriveDistFeet);
-		double a = d * Math.sin(Units.degreesToRadians(angle));
-		double b = -d * Math.cos(Units.degreesToRadians(angle));
+		// double a = d * Math.sin(Units.degreesToRadians(angle));
+		// double b = -d * Math.cos(Units.degreesToRadians(angle));
 
-		System.out.println("d: " + d);
-		System.out.println("a: " + a);
-		System.out.println("b: " + b);
-		System.out.println("y straight: " + (a + dy));
-		System.out.println("x straight: " + (b + dx));
+		// System.out.println("d: " + d);
+		// System.out.println("a: " + a);
+		// System.out.println("b: " + b);
+		// System.out.println("y straight: " + (a + dy));
+		// System.out.println("x straight: " + (b + dx));
 
-		double thetaRobotToStraight = Units.radiansToDegrees(Math.atan2(a + dy, b + dx));
+		// double thetaRobotToStraight = Units.radiansToDegrees(Math.atan2(a + dy, b + dx));
+
+		double x_d = -d * Math.cos(Units.degreesToRadians(cvData.getAngle())) + cvData.getDX();
+		double y_d = d * Math.sin(Units.degreesToRadians(cvData.getAngle())) + cvData.getDY();
+
+		double thetaRobotToStraight = Units.radiansToDegrees(Math.atan2(y_d, x_d));
 
 		// double angleToStraightDriveDegrees = signOfDY * (90.0 - Math.abs(Units.radiansToDegrees(Math.atan((cvData.getDX() - Units.feetToMeters(straightDriveDistFeet)) / cvData.getDY()))));
 		// angleToTargetDegrees -= 10;
 		// double angleToTargetDegrees = -90;
 		// thetaRobotToStraight *= 1.4;
 		turn = new TurnDegreesCommand(thetaRobotToStraight, driveSubsystem);
-		trajectory = new CVTrajectory(cvData, thetaRobotToStraight, straightDriveDistFeet, (a + dy), (b + dx));
+		trajectory = new CVTrajectory(cvData, thetaRobotToStraight, straightDriveDistFeet, distFromWallInches);
 	
 		System.out.println("-------- updated CVDriveCommand with new values");
 	}
