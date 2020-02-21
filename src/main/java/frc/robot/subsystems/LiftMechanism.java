@@ -26,7 +26,7 @@ public class LiftMechanism {
         liftMotor = new CANSparkMax(Constants.LIFT_MOTOR_PORT, MotorType.kBrushless); 
         winchStop = new JoystickButton(new Joystick(Constants.LIFT_CONTROL), Constants.WINCH_STOP_BUTTON); 
         initEncoderPosition = liftMotor.getEncoder().getPosition(); 
-        initHeight = 0; 
+        initHeight = Constants.INIT_HEIGHT; //0
     }
 
 
@@ -58,18 +58,10 @@ public class LiftMechanism {
 
         }
 
-
     }
 
     public boolean isRunDown(){
         return liftMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyClosed).get(); 
-        
-     
-    }
-
-    public boolean isWinchStop(){
-        return winchStop.get(); 
-
     }
 
     public CANSparkMax getLiftMotor(){

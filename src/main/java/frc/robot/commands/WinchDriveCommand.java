@@ -42,11 +42,6 @@ public class WinchDriveCommand extends CommandBase {
   public void execute() {
       
         liftMech.runWinch(power);
-
-    
-    
-
-
   }
   
   // Called once the command ends or is interrupted.

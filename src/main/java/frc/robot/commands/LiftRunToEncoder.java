@@ -22,7 +22,7 @@ public class LiftRunToEncoder extends CommandBase {
     public double power;
 
     public LiftRunToEncoder(LiftMechanism liftMech, double toEncoder, double power) {
-    // Use addRequirements() here to declare subsystem dependencies.
+      addRequirements();
         this.liftMech = liftMech; 
         this.toEncoder = toEncoder; 
         this.power = power; 

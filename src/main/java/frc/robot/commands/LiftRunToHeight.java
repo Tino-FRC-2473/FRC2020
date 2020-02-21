@@ -24,7 +24,7 @@ public class LiftRunToHeight extends CommandBase {
     public double initHeight; 
     public double power; 
     public LiftRunToHeight(LiftMechanism liftMech, double goHeight, double power) {
-    // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements();
         this.liftMech = liftMech; 
         this.goHeight = goHeight; 
         this.initHeight = liftMech.getCurrentHeight(); 
@@ -50,10 +50,8 @@ public class LiftRunToHeight extends CommandBase {
   
       overallHeight = liftMech.getCurrentHeight(); 
       liftMech.setPower(power);
-    // System.out.println("Init Height: " + liftMech.initHeight + "OH:" + overallHeight + " GH: " + goHeight + " Horizontal: " + liftMech.getHorizontalPosition());
-    // //19.21 54 54 horizontal 19.94 4096
-    // //about 4
-       //initHeight + 3.5*Math.sqrt((22.0*22.0) - (liftMech.getHorizontalPosition()*liftMech.getHorizontalPosition())); 
+
+       //overallHeight = initHeight + 3.5*Math.sqrt((22.0*22.0) - (liftMech.getHorizontalPosition()*liftMech.getHorizontalPosition())); 
       //if (overallHeight < goHeight){
       //   System.out.println(liftMech.liftMotor.getEncoder().getPosition());
         

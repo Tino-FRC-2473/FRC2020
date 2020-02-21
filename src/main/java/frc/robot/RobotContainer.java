@@ -102,13 +102,14 @@ public class RobotContainer {
 		buttonPanel3 = new JoystickButton(buttonPanel, 3); 
 		buttonPanel1 = new JoystickButton(buttonPanel, 1); 
 
+		//-108.76 ticks -> 4ft 3 inches (with -15)
+		//-229.581146 ticks -> 5ft 3 inches (with -15)
+		//-533.91 ticks -> 6ft 7 inches (with -15)
+
 		buttonPanel2.whenPressed(new LiftCommand(liftMech,-229.581146));
 		buttonPanel4.whenPressed(new LiftCommand(liftMech, -108.76));//-229.581146
 		buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
-		//buttonPanel3.whenPressed(() -> liftMech.runWinch(0.3));
 		buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
-		// buttonPanel3.whenReleased(() -> liftMech.runWinch(0)); 
-		
 		buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
 
 
@@ -137,9 +138,6 @@ public class RobotContainer {
 		//return new HorizontalShiftCommand(-5)
 		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
 				//	.andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
-				//-108.76 for runTO
-				//-229.581146
-				//-533.91
 
 	}
 

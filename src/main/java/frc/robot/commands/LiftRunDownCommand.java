@@ -30,9 +30,7 @@ public class LiftRunDownCommand extends CommandBase {
   @Override
   public void initialize() {
        
-      
     liftMech.setPower(power); 
-      
       
   }
 
@@ -41,11 +39,6 @@ public class LiftRunDownCommand extends CommandBase {
   public void execute() {
     
     System.out.println(liftMech.isRunDown());
-    
-   
-      
-
-
 
   }
   
