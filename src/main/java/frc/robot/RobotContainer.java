@@ -100,7 +100,7 @@ public class RobotContainer {
 		joystick1Trigger.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
 		joystick1Trigger.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
 
-		joystick1PrimaryButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0.6)));
+		joystick1PrimaryButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0.7)));
 		joystick1PrimaryButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0)));
 		
 		joystick1_10.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)));
