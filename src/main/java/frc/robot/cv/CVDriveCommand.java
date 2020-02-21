@@ -54,9 +54,9 @@ public class CVDriveCommand extends SequentialCommandGroup {
 		double straightDriveDistFeet = 3;
 
 		// CVData cvData = new CVData(true, Units.feetToMeters(8), Units.feetToMeters(-3), 0);
-		double dy = cvData.getDY();
-		double dx = cvData.getDX();
-		double angle = cvData.getAngle();
+		// double dy = cvData.getDY();
+		// double dx = cvData.getDX();
+		// double angle = cvData.getAngle();
 
 		System.out.println(cvData);
 

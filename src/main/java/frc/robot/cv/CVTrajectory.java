@@ -33,7 +33,7 @@ public class CVTrajectory implements TrajectoryContainer {
 		trajectory.add(new Waypoint(0, 0, thetaRobotToStraight));
 		// trajectory.add(new Waypoint(2, convertedShift/2));
 		// CVData cvData = Robot.jetson.getCVData();
-		double signOfY = (y_d < 0) ? -1 : 1;
+		// double signOfY = (y_d < 0) ? -1 : 1;
 		double offsetX = 0; // Units.inchesToMeters(3.5);
 		double offsetY = 0; // Units.inchesToMeters(-signOfY * 3.5);
 
