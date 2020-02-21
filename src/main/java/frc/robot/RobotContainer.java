@@ -49,23 +49,21 @@ public class RobotContainer {
 
 	private Joystick wheel;
 	private JoystickButton cvButton;
-	private Joystick joystick1;
 
 	private Joystick throttle;
+	private JoystickButton runShooterButton;
 
 	private Joystick buttonPanel;
 
-	private JoystickButton joystick1Trigger;
-	private JoystickButton joystick1PrimaryButton;
-	private JoystickButton joystick1_11;
-	private JoystickButton joystick1_10;
+	private JoystickButton intakeButton;
+	private JoystickButton shooterPistonButton;
+	private JoystickButton scissorPositionButton;
+	private JoystickButton runWinchButton;
 
-	private JoystickButton buttonPanel2;
-	private JoystickButton buttonPanel4;
-	private JoystickButton buttonPanel5;
-	private JoystickButton buttonPanel3; 
-	private JoystickButton buttonPanel1; 
-	private JoystickButton buttonPanel6;
+	private JoystickButton scissorDownDial;
+	private JoystickButton scissorLowDial;
+	private JoystickButton scissorMediumDial;
+	private JoystickButton scissorHighDial;
 
 
 	public RobotContainer() {
@@ -94,18 +92,6 @@ public class RobotContainer {
 		return buttonPanel;
 	}
 
-	public JoystickButton getButtonPanel2() {
-		return buttonPanel2;
-	}
-
-	public JoystickButton getButtonPanel4() {
-		return buttonPanel4;
-	}
-
-	public JoystickButton getButtonPanel6() {
-		return buttonPanel6;
-	}
-
 	/**
 	 * Use this method to define your button->command mappings. Buttons can be
 	 * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -114,43 +100,42 @@ public class RobotContainer {
 	 */
 	private void configureButtonBindings() {
 
-		joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
-		joystick1Trigger = new JoystickButton(joystick1, 1);
-		joystick1PrimaryButton = new JoystickButton(joystick1, 3);
-		joystick1_10 = new JoystickButton(joystick1, 10);
-		joystick1_11 = new JoystickButton(joystick1, 11);
+		// joystick1Trigger.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
+		// joystick1Trigger.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
 
-		joystick1Trigger.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
-		joystick1Trigger.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
-
-		joystick1PrimaryButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0.7)));
-		joystick1PrimaryButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0)));
+		// joystick1PrimaryButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0.7)));
+		// joystick1PrimaryButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0)));
 		
-		joystick1_10.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)));
-		joystick1_11.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0.5)));
+		// joystick1_10.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)));
+		// joystick1_11.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0.5)));
 		
 		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
 		cvButton = new JoystickButton(wheel, 6);
 
 		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
+		runShooterButton = new JoystickButton(throttle, 7);
 
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
-		buttonPanel2 = new JoystickButton(buttonPanel, 2);
-		buttonPanel4 = new JoystickButton(buttonPanel, 4);
-		buttonPanel5 = new JoystickButton(buttonPanel, 5);
-		buttonPanel3 = new JoystickButton(buttonPanel, 3); 
-		buttonPanel1 = new JoystickButton(buttonPanel, 1); 
-		buttonPanel6 = new JoystickButton(buttonPanel, 6);
+
+		intakeButton = new JoystickButton(buttonPanel, 2);
+		shooterPistonButton = new JoystickButton(buttonPanel, 4);
+		scissorPositionButton = new JoystickButton(buttonPanel, 6);
+		runWinchButton = new JoystickButton(buttonPanel, 8);
+
+		scissorDownDial = new JoystickButton(buttonPanel, 1);
+		scissorLowDial = new JoystickButton(buttonPanel, 3);
+		scissorMediumDial = new JoystickButton(buttonPanel, 5);
+		scissorHighDial = new JoystickButton(buttonPanel, 7);
 
 		//-108.76 ticks -> 4ft 3 inches (with -15)
 		//-229.581146 ticks -> 5ft 3 inches (with -15)
 		//-533.91 ticks -> 6ft 7 inches (with -15)
 
-		buttonPanel2.whenPressed(new LiftCommand(liftMech,-229.581146));
-		buttonPanel4.whenPressed(new LiftCommand(liftMech, -108.76));//-229.581146
-		buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
-		buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
-		buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
+		// buttonPanel2.whenPressed(new LiftCommand(liftMech,-229.581146));
+		// buttonPanel4.whenPressed(new LiftCommand(liftMech, -108.76));//-229.581146
+		// buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
+		// buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
+		// buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
 	}
 
 	/**
