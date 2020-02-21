@@ -26,8 +26,6 @@ public class Jetson extends SerialPort {
 		// get values from serial, store them into the three variables
 		try {
 			buffer += readString();
-			// System.out.println("buffer: " + buffer);
-			// System.out.println("buffer: " + buffer);
 			if (first) {
 				if (buffer.contains(START)) {
 					System.out.println("has start");
@@ -35,9 +33,7 @@ public class Jetson extends SerialPort {
 					first = false;
 				}
 			} else if (buffer.contains(END)) {
-				// System.out.println("has end");
 				String rawData = buffer.substring(0, buffer.lastIndexOf(END) + 1).substring(buffer.lastIndexOf(START));
-				// System.out.println(rawData+ "/" + rawData.length());
 				buffer = buffer.substring(buffer.lastIndexOf(END) + 1);
 
 				if (rawData.length() == 21) {

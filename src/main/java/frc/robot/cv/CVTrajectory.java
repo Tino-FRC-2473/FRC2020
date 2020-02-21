@@ -26,19 +26,16 @@ public class CVTrajectory implements TrajectoryContainer {
 		double x_d = -d * Math.cos(Units.degreesToRadians(cvData.getAngle())) + cvData.getDX();
 		double y_d = d * Math.sin(Units.degreesToRadians(cvData.getAngle())) + cvData.getDY();
 		
-		double x_w = -w * Math.cos(Units.degreesToRadians(cvData.getAngle())) + cvData.getDX();
-		double y_w = w * Math.sin(Units.degreesToRadians(cvData.getAngle())) + cvData.getDY();
+		double signOfY = (y_d < 0) ? -1 : 1;
+		double s_x = -signOfY * Units.inchesToMeters(7.5); // horizontal shift closer to the target
 		
+		double x_w = -s_x * Math.sin(Units.degreesToRadians(cvData.getAngle())) - w * Math.cos(Units.degreesToRadians(cvData.getAngle())) + cvData.getDX();
+		double y_w = s_x * Math.cos(Units.degreesToRadians(cvData.getAngle())) + w * Math.sin(Units.degreesToRadians(cvData.getAngle())) + cvData.getDY();
 
 		trajectory.add(new Waypoint(0, 0, thetaRobotToStraight));
-		// trajectory.add(new Waypoint(2, convertedShift/2));
-		// CVData cvData = Robot.jetson.getCVData();
-		// double signOfY = (y_d < 0) ? -1 : 1;
-		double offsetX = 0; // Units.inchesToMeters(3.5);
-		double offsetY = 0; // Units.inchesToMeters(-signOfY * 3.5);
 
-		trajectory.add(new Waypoint(x_d + offsetX, y_d + offsetY, -cvData.getAngle()));
-		trajectory.add(new Waypoint(x_w + offsetX, y_w + offsetY, -cvData.getAngle()));
+		// trajectory.add(new Waypoint(x_d, y_d, -cvData.getAngle()));
+		trajectory.add(new Waypoint(x_w, y_w, -cvData.getAngle()));
 	}
 
 	@Override

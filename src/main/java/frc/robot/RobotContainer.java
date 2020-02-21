@@ -102,29 +102,13 @@ public class RobotContainer {
 		buttonPanel6 = new JoystickButton(buttonPanel, 6);		
 	}
 
-	public void addButtonActions() {
-		// cvButton.whenHeld(new CVDriveCommand(6, driveSubsystem), true);
-	}
-
-
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
 	 *
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		// Run path following command, then stop at the end.
-
 		driveSubsystem.resetPose();
-		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
-		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.ABSOLUTE, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(8), 0, 0)).getCommand()
-		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.ABSOLUTE).getCommand()
-		// return new HorizontalShiftCommand(-5)
-		
-		// return new CVDriveCommand(0, driveSubsystem)
-		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-					// .andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
-
 		return null;
 	}
 }

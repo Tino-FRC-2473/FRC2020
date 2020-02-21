@@ -28,7 +28,7 @@ public class CVDriveCommand extends SequentialCommandGroup {
 		cvData = Robot.jetson.getCVData();
 
 		if (!cvData.canSeeTarget()) {
-			addCommands();
+			addCommands(new PerpetualCommand(new InstantCommand(driveSubsystem::stop, driveSubsystem))); // wait for driver to release CV button
 			System.out.println("---------------CANNOT SEE TARGETS--------------");
 		} else {
 			updateWithNewValues();
@@ -36,9 +36,10 @@ public class CVDriveCommand extends SequentialCommandGroup {
 			addCommands(
 				new InstantCommand(() -> driveSubsystem.resetPose()),
 				turn,
+				new InstantCommand(() -> System.out.println("POSE: " + driveSubsystem.getPose())),
 				new WaitCommand(0.1),
 				trajectory.getCommand(),
-				new PerpetualCommand(new InstantCommand(driveSubsystem::stop, driveSubsystem))
+				new PerpetualCommand(new InstantCommand(driveSubsystem::stop, driveSubsystem)) // wait for driver to release CV button
 			);
 		}
 
@@ -53,37 +54,17 @@ public class CVDriveCommand extends SequentialCommandGroup {
 	public void updateWithNewValues() {
 		double straightDriveDistFeet = 3;
 
-		// CVData cvData = new CVData(true, Units.feetToMeters(8), Units.feetToMeters(-3), 0);
-		// double dy = cvData.getDY();
-		// double dx = cvData.getDX();
-		// double angle = cvData.getAngle();
-
 		System.out.println(cvData);
 
-		// double signOfDY = (cvData.getDY() < 0) ? -1 : 1;
 
 		// for the following variables, refer to https://www.desmos.com/calculator/hhdwjepfxd
 		double d = Units.inchesToMeters(distFromWallInches) + Units.feetToMeters(straightDriveDistFeet);
-		// double a = d * Math.sin(Units.degreesToRadians(angle));
-		// double b = -d * Math.cos(Units.degreesToRadians(angle));
-
-		// System.out.println("d: " + d);
-		// System.out.println("a: " + a);
-		// System.out.println("b: " + b);
-		// System.out.println("y straight: " + (a + dy));
-		// System.out.println("x straight: " + (b + dx));
-
-		// double thetaRobotToStraight = Units.radiansToDegrees(Math.atan2(a + dy, b + dx));
 
 		double x_d = -d * Math.cos(Units.degreesToRadians(cvData.getAngle())) + cvData.getDX();
 		double y_d = d * Math.sin(Units.degreesToRadians(cvData.getAngle())) + cvData.getDY();
 
 		double thetaRobotToStraight = Units.radiansToDegrees(Math.atan2(y_d, x_d));
 
-		// double angleToStraightDriveDegrees = signOfDY * (90.0 - Math.abs(Units.radiansToDegrees(Math.atan((cvData.getDX() - Units.feetToMeters(straightDriveDistFeet)) / cvData.getDY()))));
-		// angleToTargetDegrees -= 10;
-		// double angleToTargetDegrees = -90;
-		// thetaRobotToStraight *= 1.4;
 		turn = new TurnDegreesCommand(thetaRobotToStraight, driveSubsystem);
 		trajectory = new CVTrajectory(cvData, thetaRobotToStraight, straightDriveDistFeet, distFromWallInches);
 	

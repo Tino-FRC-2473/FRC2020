@@ -23,10 +23,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 
 public class DriveSubsystem extends SubsystemBase {
-	/**
-	 * Creates a new ExampleSubsystem.
-	 */
-
+	
 	CANSparkMax frontLeftMotor; 
 	CANSparkMax backLeftMotor; 
 	CANSparkMax frontRightMotor; 
