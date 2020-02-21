@@ -10,10 +10,24 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
+
+import frc.robot.commands.LiftCommand;
+import frc.robot.commands.LiftRunDownCommand;
+import frc.robot.commands.LiftRunToEncoder;
+import frc.robot.commands.LiftRunToHeight;
+import frc.robot.commands.TestMotorCommand;
+import frc.robot.commands.WinchDriveCommand;
+import frc.robot.commands.auto.HorizontalShiftCommand;
+import frc.robot.subsystems.TestMotorSubsystem;
+import frc.robot.trajectory.*;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
+
+import frc.robot.subsystems.LiftMechanism;
+import frc.robot.subsystems.ServoSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -27,8 +41,8 @@ public class RobotContainer {
 	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
+	public final static LiftMechanism liftMech = new LiftMechanism();
 	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	
 	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -44,7 +58,9 @@ public class RobotContainer {
 	private Joystick buttonPanel;
 	private JoystickButton buttonPanel2;
 	private JoystickButton buttonPanel4;
-	private JoystickButton buttonPanel6;
+	private JoystickButton buttonPanel5;
+	private JoystickButton buttonPanel3; 
+	private JoystickButton buttonPanel1; 
 
 	public RobotContainer() {
 		// Configure the button bindings
@@ -99,7 +115,20 @@ public class RobotContainer {
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 		buttonPanel2 = new JoystickButton(buttonPanel, 2);
 		buttonPanel4 = new JoystickButton(buttonPanel, 4);
-		buttonPanel6 = new JoystickButton(buttonPanel, 6);		
+		buttonPanel5 = new JoystickButton(buttonPanel, 5);
+		buttonPanel3 = new JoystickButton(buttonPanel, 3); 
+		buttonPanel1 = new JoystickButton(buttonPanel, 1); 
+		buttonPanel6 = new JoystickButton(buttonPanel, 6);
+
+		//-108.76 ticks -> 4ft 3 inches (with -15)
+		//-229.581146 ticks -> 5ft 3 inches (with -15)
+		//-533.91 ticks -> 6ft 7 inches (with -15)
+
+		buttonPanel2.whenPressed(new LiftCommand(liftMech,-229.581146));
+		buttonPanel4.whenPressed(new LiftCommand(liftMech, -108.76));//-229.581146
+		buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
+		buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
+		buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
 	}
 
 	/**
@@ -110,5 +139,21 @@ public class RobotContainer {
 	public Command getAutonomousCommand() {
 		driveSubsystem.resetPose();
 		return null;
+	}
+
+	public Joystick getButtonPanel() {
+		return buttonPanel;
+	}
+
+	public JoystickButton getButtonPanel2() {
+		return buttonPanel2;
+	}
+
+	public JoystickButton getButtonPanel4() {
+		return buttonPanel4;
+	}
+
+	public JoystickButton getButtonPanel6() {
+		return buttonPanel5;
 	}
 }

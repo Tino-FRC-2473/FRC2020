@@ -22,9 +22,20 @@ import edu.wpi.first.wpilibj.util.Units;
  */
 public final class Constants {
 
-    public static final int TEST_PORT = 11;
+	public static final int TEST_PORT = 11;
 	public static final double ENCODER_INCHES_TO_TICKS = 1;
 	public static final int SERVO_PORT = 0;
+
+	public static final class ClimberConstants {
+		public static final int LIFT_MOTOR_PORT = 5;
+		public static final int WINCH_MOTOR_PORT = 10;
+		public static final double INITIAL_HORIZONTAL_POS_LIFT = 21.62;
+		public static final double DISTANCE_OPP_PIVOT_POINTS = 22.0;
+		public static final double INIT_HEIGHT = 11.0;
+		public static final double HOOK_HEIGHT = 0;
+		public static final int LIFT_CONTROL = 3;
+		public static final int WINCH_STOP_BUTTON = 3;
+	}
 
 	public static final class DriveConstants {
 
@@ -48,14 +59,19 @@ public final class Constants {
 		public static final double KD_DRIVE_VEL = 0.024936;
 
 		public static final double K_TRACK_WIDTH_METERS = 0.447675;
-    	public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = 
-        	new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
+		public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(
+				K_TRACK_WIDTH_METERS);
 	}
 
 	public static final class JoystickConstants {
 		public static final int WHEEL_PORT = 0;
 		public static final int THROTTLE_PORT = 2;
-		public static final int BUTTON_PANEL_PORT = 3;
+    
+		public static final int BUTTON_PANEL_PORT = 1;
+		public static final int JOYSTICK_2_PORT = 4;
+
+		public static final int BUTTON_1_PORT = 1;
+		public static final int BUTTON_2_PORT = 2;
 	}
 
 	public static final class AutoConstants {
@@ -65,6 +81,5 @@ public final class Constants {
 		public static final double K_RAMSETE_B = 2;
 		public static final double K_RAMSETE_ZETA = 0.7;
 	}
-    
-    
+
 }
