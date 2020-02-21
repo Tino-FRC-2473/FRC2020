@@ -25,6 +25,19 @@ public final class Constants {
 	public static final double ENCODER_INCHES_TO_TICKS = 1;
 	public static final int SERVO_PORT = 0;
 
+	public static final class IntakeStorageConstants {
+		public static final int SPARK_INTAKE = 3;
+		public static final int SPARK_STORAGE = 8;
+	}
+
+	public static final class ShooterConstants {
+		public static final int SPARK_SHOOTER_LEFT = 6;
+		public static final int SPARK_SHOOTER_RIGHT = 7;
+
+		public static final int FORWARD_SOLENOID_PORT = 0;
+		public static final int REVERSE_SOLENOID_PORT = 7;
+	}
+
 	public static final class DriveConstants {
 
 		public static final int SPARK_FRONT_LEFT_ID = 3; 

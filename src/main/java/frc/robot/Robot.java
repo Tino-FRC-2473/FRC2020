@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ServoControlCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 
@@ -103,7 +104,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		(new TeleopArcadeDriveCommand(robotContainer.driveSubsystem)).schedule();
+		// (new TeleopArcadeDriveCommand(robotContainer.driveSubsystem)).schedule();
 	}
 
 	/**
