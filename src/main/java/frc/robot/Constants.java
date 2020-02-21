@@ -26,6 +26,20 @@ public final class Constants {
 	public static final double ENCODER_INCHES_TO_TICKS = 1;
 	public static final int SERVO_PORT = 0;
 
+
+	public static final class IntakeStorageConstants {
+		public static final int SPARK_INTAKE = 3;
+		public static final int SPARK_STORAGE = 8;
+	}
+
+	public static final class ShooterConstants {
+		public static final int SPARK_SHOOTER_LEFT = 6;
+		public static final int SPARK_SHOOTER_RIGHT = 7;
+
+		public static final int FORWARD_SOLENOID_PORT = 0;
+		public static final int REVERSE_SOLENOID_PORT = 7;
+  }
+
 	public static final class ClimberConstants {
 		public static final int LIFT_MOTOR_PORT = 5;
 		public static final int WINCH_MOTOR_PORT = 10;
@@ -35,6 +49,7 @@ public final class Constants {
 		public static final double HOOK_HEIGHT = 0;
 		public static final int LIFT_CONTROL = 3;
 		public static final int WINCH_STOP_BUTTON = 3;
+
 	}
 
 	public static final class DriveConstants {

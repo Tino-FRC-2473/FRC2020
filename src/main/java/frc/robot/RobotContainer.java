@@ -25,9 +25,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
-
+import frc.robot.subsystems.IntakeStorageSubsystem;
 import frc.robot.subsystems.LiftMechanism;
 import frc.robot.subsystems.ServoSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -41,8 +42,11 @@ public class RobotContainer {
 	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
+	public final static IntakeStorageSubsystem intakeStorageSubsystem = new IntakeStorageSubsystem();
+	public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	public final static LiftMechanism liftMech = new LiftMechanism();
 	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+
 	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -56,11 +60,18 @@ public class RobotContainer {
 	private Joystick throttle;
 
 	private Joystick buttonPanel;
+
+	private JoystickButton joystick1Trigger;
+	private JoystickButton joystick1PrimaryButton;
+	private JoystickButton joystick1_11;
+	private JoystickButton joystick1_10;
+
 	private JoystickButton buttonPanel2;
 	private JoystickButton buttonPanel4;
 	private JoystickButton buttonPanel5;
 	private JoystickButton buttonPanel3; 
 	private JoystickButton buttonPanel1; 
+
 
 	public RobotContainer() {
 		// Configure the button bindings
@@ -107,6 +118,22 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+
+		joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
+		joystick1Trigger = new JoystickButton(joystick1, 1);
+		joystick1PrimaryButton = new JoystickButton(joystick1, 3);
+		joystick1_10 = new JoystickButton(joystick1, 10);
+		joystick1_11 = new JoystickButton(joystick1, 11);
+
+		joystick1Trigger.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
+		joystick1Trigger.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
+
+		joystick1PrimaryButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0.7)));
+		joystick1PrimaryButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0)));
+		
+		joystick1_10.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)));
+		joystick1_11.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0.5)));
+		
 		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
 		cvButton = new JoystickButton(wheel, 6);
 
@@ -143,17 +170,5 @@ public class RobotContainer {
 
 	public Joystick getButtonPanel() {
 		return buttonPanel;
-	}
-
-	public JoystickButton getButtonPanel2() {
-		return buttonPanel2;
-	}
-
-	public JoystickButton getButtonPanel4() {
-		return buttonPanel4;
-	}
-
-	public JoystickButton getButtonPanel6() {
-		return buttonPanel5;
 	}
 }
