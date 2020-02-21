@@ -37,13 +37,13 @@ public class LiftRunToEncoder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (liftMech.liftMotor.getEncoder().getPosition() > toEncoder){ //-108.5
+    if (liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder){ //-108.5
       liftMech.setPower(power);
      } else {
      liftMech.setPower(0);
     }
    
-      System.out.println(liftMech.liftMotor.getEncoder().getPosition());
+      System.out.println(liftMech.getLiftMotor().getEncoder().getPosition());
       
 
 
@@ -59,6 +59,6 @@ public class LiftRunToEncoder extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return liftMech.getLiftMotor().getEncoder().getPosition() < toEncoder;
   }
 }

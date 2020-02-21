@@ -21,6 +21,7 @@ public class LiftRunDownCommand extends CommandBase {
 
     public LiftRunDownCommand(LiftMechanism liftMech, double power) {
         this.power = power; 
+        this.liftMech = liftMech; 
         
         
   }
@@ -30,14 +31,17 @@ public class LiftRunDownCommand extends CommandBase {
   public void initialize() {
        
       
-     
+    liftMech.setPower(power); 
       
-      liftMech.setPower(0.1); 
+      
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
+    System.out.println(liftMech.isRunDown());
+    
    
       
 
@@ -49,12 +53,13 @@ public class LiftRunDownCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
       liftMech.setPower(0);
-      liftMech.liftMotor.getEncoder().setPosition(0); 
+      liftMech.getLiftMotor().getEncoder().setPosition(0); 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
     return liftMech.isRunDown(); 
   }
 }

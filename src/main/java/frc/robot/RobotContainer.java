@@ -14,9 +14,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.commands.LiftCommand;
+import frc.robot.commands.LiftRunDownCommand;
 import frc.robot.commands.LiftRunToEncoder;
 import frc.robot.commands.LiftRunToHeight;
 import frc.robot.commands.TestMotorCommand;
+import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.auto.HorizontalShiftCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
 import frc.robot.trajectory.*;
@@ -55,7 +58,9 @@ public class RobotContainer {
 	private Joystick buttonPanel;
 	private JoystickButton buttonPanel2;
 	private JoystickButton buttonPanel4;
-	private JoystickButton buttonPanel6;
+	private JoystickButton buttonPanel5;
+	private JoystickButton buttonPanel3; 
+	private JoystickButton buttonPanel1; 
 
 	public RobotContainer() {
 		// Configure the button bindings
@@ -93,7 +98,20 @@ public class RobotContainer {
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 		buttonPanel2 = new JoystickButton(buttonPanel, 2);
 		buttonPanel4 = new JoystickButton(buttonPanel, 4);
-		buttonPanel6 = new JoystickButton(buttonPanel, 6);
+		buttonPanel5 = new JoystickButton(buttonPanel, 5);
+		buttonPanel3 = new JoystickButton(buttonPanel, 3); 
+		buttonPanel1 = new JoystickButton(buttonPanel, 1); 
+
+		buttonPanel2.whenPressed(new LiftCommand(liftMech,-229.581146));
+		buttonPanel4.whenPressed(new LiftCommand(liftMech, -108.76));//-229.581146
+		buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
+		//buttonPanel3.whenPressed(() -> liftMech.runWinch(0.3));
+		buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
+		// buttonPanel3.whenReleased(() -> liftMech.runWinch(0)); 
+		
+		buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
+
+
 	}
 
 	/**
@@ -108,7 +126,8 @@ public class RobotContainer {
 	
 
 		//liftMech.liftMotor.getEncoder().setPosition(0);
-		return new InstantCommand(() -> liftMech.setPower(0.1));
+		//return new InstantCommand(() -> liftMech.setPower(-0.1));
+		return new LiftCommand(liftMech, -108.76); 
 		//liftMech.liftMotor.getEncoder().setPosition(0); 
 		//return new LiftRunToEncoder(liftMech, -533.91, -0.1); 
 
@@ -137,6 +156,6 @@ public class RobotContainer {
 	}
 
 	public JoystickButton getButtonPanel6() {
-		return buttonPanel6;
+		return buttonPanel5;
 	}
 }

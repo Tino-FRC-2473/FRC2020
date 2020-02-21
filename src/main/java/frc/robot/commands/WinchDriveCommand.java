@@ -40,12 +40,10 @@ public class WinchDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      if (liftMech.isWinchStop()){
+      
         liftMech.runWinch(power);
 
-      } else {
-          end(true); 
-      }
+    
     
 
 

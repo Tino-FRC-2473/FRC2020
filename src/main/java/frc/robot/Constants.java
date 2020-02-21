@@ -25,7 +25,7 @@ public final class Constants {
 	public static final double ENCODER_INCHES_TO_TICKS = 1;
 	public static final int SERVO_PORT = 0;
 	public static final int LIFT_MOTOR_PORT = 5;
-	public static final int WINCH_MOTOR_PORT = 7; 
+	public static final int WINCH_MOTOR_PORT = 10; 
 	public static final double INITIAL_HORIZONTAL_POS_LIFT = 21.62;
 	public static final double DISTANCE_OPP_PIVOT_POINTS = 22.0; 
 	public static final double INIT_HEIGHT = 11.0; 
@@ -70,7 +70,7 @@ public final class Constants {
 		public static final int WHEEL_PORT = 0;
 		public static final int JOYSTICK_1_PORT = 1;
 		public static final int THROTTLE_PORT = 2;
-		public static final int BUTTON_PANEL_PORT = 3;
+		public static final int BUTTON_PANEL_PORT = 1;
 		public static final int JOYSTICK_2_PORT = 4;
 	
 		public static final int BUTTON_1_PORT = 1;

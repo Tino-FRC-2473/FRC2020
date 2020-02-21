@@ -15,7 +15,7 @@ import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 
 public class LiftMechanism {
 
-    public CANSparkMax liftMotor;
+    private CANSparkMax liftMotor;
     public CANSparkMax winchMotor; 
     public double initHeight; 
     public double initEncoderPosition; 
@@ -55,14 +55,14 @@ public class LiftMechanism {
             winchMotor.set(power);
         } else {
             System.out.println("WARNING: MOTOR IS BEING DRIVEN IN REVERSE! POWER: " + power);
-            
+
         }
 
 
     }
 
     public boolean isRunDown(){
-        return liftMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen).isLimitSwitchEnabled(); 
+        return liftMotor.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyClosed).get(); 
         
      
     }
@@ -70,5 +70,9 @@ public class LiftMechanism {
     public boolean isWinchStop(){
         return winchStop.get(); 
 
+    }
+
+    public CANSparkMax getLiftMotor(){
+        return liftMotor; 
     }
 }

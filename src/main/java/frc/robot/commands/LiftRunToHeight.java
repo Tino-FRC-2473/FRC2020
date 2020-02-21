@@ -63,7 +63,7 @@ public class LiftRunToHeight extends CommandBase {
       // } else {
       //   liftMech.setPower(0);
       // }
-      System.out.println(liftMech.liftMotor.getEncoder().getPosition());
+      System.out.println(liftMech.getLiftMotor().getEncoder().getPosition());
       
 
 
@@ -73,7 +73,8 @@ public class LiftRunToHeight extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      liftMech.setPower(0);
+    liftMech.setPower(0);
+     
   }
 
   // Returns true when the command should end.
