@@ -8,12 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ServoControlCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
+import frc.robot.cv.Jetson;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 
 	public static RobotContainer robotContainer;
+	public static Jetson jetson;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -36,8 +38,8 @@ public class Robot extends TimedRobot {
 		// Instantiate our RobotContainer. This will perform all our button bindings,
 		// and put our
 		// autonomous chooser on the dashboard.
+		jetson = new Jetson(9600, Port.kUSB);
 		robotContainer = new RobotContainer();
-
 	}
 
 	/**
@@ -71,6 +73,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		jetson.updateVisionValues();
 	}
 
 	/**
@@ -103,8 +106,12 @@ public class Robot extends TimedRobot {
 		// this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
-		}
-		// (new TeleopArcadeDriveCommand(robotContainer.driveSubsystem)).schedule();
+    }
+		
+		/*
+		TeleopArcadeDriveCommand is the default command of DriveSubsystem, so
+		it will be run during the teleop period.
+		*/
 	}
 
 	/**
@@ -112,6 +119,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		jetson.updateVisionValues();
 	}
 
 	@Override

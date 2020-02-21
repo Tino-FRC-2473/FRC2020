@@ -8,36 +8,57 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.subsystems.LiftMechanism;
 
-public class ServoControlCommand extends CommandBase {
-  /**
-   * Creates a new Teleop.
-   */
-  public ServoControlCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+public class LiftRunToEncoder extends CommandBase {
+
+    LiftMechanism liftMech;
+    /**
+     * Creates a new Teleop.
+     */
+    
+    public double toEncoder;
+    public double power;
+
+    public LiftRunToEncoder(LiftMechanism liftMech, double toEncoder, double power) {
+      addRequirements();
+        this.liftMech = liftMech; 
+        this.toEncoder = toEncoder; 
+        this.power = power; 
+    }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+      
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Robot.robotContainer.getButtonPanel2().whenReleased(new RunServo(0, Robot.robotContainer.servoSubsystem));
-    // Robot.robotContainer.getButtonPanel4().whenReleased(new RunServo(90, Robot.robotContainer.servoSubsystem));
-    // Robot.robotContainer.getButtonPanel6().whenReleased(new RunServo(180, Robot.robotContainer.servoSubsystem));
+    if (liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder){ //-108.5
+      liftMech.setPower(power);
+     } else {
+     liftMech.setPower(0);
+    }
+   
+      System.out.println(liftMech.getLiftMotor().getEncoder().getPosition());
+      
+
+
+
   }
   
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+      liftMech.setPower(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return liftMech.getLiftMotor().getEncoder().getPosition() < toEncoder;
   }
 }

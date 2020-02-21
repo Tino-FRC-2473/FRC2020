@@ -10,9 +10,9 @@ public class StraightThenArcTrajectory implements TrajectoryContainer {
 		trajectory = new TrajectoryBuilder(TrajectoryBuilder.Type.QUINTIC, position);
 
 		trajectory.add(new Waypoint(0, 0, 0));
-		trajectory.add(new Waypoint(Units.feetToMeters(3), 0, 0));
-		trajectory.add(new Waypoint(Units.feetToMeters(7), Units.feetToMeters(-4), -90));
-		trajectory.add(new Waypoint(Units.feetToMeters(7), Units.feetToMeters(-6), -90));
+		trajectory.add(new Waypoint(Units.feetToMeters(2), 0, 0));
+		trajectory.add(new Waypoint(Units.feetToMeters(5), Units.feetToMeters(-3), -90));
+		trajectory.add(new Waypoint(Units.feetToMeters(5), Units.feetToMeters(-5), -90));
 	}
 
 	@Override

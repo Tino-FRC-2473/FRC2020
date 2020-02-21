@@ -7,37 +7,52 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 
-public class ServoControlCommand extends CommandBase {
-  /**
-   * Creates a new Teleop.
-   */
-  public ServoControlCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.subsystems.LiftMechanism;
+
+public class LiftRunDownCommand extends CommandBase {
+
+    LiftMechanism liftMech;
+   double power; 
+   
+
+    public LiftRunDownCommand(LiftMechanism liftMech, double power) {
+        this.power = power; 
+        this.liftMech = liftMech; 
+        
+        
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+       
+    liftMech.setPower(power); 
+      
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Robot.robotContainer.getButtonPanel2().whenReleased(new RunServo(0, Robot.robotContainer.servoSubsystem));
-    // Robot.robotContainer.getButtonPanel4().whenReleased(new RunServo(90, Robot.robotContainer.servoSubsystem));
-    // Robot.robotContainer.getButtonPanel6().whenReleased(new RunServo(180, Robot.robotContainer.servoSubsystem));
+    
+    System.out.println(liftMech.isRunDown());
+
   }
   
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+      liftMech.setPower(0);
+      liftMech.getLiftMotor().getEncoder().setPosition(0); 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+
+    return liftMech.isRunDown(); 
   }
 }

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.robot.RobotContainer;
+import frc.robot.Robot;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 
@@ -118,23 +118,23 @@ public class TrajectoryBuilder {
 		}
 
 		if (position == Position.RELATIVE_TO_ROBOT) {
-			trajectory = trajectory.relativeTo(RobotContainer.driveSubsystem.getPose());
+			trajectory = trajectory.relativeTo(Robot.robotContainer.getDriveSubsystem().getPose());
 		}
 
 		RamseteCommand ramseteCommand = new RamseteCommand(
 			trajectory,
-			RobotContainer.driveSubsystem::getPose,
+			Robot.robotContainer.getDriveSubsystem()::getPose,
 			new RamseteController(AutoConstants.K_RAMSETE_B, AutoConstants.K_RAMSETE_ZETA),
 			new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
 									DriveConstants.KV_VOLT_SECONDS_PER_METER,
 									DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
 									DriveConstants.K_DRIVE_KINEMATICS,
-									RobotContainer.driveSubsystem::getWheelSpeeds,
+									Robot.robotContainer.getDriveSubsystem()::getWheelSpeeds,
 			new PIDController(DriveConstants.KP_DRIVE_VEL, DriveConstants.KI_DRIVE_VEL, DriveConstants.KD_DRIVE_VEL),
 			new PIDController(DriveConstants.KP_DRIVE_VEL, DriveConstants.KI_DRIVE_VEL, DriveConstants.KD_DRIVE_VEL),
 			// RamseteCommand passes volts to the callback
-			RobotContainer.driveSubsystem::tankDriveVolts,
-			RobotContainer.driveSubsystem
+			Robot.robotContainer.getDriveSubsystem()::tankDriveVolts,
+			Robot.robotContainer.getDriveSubsystem()
 		);
 
 		System.out.println(quinticPoseArray);

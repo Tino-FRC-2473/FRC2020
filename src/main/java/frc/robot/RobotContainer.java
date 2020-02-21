@@ -7,22 +7,26 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.JoystickConstants;
+
+import frc.robot.commands.LiftCommand;
+import frc.robot.commands.LiftRunDownCommand;
+import frc.robot.commands.LiftRunToEncoder;
+import frc.robot.commands.LiftRunToHeight;
 import frc.robot.commands.TestMotorCommand;
+import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.auto.HorizontalShiftCommand;
 import frc.robot.subsystems.TestMotorSubsystem;
 import frc.robot.trajectory.*;
+import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeStorageSubsystem;
+import frc.robot.subsystems.LiftMechanism;
 import frc.robot.subsystems.ServoSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -38,9 +42,11 @@ public class RobotContainer {
 	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
-	public final static DriveSubsystem driveSubsystem = null;
 	public final static IntakeStorageSubsystem intakeStorageSubsystem = new IntakeStorageSubsystem();
 	public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	public final static LiftMechanism liftMech = new LiftMechanism();
+	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+
 	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
 
 	/**
@@ -48,35 +54,61 @@ public class RobotContainer {
 	 * 
 	 */
 
-	private Joystick joystick1;
-	private Joystick joystick2;
 	private Joystick wheel;
+	private JoystickButton cvButton;
+
 	private Joystick throttle;
+
 	private Joystick buttonPanel;
+
 	private JoystickButton joystick1Trigger;
 	private JoystickButton joystick1PrimaryButton;
 	private JoystickButton joystick1_11;
 	private JoystickButton joystick1_10;
 
+	private JoystickButton buttonPanel2;
+	private JoystickButton buttonPanel4;
+	private JoystickButton buttonPanel5;
+	private JoystickButton buttonPanel3; 
+	private JoystickButton buttonPanel1; 
+
+
 	public RobotContainer() {
 		// Configure the button bindings
 		configureButtonBindings();
+		driveSubsystem.setDefaultCommand(new TeleopArcadeDriveCommand(driveSubsystem));
 	}
 
-	public Joystick getJoystick1() {
-		return joystick1;
-	}
-
-	public Joystick getJoystick2() {
-		return joystick2;
+	public DriveSubsystem getDriveSubsystem() {
+		return driveSubsystem;
 	}
 
 	public Joystick getWheel() {
 		return wheel;
 	}
 
+	public JoystickButton getCVButton() {
+		return cvButton;
+	}
+
 	public Joystick getThrottle() {
 		return throttle;
+	}
+
+	public Joystick getButtonPanel() {
+		return buttonPanel;
+	}
+
+	public JoystickButton getButtonPanel2() {
+		return buttonPanel2;
+	}
+
+	public JoystickButton getButtonPanel4() {
+		return buttonPanel4;
+	}
+
+	public JoystickButton getButtonPanel6() {
+		return buttonPanel6;
 	}
 
 	/**
@@ -86,12 +118,8 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
-		// joystick2 = new Joystick(JoystickConstants.JOYSTICK_2_PORT);
-		// wheel = new Joystick(JoystickConstants.WHEEL_PORT);
-		// throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
 
-		// buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
+		joystick1 = new Joystick(JoystickConstants.JOYSTICK_1_PORT);
 		joystick1Trigger = new JoystickButton(joystick1, 1);
 		joystick1PrimaryButton = new JoystickButton(joystick1, 3);
 		joystick1_10 = new JoystickButton(joystick1, 10);
@@ -106,6 +134,28 @@ public class RobotContainer {
 		joystick1_10.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)));
 		joystick1_11.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0.5)));
 		
+		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
+		cvButton = new JoystickButton(wheel, 6);
+
+		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
+
+		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
+		buttonPanel2 = new JoystickButton(buttonPanel, 2);
+		buttonPanel4 = new JoystickButton(buttonPanel, 4);
+		buttonPanel5 = new JoystickButton(buttonPanel, 5);
+		buttonPanel3 = new JoystickButton(buttonPanel, 3); 
+		buttonPanel1 = new JoystickButton(buttonPanel, 1); 
+		buttonPanel6 = new JoystickButton(buttonPanel, 6);
+
+		//-108.76 ticks -> 4ft 3 inches (with -15)
+		//-229.581146 ticks -> 5ft 3 inches (with -15)
+		//-533.91 ticks -> 6ft 7 inches (with -15)
+
+		buttonPanel2.whenPressed(new LiftCommand(liftMech,-229.581146));
+		buttonPanel4.whenPressed(new LiftCommand(liftMech, -108.76));//-229.581146
+		buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
+		buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
+		buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
 	}
 
 	/**
@@ -114,16 +164,7 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		// Run path following command, then stop at the end.
-		// driveSubsystem.resetPose();
-
-		// return new SemicircleTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, 1.5).getCommand()
-		// return new TwoWaypointTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT, TrajectoryBuilder.Direction.FORWARD, new Waypoint(0, 0, 0), new Waypoint(Units.feetToMeters(6), 0, 0)).getCommand()
-		// return new StraightThenArcTrajectory(TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-		// return new HorizontalShiftCommand(-5)
-		// return new HorizontalShiftTrajectory(-3, TrajectoryBuilder.Position.RELATIVE_TO_ROBOT).getCommand()
-					// .andThen(() -> driveSubsystem.tankDriveVolts(0, 0));
-
+		driveSubsystem.resetPose();
 		return null;
 	}
 
