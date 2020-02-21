@@ -13,13 +13,7 @@ import frc.robot.Constants.JoystickConstants;
 
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.LiftRunDownCommand;
-import frc.robot.commands.LiftRunToEncoder;
-import frc.robot.commands.LiftRunToHeight;
-import frc.robot.commands.TestMotorCommand;
 import frc.robot.commands.WinchDriveCommand;
-import frc.robot.commands.auto.HorizontalShiftCommand;
-import frc.robot.subsystems.TestMotorSubsystem;
-import frc.robot.trajectory.*;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -27,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeStorageSubsystem;
 import frc.robot.subsystems.LiftMechanism;
-import frc.robot.subsystems.ServoSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /**
@@ -56,6 +49,7 @@ public class RobotContainer {
 
 	private Joystick wheel;
 	private JoystickButton cvButton;
+	private Joystick joystick1;
 
 	private Joystick throttle;
 
@@ -71,6 +65,7 @@ public class RobotContainer {
 	private JoystickButton buttonPanel5;
 	private JoystickButton buttonPanel3; 
 	private JoystickButton buttonPanel1; 
+	private JoystickButton buttonPanel6;
 
 
 	public RobotContainer() {
@@ -166,9 +161,5 @@ public class RobotContainer {
 	public Command getAutonomousCommand() {
 		driveSubsystem.resetPose();
 		return null;
-	}
-
-	public Joystick getButtonPanel() {
-		return buttonPanel;
 	}
 }
