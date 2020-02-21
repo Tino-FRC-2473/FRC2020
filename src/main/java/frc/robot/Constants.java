@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -38,29 +39,24 @@ public final class Constants {
 
 	public static final class DriveConstants {
 
-		public static final int SPARK_FRONT_LEFT_ID = 3;
-		public static final int SPARK_BACK_LEFT_ID = 4;
-		public static final int SPARK_FRONT_RIGHT_ID = 1;
-		public static final int SPARK_BACK_RIGHT_ID = 2;
+		public static final int SPARK_FRONT_LEFT_ID = 3; 
+		public static final int SPARK_BACK_LEFT_ID = 4; 
+		public static final int SPARK_FRONT_RIGHT_ID = 1; 
+		public static final int SPARK_BACK_RIGHT_ID = 2;  
 
-		public static final double DRIVE_METERS_PER_ROTATION = 0.0631 * 0.93220339;
+		public static final double CAMERA_TO_FRONT_DISTANCE_INCHES = 22;
+	
+		public static final double DRIVE_WHEEL_CIRCUMFRENCE_INCHES = 23.8125;
+		public static final double GEAR_RATIO = 10.1111;
+		public static final double DRIVE_METERS_PER_ROTATION = Units.inchesToMeters(DRIVE_WHEEL_CIRCUMFRENCE_INCHES / GEAR_RATIO);
+		
+		public static final double KS_VOLTS = 0.139;
+		public static final double KV_VOLT_SECONDS_PER_METER = 2.02;
+		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.321;
 
-		public static final double KS_VOLTS = 0.147;
-		public static final double KV_VOLT_SECONDS_PER_METER = 1.92;
-		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.255;
-
-		// old pid constants
 		public static final double KP_DRIVE_VEL = 0.003861;
 		public static final double KI_DRIVE_VEL = 0.000149;
 		public static final double KD_DRIVE_VEL = 0.024936;
-
-		// new pid constants
-		// public static final double KP_DRIVE_VEL = 0.008459;
-		// public static final double KI_DRIVE_VEL = 0.000326;
-		// public static final double KD_DRIVE_VEL = 0.054780;
-		// 17.265
-
-		// P used to be 10.4
 
 		public static final double K_TRACK_WIDTH_METERS = 0.447675;
 		public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(
@@ -69,8 +65,8 @@ public final class Constants {
 
 	public static final class JoystickConstants {
 		public static final int WHEEL_PORT = 0;
-		public static final int JOYSTICK_1_PORT = 1;
 		public static final int THROTTLE_PORT = 2;
+    
 		public static final int BUTTON_PANEL_PORT = 1;
 		public static final int JOYSTICK_2_PORT = 4;
 
@@ -80,8 +76,8 @@ public final class Constants {
 
 	public static final class AutoConstants {
 		public static final double K_MAX_SPEED_METERS_PER_SECOND = 2;
-		public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 4;
-
+		public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
+	
 		public static final double K_RAMSETE_B = 2;
 		public static final double K_RAMSETE_ZETA = 0.7;
 	}

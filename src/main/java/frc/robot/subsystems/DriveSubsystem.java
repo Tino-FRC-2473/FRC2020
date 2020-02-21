@@ -9,11 +9,9 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj.SPI;
@@ -25,10 +23,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 
 public class DriveSubsystem extends SubsystemBase {
-	/**
-	 * Creates a new ExampleSubsystem.
-	 */
-
+	
 	CANSparkMax frontLeftMotor; 
 	CANSparkMax backLeftMotor; 
 	CANSparkMax frontRightMotor; 
@@ -62,11 +57,12 @@ public class DriveSubsystem extends SubsystemBase {
 		differentialDrive.setSafetyEnabled(false);
 
 		resetPose();
+
 	}
 
 	public void powerDrive(double leftPower, double rightPower) { 
 		leftSpeedControllerGroup.set(leftPower); 
-		rightSpeedControllerGroup.set(rightPower);
+		rightSpeedControllerGroup.set(-rightPower);
 	}
 
 	public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -74,11 +70,11 @@ public class DriveSubsystem extends SubsystemBase {
 		rightSpeedControllerGroup.setVoltage(-rightVolts);
 
 		// System.out.println(leftVolts);
-		System.out.println(System.currentTimeMillis() + "," + getHeading());
+		// System.out.println(System.currentTimeMillis() + "," + getHeading());
 	}
 
 	public void tankDrive(){
-		differentialDrive.tankDrive(Robot.robotContainer.getJoystick1().getY(), Robot.robotContainer.getJoystick2().getY(), true);
+		// differentialDrive.tankDrive(Robot.robotContainer.getJoystick1().getY(), Robot.robotContainer.getJoystick2().getY(), true);
 	}
 
 	public void arcadeDrive() {
@@ -110,6 +106,13 @@ public class DriveSubsystem extends SubsystemBase {
 		resetGyro();
 		resetEncoders();
 		odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), Rotation2d.fromDegrees(getHeading()));
+	}
+
+	public void resetPoseWithAngle(double angle) {
+		resetGyro();
+		gyro.setAngleAdjustment(angle);
+		resetEncoders();
+		odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(angle)), Rotation2d.fromDegrees(getHeading()));
 	}
 
 	// Trajectory methods

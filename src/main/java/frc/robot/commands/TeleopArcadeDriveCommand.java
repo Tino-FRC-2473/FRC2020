@@ -1,7 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.cv.CVDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopArcadeDriveCommand extends CommandBase {
@@ -22,7 +25,17 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        driveSubsystem.arcadeDrive();
+        // System.out.println(Robot.robotContainer.getThrottle().getZ());
+        // System.out.println(Robot.robotContainer.getWheel().getX());
+        if (RobotState.isOperatorControl()) {
+            driveSubsystem.arcadeDrive();
+        }
+
+        if (Robot.robotContainer.getCVButton().get()) {
+            new CVDriveCommand(DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES, Robot.robotContainer.getDriveSubsystem()).schedule();
+            end(true);
+        }
+        
         // System.out.println(driveSubsystem.getHeading());
         // System.out.println(driveSubsystem.getLeftEncoderDistance() + " " + driveSubsystem.getRightEncoderDistance());
         // System.out.println(driveSubsystem.getWheelSpeeds());
