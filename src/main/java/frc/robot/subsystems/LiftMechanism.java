@@ -1,14 +1,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants;
+import frc.robot.Constants.ClimberConstants;
+
 import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 
 
@@ -22,11 +20,11 @@ public class LiftMechanism {
     public JoystickButton winchStop; 
 
     public LiftMechanism() {
-        winchMotor = new CANSparkMax(Constants.WINCH_MOTOR_PORT, MotorType.kBrushless);
-        liftMotor = new CANSparkMax(Constants.LIFT_MOTOR_PORT, MotorType.kBrushless); 
-        winchStop = new JoystickButton(new Joystick(Constants.LIFT_CONTROL), Constants.WINCH_STOP_BUTTON); 
+        winchMotor = new CANSparkMax(ClimberConstants.WINCH_MOTOR_PORT, MotorType.kBrushless);
+        liftMotor = new CANSparkMax(ClimberConstants.LIFT_MOTOR_PORT, MotorType.kBrushless); 
+        winchStop = new JoystickButton(new Joystick(ClimberConstants.LIFT_CONTROL), ClimberConstants.WINCH_STOP_BUTTON); 
         initEncoderPosition = liftMotor.getEncoder().getPosition(); 
-        initHeight = Constants.INIT_HEIGHT; //0
+        initHeight = ClimberConstants.INIT_HEIGHT; //0
     }
 
 
@@ -37,11 +35,11 @@ public class LiftMechanism {
     //the horizontal displacement from the initial x, around 21.88
     public double getHorizontalPosition() {
        double currentEncoderPos = liftMotor.getEncoder().getPosition() - initEncoderPosition; //(y2-y1) IT WORKS
-       return Constants.INITIAL_HORIZONTAL_POS_LIFT + currentEncoderPos/42.0; //(-18), if (-15), divide by ~ 33.5 
+       return ClimberConstants.INITIAL_HORIZONTAL_POS_LIFT + currentEncoderPos/42.0; //(-18), if (-15), divide by ~ 33.5 
     }
 
     public double getCurrentHeight() {
-        double overallHeight = Constants.HOOK_HEIGHT + Constants.INIT_HEIGHT + (3 * Math.sqrt((Math.pow(Constants.DISTANCE_OPP_PIVOT_POINTS, 2) - Math.pow(getHorizontalPosition(), 2)))); 
+        double overallHeight = ClimberConstants.HOOK_HEIGHT + ClimberConstants.INIT_HEIGHT + (3 * Math.sqrt((Math.pow(ClimberConstants.DISTANCE_OPP_PIVOT_POINTS, 2) - Math.pow(getHorizontalPosition(), 2)))); 
         return overallHeight;
     }
 
