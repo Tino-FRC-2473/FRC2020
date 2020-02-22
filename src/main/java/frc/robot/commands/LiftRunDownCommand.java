@@ -29,9 +29,9 @@ public class LiftRunDownCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-       
-    liftMech.setPower(power); 
-      
+    if (power > 0) {
+      liftMech.setPower(power); 
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

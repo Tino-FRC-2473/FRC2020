@@ -13,6 +13,7 @@ import frc.robot.Constants.JoystickConstants;
 
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.LiftRunDownCommand;
+import frc.robot.commands.LiftRunToEncoder;
 import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +23,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeStorageSubsystem;
 import frc.robot.subsystems.LiftMechanism;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.LiftMechanism.LiftHeights;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -120,6 +122,14 @@ public class RobotContainer {
 		scissorPositionButton = new JoystickButton(buttonPanel, 6);
 		runWinchButton = new JoystickButton(buttonPanel, 8);
 
+
+		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(0.7)));
+		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
+
+		
+		scissorPositionButton.whenPressed(new LiftRunToEncoder(liftMech, getDialHeight().getValue(), -0.5));
+
+
 		scissorDownDial = new JoystickButton(buttonPanel, 1);
 		scissorLowDial = new JoystickButton(buttonPanel, 3);
 		scissorMediumDial = new JoystickButton(buttonPanel, 5);
@@ -134,6 +144,14 @@ public class RobotContainer {
 		// buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
 		// buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
 		// buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
+	}
+
+	public LiftHeights getDialHeight() {
+		if (scissorDownDial.get()) return LiftHeights.DOWN;
+		if (scissorLowDial.get()) return LiftHeights.LOW;
+		if (scissorMediumDial.get()) return LiftHeights.MEDIUM;
+		if (scissorHighDial.get()) return LiftHeights.HIGH;
+		return null;
 	}
 
 	/**

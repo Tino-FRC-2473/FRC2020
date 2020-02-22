@@ -11,7 +11,6 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 
     DriveSubsystem driveSubsystem;
 
-
     public TeleopArcadeDriveCommand(DriveSubsystem subsystem) {
         driveSubsystem = subsystem;
         addRequirements(subsystem);
@@ -35,6 +34,8 @@ public class TeleopArcadeDriveCommand extends CommandBase {
             new CVDriveCommand(DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES, Robot.robotContainer.getDriveSubsystem()).schedule();
             end(true);
         }
+
+
         
         // System.out.println(driveSubsystem.getHeading());
         // System.out.println(driveSubsystem.getLeftEncoderDistance() + " " + driveSubsystem.getRightEncoderDistance());

@@ -30,6 +30,9 @@ public final class Constants {
 	public static final class IntakeStorageConstants {
 		public static final int SPARK_INTAKE = 3;
 		public static final int SPARK_STORAGE = 8;
+
+		public static final int INTAKE_PISTON_FORWARD_PORT = 6;
+		public static final int INTAKE_PISTON_REVERSE_PORT = 1;
 	}
 
 	public static final class ShooterConstants {
