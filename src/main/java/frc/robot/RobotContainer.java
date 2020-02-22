@@ -39,7 +39,7 @@ public class RobotContainer {
 
 	public final static IntakeStorageSubsystem intakeStorageSubsystem = new IntakeStorageSubsystem();
 	public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-	public final static LiftMechanism liftMech = new LiftMechanism();
+	public final static LiftMechanism liftSubsystem = new LiftMechanism();
 	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
 	/**
@@ -76,6 +76,20 @@ public class RobotContainer {
 		return driveSubsystem;
 	}
 
+	public IntakeStorageSubsystem getIntakeStorageSubsystem() {
+		return intakeStorageSubsystem;
+	}
+
+	public ShooterSubsystem getShooterSubsystem() {
+		return shooterSubsystem;
+	}
+
+	public LiftMechanism getLiftSubsystem() {
+		return liftSubsystem;
+	}
+
+
+	
 	public Joystick getWheel() {
 		return wheel;
 	}
@@ -121,9 +135,9 @@ public class RobotContainer {
 
 		shooterPistonButton.whenPressed(new InstantCommand(() -> shooterSubsystem.launchBallWithPiston()));
 
-		scissorPositionButton.whenPressed(new LiftRunToEncoder(liftMech, getDialHeight().getValue(), -0.5));
+		scissorPositionButton.whenPressed(new LiftRunToEncoder(liftSubsystem, getDialHeight().getValue(), 0.5));
 
-		runWinchButton.whileHeld(new WinchDriveCommand(liftMech, 0.5));
+		runWinchButton.whileHeld(new WinchDriveCommand(liftSubsystem, 0.5));
 
 
 		scissorDownDial = new JoystickButton(buttonPanel, 1);
