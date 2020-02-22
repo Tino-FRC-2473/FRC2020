@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 
-import frc.robot.commands.LiftCommand;
-import frc.robot.commands.LiftRunDownCommand;
 import frc.robot.commands.LiftRunToEncoder;
 import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
