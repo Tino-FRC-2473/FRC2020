@@ -40,8 +40,6 @@ public class RobotContainer {
 	public final static LiftMechanism liftMech = new LiftMechanism();
 	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
-	// public final ServoSubsystem servoSubsystem = new ServoSubsystem();
-
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 * 
