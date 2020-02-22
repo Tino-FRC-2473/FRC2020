@@ -99,15 +99,6 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-
-		// joystick1Trigger.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
-		// joystick1Trigger.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
-
-		// joystick1PrimaryButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0.7)));
-		// joystick1PrimaryButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0)));
-		
-		// joystick1_10.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)));
-		// joystick1_11.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0.5)));
 		
 		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
 		cvButton = new JoystickButton(wheel, 6);
@@ -122,28 +113,23 @@ public class RobotContainer {
 		scissorPositionButton = new JoystickButton(buttonPanel, 6);
 		runWinchButton = new JoystickButton(buttonPanel, 8);
 
+		runShooterButton.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
+		runShooterButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
 
 		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(0.7)));
 		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
 
-		
+		shooterPistonButton.whenPressed(new InstantCommand(() -> shooterSubsystem.launchBallWithPiston()));
+
 		scissorPositionButton.whenPressed(new LiftRunToEncoder(liftMech, getDialHeight().getValue(), -0.5));
+
+		runWinchButton.whileHeld(new WinchDriveCommand(liftMech, 0.5));
 
 
 		scissorDownDial = new JoystickButton(buttonPanel, 1);
 		scissorLowDial = new JoystickButton(buttonPanel, 3);
 		scissorMediumDial = new JoystickButton(buttonPanel, 5);
 		scissorHighDial = new JoystickButton(buttonPanel, 7);
-
-		//-108.76 ticks -> 4ft 3 inches (with -15)
-		//-229.581146 ticks -> 5ft 3 inches (with -15)
-		//-533.91 ticks -> 6ft 7 inches (with -15)
-
-		// buttonPanel2.whenPressed(new LiftCommand(liftMech,-229.581146));
-		// buttonPanel4.whenPressed(new LiftCommand(liftMech, -108.76));//-229.581146
-		// buttonPanel5.whenPressed(new LiftCommand(liftMech, -533.91));
-		// buttonPanel3.whileHeld(new WinchDriveCommand(liftMech,0.5)); 
-		// buttonPanel1.whenPressed(new LiftRunDownCommand(liftMech, 0.1)); //runDown power must be positive
 	}
 
 	public LiftHeights getDialHeight() {

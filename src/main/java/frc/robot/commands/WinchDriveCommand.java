@@ -15,44 +15,41 @@ import frc.robot.subsystems.LiftMechanism;
 
 public class WinchDriveCommand extends CommandBase {
 
-    public LiftMechanism liftMech;
-    
-    /**
-     * Creates a new Teleop.
-     */
- 
-    public double power;
+	public LiftMechanism liftMech;
 
-    public WinchDriveCommand(LiftMechanism liftMech, double power) {
-    // Use addRequirements() here to declare subsystem dependencies.
-        this.liftMech = liftMech; 
-        this.power = power; 
-        
-       
-  }
+	/**
+	 * Creates a new Teleop.
+	 */
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-     liftMech.runWinch(0); 
-  }
+	public double power;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-      
-        liftMech.runWinch(power);
-  }
-  
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-      liftMech.runWinch(0);
-  }
+	public WinchDriveCommand(LiftMechanism liftMech, double power) {
+		// Use addRequirements() here to declare subsystem dependencies.
+		this.liftMech = liftMech;
+		this.power = power;
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+	}
+
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		liftMech.runWinch(power);
+	}
+
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+	}
+
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+		liftMech.runWinch(0);
+	}
+
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
 }

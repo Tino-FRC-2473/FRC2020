@@ -42,6 +42,11 @@ public class ShooterSubsystem extends SubsystemBase {
 		rightShooterMotor.set(-power);
 	}
 
+	public void launchBallWithPiston() {
+		extendFeeder();
+		retractFeeder();
+	}
+
 	public void extendFeeder() {
 		feederPiston.set(Value.kOff);
 		feederPiston.set(Value.kForward); 
