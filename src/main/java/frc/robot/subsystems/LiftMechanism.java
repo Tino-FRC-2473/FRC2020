@@ -19,6 +19,20 @@ public class LiftMechanism {
     public double initEncoderPosition; 
     public JoystickButton winchStop; 
 
+    public enum LiftHeights {
+        DOWN(-30), LOW(-108.76), MEDIUM(-229.581146), HIGH(-533.91);
+
+        private final double value;
+
+        private LiftHeights(double height) {
+            this.value = height;
+        }
+
+        public double getValue() {
+            return value;
+        }
+    }
+
     public LiftMechanism() {
         winchMotor = new CANSparkMax(ClimberConstants.WINCH_MOTOR_PORT, MotorType.kBrushless);
         liftMotor = new CANSparkMax(ClimberConstants.LIFT_MOTOR_PORT, MotorType.kBrushless); 

@@ -20,7 +20,7 @@ public class ShooterSubsystem extends SubsystemBase {
 	private CANSparkMax leftShooterMotor;
 	private CANSparkMax rightShooterMotor;
 
-	// private DoubleSolenoid feederPiston;
+	private DoubleSolenoid feederPiston;
 
 	/**
 	 * Creates a new ServoSubsystem.
@@ -29,7 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
 		leftShooterMotor = new CANSparkMax(ShooterConstants.SPARK_SHOOTER_LEFT, MotorType.kBrushless);
 		rightShooterMotor = new CANSparkMax(ShooterConstants.SPARK_SHOOTER_RIGHT, MotorType.kBrushless);
 
-		// feederPiston = new DoubleSolenoid(ShooterConstants.FORWARD_SOLENOID_PORT, ShooterConstants.REVERSE_SOLENOID_PORT);
+		feederPiston = new DoubleSolenoid(ShooterConstants.FORWARD_SOLENOID_PORT, ShooterConstants.REVERSE_SOLENOID_PORT);
 	}
 
 	@Override
@@ -42,13 +42,18 @@ public class ShooterSubsystem extends SubsystemBase {
 		rightShooterMotor.set(-power);
 	}
 
-	// public void extendFeeder() {
-	// 	feederPiston.set(Value.kOff);
-	// 	feederPiston.set(Value.kForward); 
-	// }
+	public void launchBallWithPiston() {
+		extendFeeder();
+		retractFeeder();
+	}
 
-	// public void retractFeeder() {
-	// 	feederPiston.set(Value.kOff);
-	// 	feederPiston.set(Value.kReverse);
-	// }
+	public void extendFeeder() {
+		feederPiston.set(Value.kOff);
+		feederPiston.set(Value.kForward); 
+	}
+
+	public void retractFeeder() {
+		feederPiston.set(Value.kOff);
+		feederPiston.set(Value.kReverse);
+	}
 }

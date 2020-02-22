@@ -9,48 +9,50 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopArcadeDriveCommand extends CommandBase {
 
-    DriveSubsystem driveSubsystem;
+	DriveSubsystem driveSubsystem;
 
+	public TeleopArcadeDriveCommand(DriveSubsystem subsystem) {
+		driveSubsystem = subsystem;
+		addRequirements(subsystem);
 
-    public TeleopArcadeDriveCommand(DriveSubsystem subsystem) {
-        driveSubsystem = subsystem;
-        addRequirements(subsystem);
+	}
 
-    }
+	@Override
+	public void initialize() {
+		driveSubsystem.resetPose();
+	}
 
-    @Override
-    public void initialize() { 
-        driveSubsystem.resetPose();
-    }
+	@Override
+	public void execute() {
+		if (RobotState.isOperatorControl()) { // safety check to make sure nothing is accidentally happening in auto mode
+			driveSubsystem.arcadeDrive();
 
-    @Override
-    public void execute() {
-        // System.out.println(Robot.robotContainer.getThrottle().getZ());
-        // System.out.println(Robot.robotContainer.getWheel().getX());
-        if (RobotState.isOperatorControl()) {
-            driveSubsystem.arcadeDrive();
-        }
+			if (Robot.robotContainer.getCVButton().get()) {
+				new CVDriveCommand(DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES,
+						Robot.robotContainer.getDriveSubsystem()).schedule();
+				end(true);
+			}
 
-        if (Robot.robotContainer.getCVButton().get()) {
-            new CVDriveCommand(DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES, Robot.robotContainer.getDriveSubsystem()).schedule();
-            end(true);
-        }
-        
-        // System.out.println(driveSubsystem.getHeading());
-        // System.out.println(driveSubsystem.getLeftEncoderDistance() + " " + driveSubsystem.getRightEncoderDistance());
-        // System.out.println(driveSubsystem.getWheelSpeeds());
-    
+			Robot.robotContainer.getIntakeStorageSubsystem().runStorageMotor(0.5);
+
+		}
+
+		// System.out.println(driveSubsystem.getHeading());
+		// System.out.println(driveSubsystem.getLeftEncoderDistance() + " " +
+		// driveSubsystem.getRightEncoderDistance());
+		// System.out.println(driveSubsystem.getWheelSpeeds());
+
 		// System.out.println(Units.degreesToRadians(-90));
-        // System.out.println(driveSubsystem.getPose());
-    }
+		// System.out.println(driveSubsystem.getPose());
+	}
 
-    @Override
-    public void end(boolean interrupted) {
-        driveSubsystem.stop();
-    }
+	@Override
+	public void end(boolean interrupted) {
+		driveSubsystem.stop();
+	}
 
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
 }

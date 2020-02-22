@@ -8,57 +8,60 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.subsystems.LiftMechanism;
 
 public class LiftRunToEncoder extends CommandBase {
 
-    LiftMechanism liftMech;
-    /**
-     * Creates a new Teleop.
-     */
-    
-    public double toEncoder;
-    public double power;
+	LiftMechanism liftMech;
 
-    public LiftRunToEncoder(LiftMechanism liftMech, double toEncoder, double power) {
-      addRequirements();
-        this.liftMech = liftMech; 
-        this.toEncoder = toEncoder; 
-        this.power = power; 
-    }
+	public double toEncoder;
+	public double power;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-      
-  }
+	public LiftRunToEncoder(LiftMechanism liftMech, double toEncoder, double power) {
+		addRequirements();
+		this.liftMech = liftMech;
+		this.toEncoder = toEncoder;
+		power = Math.abs(power);
+		if (liftMech.getLiftMotor().getEncoder().getPosition() >= toEncoder) {
+			this.power = -power;
+		} else {
+			this.power = power;
+		}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    if (liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder){ //-108.5
-      liftMech.setPower(power);
-     } else {
-     liftMech.setPower(0);
-    }
-   
-      System.out.println(liftMech.getLiftMotor().getEncoder().getPosition());
-      
+	}
 
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		liftMech.setPower(power);
 
+	}
 
-  }
-  
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-      liftMech.setPower(0);
-  }
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+		// if (liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder){ //-108.5
+		// liftMech.setPower(power);
+		// } else {
+		// liftMech.setPower(0);
+		// }
+		System.out.println(liftMech.getLiftMotor().getEncoder().getPosition());
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return liftMech.getLiftMotor().getEncoder().getPosition() < toEncoder;
-  }
+	}
+
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+		liftMech.setPower(0);
+	}
+
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		if (power > 0) {
+			return liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder;
+
+		}
+		return liftMech.getLiftMotor().getEncoder().getPosition() < toEncoder;
+	}
 }

@@ -7,10 +7,7 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.subsystems.LiftMechanism;
 
 public class LiftRunDownCommand extends CommandBase {
@@ -29,9 +26,9 @@ public class LiftRunDownCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-       
-    liftMech.setPower(power); 
-      
+    if (power > 0) {
+      liftMech.setPower(power); 
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
