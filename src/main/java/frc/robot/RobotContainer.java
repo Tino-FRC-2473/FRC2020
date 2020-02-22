@@ -37,9 +37,9 @@ public class RobotContainer {
 	// public final TestMotorSubsystem testMotorSubsystem = new TestMotorSubsystem();
 	// public final TestMotorCommand testMotorCommand = new TestMotorCommand(testMotorSubsystem);
 
-	public final static IntakeStorageSubsystem intakeStorageSubsystem = new IntakeStorageSubsystem();
-	public final static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-	public final static LiftMechanism liftSubsystem = new LiftMechanism();
+	private final IntakeStorageSubsystem intakeStorageSubsystem = new IntakeStorageSubsystem();
+	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	private final LiftMechanism liftSubsystem = new LiftMechanism();
 	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
 	/**
@@ -89,7 +89,7 @@ public class RobotContainer {
 	}
 
 
-	
+
 	public Joystick getWheel() {
 		return wheel;
 	}
