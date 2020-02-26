@@ -7,10 +7,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import frc.robot.Constants.JoystickConstants;
-
+import frc.robot.commands.FireShooterPistonCommand;
 import frc.robot.commands.LiftRunToEncoder;
 import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
@@ -40,6 +43,10 @@ public class RobotContainer {
 	private final LiftMechanism liftSubsystem = new LiftMechanism();
 	private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
+	private final Relay cvLight = new Relay(0);
+
+	private final Compressor compressor = new Compressor(0);
+
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 * 
@@ -68,6 +75,9 @@ public class RobotContainer {
 		// Configure the button bindings
 		configureButtonBindings();
 		driveSubsystem.setDefaultCommand(new TeleopArcadeDriveCommand(driveSubsystem));
+
+		compressor.start();
+		// System.out.println("Enabled: ");
 	}
 
 	public DriveSubsystem getDriveSubsystem() {
@@ -116,32 +126,31 @@ public class RobotContainer {
 		cvButton = new JoystickButton(wheel, 6);
 
 		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
-		runShooterButton = new JoystickButton(throttle, 7);
+		runShooterButton = new JoystickButton(throttle, 3);
+
+		runShooterButton.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
+		runShooterButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
 
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
+
+		scissorDownDial = new JoystickButton(buttonPanel, 1);
+		scissorLowDial = new JoystickButton(buttonPanel, 3);
+		scissorMediumDial = new JoystickButton(buttonPanel, 5);
+		scissorHighDial = new JoystickButton(buttonPanel, 7);
 
 		intakeButton = new JoystickButton(buttonPanel, 2);
 		shooterPistonButton = new JoystickButton(buttonPanel, 4);
 		scissorPositionButton = new JoystickButton(buttonPanel, 6);
 		runWinchButton = new JoystickButton(buttonPanel, 8);
 
-		runShooterButton.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
-		runShooterButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
-
 		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(0.7)));
 		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
 
-		shooterPistonButton.whenPressed(new InstantCommand(() -> shooterSubsystem.launchBallWithPiston()));
+		shooterPistonButton.whenPressed(new FireShooterPistonCommand(shooterSubsystem));
 
 		scissorPositionButton.whenPressed(new LiftRunToEncoder(liftSubsystem, getDialHeight().getValue(), 0.5));
 
 		runWinchButton.whileHeld(new WinchDriveCommand(liftSubsystem, 0.5));
-
-
-		scissorDownDial = new JoystickButton(buttonPanel, 1);
-		scissorLowDial = new JoystickButton(buttonPanel, 3);
-		scissorMediumDial = new JoystickButton(buttonPanel, 5);
-		scissorHighDial = new JoystickButton(buttonPanel, 7);
 	}
 
 	public LiftHeights getDialHeight() {
@@ -149,7 +158,15 @@ public class RobotContainer {
 		if (scissorLowDial.get()) return LiftHeights.LOW;
 		if (scissorMediumDial.get()) return LiftHeights.MEDIUM;
 		if (scissorHighDial.get()) return LiftHeights.HIGH;
-		return null;
+		return LiftHeights.DOWN;
+	}
+
+	public void setCVLight(boolean on) {
+		if (on) {
+			cvLight.set(Value.kForward);
+		} else {
+			cvLight.set(Value.kOff);
+		}
 	}
 
 	/**

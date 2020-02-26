@@ -24,7 +24,7 @@ public class WinchDriveCommand extends CommandBase {
 	public WinchDriveCommand(LiftMechanism liftMech, double power) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		this.liftMech = liftMech;
-		this.power = power;
+		this.power = Math.abs(power);
 
 	}
 
@@ -47,7 +47,7 @@ public class WinchDriveCommand extends CommandBase {
 
 	// Returns true when the command should end.
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished() { 
 		return false;
 	}
 }

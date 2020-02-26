@@ -35,7 +35,7 @@ public class LiftRunDownCommand extends CommandBase {
   @Override
   public void execute() {
     
-    System.out.println(liftMech.isRunDown());
+    // System.out.println(liftMech.isRunDown());
 
   }
   

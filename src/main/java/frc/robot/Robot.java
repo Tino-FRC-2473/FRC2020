@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		robotContainer.setCVLight(false);
 	}
 
 	@Override
@@ -85,6 +86,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.schedule();
 		}
+		robotContainer.setCVLight(true);
 	}
 
 	/**
@@ -103,12 +105,14 @@ public class Robot extends TimedRobot {
 		// this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
-    }
-		
+		}
+
+		robotContainer.setCVLight(true);
+
 		/*
-		TeleopArcadeDriveCommand is the default command of DriveSubsystem, so
-		it will be run during the teleop period.
-		*/
+		 * TeleopArcadeDriveCommand is the default command of DriveSubsystem, so it will
+		 * be run during the teleop period.
+		 */
 	}
 
 	/**

@@ -20,6 +20,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 	@Override
 	public void initialize() {
 		driveSubsystem.resetPose();
+		(new LiftRunDownCommand(Robot.robotContainer.getLiftSubsystem(), 0.1)).schedule();
 	}
 
 	@Override
