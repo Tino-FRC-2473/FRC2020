@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.FireShooterPistonCommand;
-import frc.robot.commands.LiftRunToEncoder;
+import frc.robot.commands.LiftRunToDialHeight;
 import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -148,7 +148,7 @@ public class RobotContainer {
 
 		shooterPistonButton.whenPressed(new FireShooterPistonCommand(shooterSubsystem));
 
-		scissorPositionButton.whenPressed(new LiftRunToEncoder(liftSubsystem, getDialHeight().getValue(), 0.5));
+		scissorPositionButton.whenPressed(new LiftRunToDialHeight(liftSubsystem, 0.5));
 
 		runWinchButton.whileHeld(new WinchDriveCommand(liftSubsystem, 0.5));
 	}

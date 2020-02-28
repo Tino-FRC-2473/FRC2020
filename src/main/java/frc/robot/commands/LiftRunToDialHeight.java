@@ -8,32 +8,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.LiftMechanism;
 
-public class LiftRunToEncoder extends CommandBase {
+public class LiftRunToDialHeight extends CommandBase {
 
 	LiftMechanism liftMech;
 
 	public double toEncoder;
 	public double power;
+	public double absolutePower;
 
-	public LiftRunToEncoder(LiftMechanism liftMech, double toEncoder, double power) {
+	public LiftRunToDialHeight(LiftMechanism liftMech, double power) {
 		addRequirements();
 		this.liftMech = liftMech;
-		this.toEncoder = toEncoder;
-		power = Math.abs(power);
-		if (liftMech.getLiftMotor().getEncoder().getPosition() >= toEncoder) {
-			this.power = -power;
-		} else {
-			this.power = power;
-		}
-
+		this.absolutePower = Math.abs(power);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		liftMech.setPower(power);
+		toEncoder = Robot.robotContainer.getDialHeight().getValue();
+		if (liftMech.getLiftMotor().getEncoder().getPosition() >= toEncoder) { // going up
+			this.power = -absolutePower;
+		} else { // going down
+			this.power = absolutePower;
+		}
 
 	}
 
@@ -46,7 +46,8 @@ public class LiftRunToEncoder extends CommandBase {
 		// liftMech.setPower(0);
 		// }
 		System.out.println(liftMech.getLiftMotor().getEncoder().getPosition());
-
+		
+		liftMech.setPower(power);
 	}
 
 	// Called once the command ends or is interrupted.
@@ -59,9 +60,9 @@ public class LiftRunToEncoder extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (power > 0) {
-			return liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder;
+			return liftMech.getLiftMotor().getEncoder().getPosition() >= toEncoder;
 
 		}
-		return liftMech.getLiftMotor().getEncoder().getPosition() < toEncoder;
+		return liftMech.getLiftMotor().getEncoder().getPosition() <= toEncoder;
 	}
 }
