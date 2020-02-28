@@ -62,15 +62,15 @@ public final class Constants {
 		public static final int SPARK_FRONT_RIGHT_ID = 1; 
 		public static final int SPARK_BACK_RIGHT_ID = 2;  
 
-		public static final double CAMERA_TO_FRONT_DISTANCE_INCHES = 22;
+		public static final double CAMERA_TO_FRONT_DISTANCE_INCHES = 15.75;
 	
 		public static final double DRIVE_WHEEL_CIRCUMFRENCE_INCHES = 23.8125;
 		public static final double GEAR_RATIO = 10.1111;
 		public static final double DRIVE_METERS_PER_ROTATION = Units.inchesToMeters(DRIVE_WHEEL_CIRCUMFRENCE_INCHES / GEAR_RATIO);
 		
-		public static final double KS_VOLTS = 0.139;
-		public static final double KV_VOLT_SECONDS_PER_METER = 2.02;
-		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.321;
+		public static final double KS_VOLTS = 0.173; // 0.139
+		public static final double KV_VOLT_SECONDS_PER_METER = 2.04; // 2.02
+		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.467; // 0.321
 
 		public static final double KP_DRIVE_VEL = 0.003861;
 		public static final double KI_DRIVE_VEL = 0.000149;

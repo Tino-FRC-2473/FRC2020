@@ -34,9 +34,13 @@ public class Jetson extends SerialPort {
 				}
 			} else if (buffer.contains(END)) {
 				String rawData = buffer.substring(0, buffer.lastIndexOf(END) + 1).substring(buffer.lastIndexOf(START));
+				
+				// System.out.println(rawData + "/// " + rawData.length() + "///_" + rawData.charAt(18) + "///");
+				
 				buffer = buffer.substring(buffer.lastIndexOf(END) + 1);
 
-				if (rawData.length() == 21) {
+				if (rawData.length() == 22) {
+					// System.out.println("right length");
 					// System.out.println(rawData);
 
 					String dxString = rawData.substring(2, 7);
@@ -57,8 +61,11 @@ public class Jetson extends SerialPort {
 
 						d_y -= 0.1;
 
+						d_x /= 1.25;
+						d_y /= 1.25;
+
 						alpha = Integer.parseInt(alphaString) / 10.0;
-						// alpha *= -1;
+						alpha *= -1;
 					}
 					// System.out.printf("dX: %f\ndY: %f\na: %f\n\n", d_x, d_y, alpha);
 				}

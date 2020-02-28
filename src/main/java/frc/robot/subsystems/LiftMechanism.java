@@ -58,12 +58,14 @@ public class LiftMechanism {
     }
 
     public void setPower(double power) {
-        if (liftMotor.getEncoder().getPosition() > -10) {
-            double signOfPower = (power < 0) ? -1 : 1;
-            liftMotor.set(signOfPower * 0.1);
+        if (power == 0) {
+            liftMotor.set(0);
+        } else if (liftMotor.getEncoder().getPosition() >= -10 && power > 0) {
+            liftMotor.set(0.1);
         } else {
             liftMotor.set(power);
         }
+        
         System.out.println(liftMotor.getEncoder().getPosition());
     }
 
