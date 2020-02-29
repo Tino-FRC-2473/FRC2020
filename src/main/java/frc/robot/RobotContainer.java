@@ -45,8 +45,6 @@ public class RobotContainer {
 
 	private final Relay cvLight = new Relay(0);
 
-	private final Compressor compressor = new Compressor(0);
-
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 * 
@@ -76,8 +74,6 @@ public class RobotContainer {
 		configureButtonBindings();
 		driveSubsystem.setDefaultCommand(new TeleopArcadeDriveCommand(driveSubsystem));
 
-		compressor.start();
-		// System.out.println("Enabled: ");
 	}
 
 	public DriveSubsystem getDriveSubsystem() {
@@ -128,8 +124,8 @@ public class RobotContainer {
 		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
 		runShooterButton = new JoystickButton(throttle, 3);
 
-		runShooterButton.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
-		runShooterButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
+		runShooterButton.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooterRPM(5950))); // 5834 good, I'm making it a little higher to get to inner port
+		runShooterButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooterRPM(0)));
 
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 
