@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.RunShooterToRPMCommand;
 import frc.robot.commands.FireShooterPistonCommand;
 import frc.robot.commands.LiftRunToDialHeight;
 import frc.robot.commands.WinchDriveCommand;
@@ -54,7 +56,6 @@ public class RobotContainer {
 	private JoystickButton cvButton;
 
 	private Joystick throttle;
-	private JoystickButton runShooterButton;
 
 	private Joystick buttonPanel;
 
@@ -122,10 +123,6 @@ public class RobotContainer {
 		cvButton = new JoystickButton(wheel, 6);
 
 		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
-		runShooterButton = new JoystickButton(throttle, 3);
-
-		runShooterButton.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooterRPM(5950))); // 5834 good, I'm making it a little higher to get to inner port
-		runShooterButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooterRPM(0)));
 
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 
@@ -142,7 +139,8 @@ public class RobotContainer {
 		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(0.7)));
 		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
 
-		shooterPistonButton.whenPressed(new FireShooterPistonCommand(shooterSubsystem));
+		shooterPistonButton.whileHeld(new FireShooterPistonCommand(shooterSubsystem));
+		shooterPistonButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooterRPM(0)));
 
 		scissorPositionButton.whenPressed(new LiftRunToDialHeight(liftSubsystem, 0.5));
 
