@@ -41,7 +41,7 @@ public class Jetson extends SerialPort {
 
 				if (rawData.length() == 22) {
 					// System.out.println("right length");
-					// System.out.println(rawData);
+					System.out.println(rawData);
 
 					String dxString = rawData.substring(2, 7);
 					String dyString = rawData.substring(8, 13);

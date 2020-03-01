@@ -20,7 +20,7 @@ public class LiftMechanism {
     public JoystickButton winchStop; 
 
     public enum LiftHeights {
-        DOWN(0), LOW(-108.76), MEDIUM(-229.581146), HIGH(-533.91);
+        DOWN(0), LOW(-108.76), MEDIUM(-229.581146), HIGH(-400); // -533.91
 
         private final double value;
 
