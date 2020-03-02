@@ -85,7 +85,7 @@ public class Jetson extends SerialPort {
 		return new CVData(canSeeTarget, d_x, d_y, alpha);
 	}
 
-	public DepthData getDepthData() {
+	public DepthData getClosestBallData() {
 		return null;
 	}
 

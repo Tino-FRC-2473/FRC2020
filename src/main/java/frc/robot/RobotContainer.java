@@ -54,6 +54,7 @@ public class RobotContainer {
 
 	private Joystick wheel;
 	private JoystickButton cvButton;
+	private JoystickButton depthBallPickupButton;
 
 	private Joystick throttle;
 
@@ -99,12 +100,18 @@ public class RobotContainer {
 		return wheel;
 	}
 
+
+
+	public Joystick getThrottle() {
+		return throttle;
+	}
+
 	public JoystickButton getCVButton() {
 		return cvButton;
 	}
 
-	public Joystick getThrottle() {
-		return throttle;
+	public JoystickButton getDepthBallPickupButton() {
+		return depthBallPickupButton;
 	}
 
 	public Joystick getButtonPanel() {
@@ -120,9 +127,10 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		
 		wheel = new Joystick(JoystickConstants.WHEEL_PORT);
-		cvButton = new JoystickButton(wheel, 6);
 
 		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
+		cvButton = new JoystickButton(throttle, 1);
+		depthBallPickupButton = new JoystickButton(throttle, 3);
 
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 
