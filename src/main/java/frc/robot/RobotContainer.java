@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.RunShooterToRPMCommand;
 import frc.robot.commands.FireShooterPistonCommand;
-import frc.robot.commands.LiftRunToEncoder;
+import frc.robot.commands.LiftRunToDialHeight;
 import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,8 +47,6 @@ public class RobotContainer {
 
 	private final Relay cvLight = new Relay(0);
 
-	private final Compressor compressor = new Compressor(0);
-
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 * 
@@ -56,7 +56,6 @@ public class RobotContainer {
 	private JoystickButton cvButton;
 
 	private Joystick throttle;
-	private JoystickButton runShooterButton;
 
 	private Joystick buttonPanel;
 
@@ -76,8 +75,6 @@ public class RobotContainer {
 		configureButtonBindings();
 		driveSubsystem.setDefaultCommand(new TeleopArcadeDriveCommand(driveSubsystem));
 
-		compressor.start();
-		// System.out.println("Enabled: ");
 	}
 
 	public DriveSubsystem getDriveSubsystem() {
@@ -126,10 +123,6 @@ public class RobotContainer {
 		cvButton = new JoystickButton(wheel, 6);
 
 		throttle = new Joystick(JoystickConstants.THROTTLE_PORT);
-		runShooterButton = new JoystickButton(throttle, 3);
-
-		runShooterButton.whenPressed(new InstantCommand(() -> shooterSubsystem.runShooter(0.6)));
-		runShooterButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooter(0)));
 
 		buttonPanel = new Joystick(JoystickConstants.BUTTON_PANEL_PORT);
 
@@ -146,9 +139,10 @@ public class RobotContainer {
 		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(0.7)));
 		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
 
-		shooterPistonButton.whenPressed(new FireShooterPistonCommand(shooterSubsystem));
+		shooterPistonButton.whileHeld(new FireShooterPistonCommand(shooterSubsystem));
+		shooterPistonButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooterRPM(0)));
 
-		scissorPositionButton.whenPressed(new LiftRunToEncoder(liftSubsystem, getDialHeight().getValue(), 0.5));
+		scissorPositionButton.whenPressed(new LiftRunToDialHeight(liftSubsystem, 0.5));
 
 		runWinchButton.whileHeld(new WinchDriveCommand(liftSubsystem, 0.5));
 	}

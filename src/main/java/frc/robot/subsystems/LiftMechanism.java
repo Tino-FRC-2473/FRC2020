@@ -20,7 +20,7 @@ public class LiftMechanism {
     public JoystickButton winchStop; 
 
     public enum LiftHeights {
-        DOWN(-30), LOW(-108.76), MEDIUM(-229.581146), HIGH(-533.91);
+        DOWN(0), LOW(-108.76), MEDIUM(-229.581146), HIGH(-400); // -533.91
 
         private final double value;
 
@@ -58,8 +58,15 @@ public class LiftMechanism {
     }
 
     public void setPower(double power) {
+        if (power == 0) {
+            liftMotor.set(0);
+        } else if (liftMotor.getEncoder().getPosition() >= -10 && power > 0) {
+            liftMotor.set(0.1);
+        } else {
+            liftMotor.set(power);
+        }
+        
         System.out.println(liftMotor.getEncoder().getPosition());
-        liftMotor.set(power);
     }
 
     public void runWinch(double power){

@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -30,6 +31,18 @@ public class ShooterSubsystem extends SubsystemBase {
 		rightShooterMotor = new CANSparkMax(ShooterConstants.SPARK_SHOOTER_RIGHT, MotorType.kBrushless);
 
 		feederPiston = new DoubleSolenoid(ShooterConstants.FORWARD_SOLENOID_PORT, ShooterConstants.REVERSE_SOLENOID_PORT);
+
+		double kP = 0;
+		double kI = 2e-7;
+		double kD = 0;
+
+		leftShooterMotor.getPIDController().setP(kP);
+		leftShooterMotor.getPIDController().setI(kI);
+		leftShooterMotor.getPIDController().setD(kD);
+
+		rightShooterMotor.getPIDController().setP(kP);
+		rightShooterMotor.getPIDController().setI(kI);
+		rightShooterMotor.getPIDController().setD(kD);
 	}
 
 	@Override
@@ -37,9 +50,14 @@ public class ShooterSubsystem extends SubsystemBase {
 		// This method will be called once per scheduler run
 	}
 
-	public void runShooter(double power) {
+	public void runShooterPower(double power) {
 		leftShooterMotor.set(power);
 		rightShooterMotor.set(-power);
+	}
+
+	public void runShooterRPM(double rpm) { // 5834
+		leftShooterMotor.getPIDController().setReference(rpm, ControlType.kVelocity);
+		rightShooterMotor.getPIDController().setReference(-rpm, ControlType.kVelocity);
 	}
 
 	public void launchBallWithPiston() {
@@ -55,5 +73,13 @@ public class ShooterSubsystem extends SubsystemBase {
 	public void retractFeeder() {
 		feederPiston.set(Value.kOff);
 		feederPiston.set(Value.kReverse);
+	}
+
+	public double getLeftVelocity() {
+		return leftShooterMotor.getEncoder().getVelocity();
+	}
+
+	public double getRightVelocity() {
+		return leftShooterMotor.getEncoder().getVelocity();
 	}
 }

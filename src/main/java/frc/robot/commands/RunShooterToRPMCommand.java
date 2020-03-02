@@ -8,60 +8,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LiftMechanism;
+import frc.robot.Robot;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class LiftRunToEncoder extends CommandBase {
+public class RunShooterToRPMCommand extends CommandBase {
 
-	LiftMechanism liftMech;
+	ShooterSubsystem shooterSubsystem;
 
-	public double toEncoder;
-	public double power;
-
-	public LiftRunToEncoder(LiftMechanism liftMech, double toEncoder, double power) {
-		addRequirements();
-		this.liftMech = liftMech;
-		this.toEncoder = toEncoder;
-		power = Math.abs(power);
-		if (liftMech.getLiftMotor().getEncoder().getPosition() >= toEncoder) {
-			this.power = -power;
-		} else {
-			this.power = power;
-		}
+	public RunShooterToRPMCommand(ShooterSubsystem shooterSubsystem) {
+		this.shooterSubsystem = shooterSubsystem;
 
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		liftMech.setPower(power);
-
+		shooterSubsystem.runShooterRPM(ShooterConstants.SHOOTER_RPM);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		// if (liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder){ //-108.5
-		// liftMech.setPower(power);
-		// } else {
-		// liftMech.setPower(0);
-		// }
-		System.out.println(liftMech.getLiftMotor().getEncoder().getPosition());
-
+		
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		liftMech.setPower(0);
+
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (power > 0) {
-			return liftMech.getLiftMotor().getEncoder().getPosition() > toEncoder;
-
-		}
-		return liftMech.getLiftMotor().getEncoder().getPosition() < toEncoder;
+		return Math.abs(Robot.robotContainer.getShooterSubsystem().getLeftVelocity()) > ShooterConstants.SHOOTER_RPM - 25;
 	}
 }

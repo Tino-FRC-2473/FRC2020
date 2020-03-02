@@ -10,7 +10,7 @@ public class TurnDegreesCommand extends CommandBase {
 
 	private double initialGyroHeading;
 
-	private final double power = 0.1;
+	private final double power = 0.2;
 	private final double marginOfError = 1;
 
 	private double finalHeading;
