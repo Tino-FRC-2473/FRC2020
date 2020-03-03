@@ -17,6 +17,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.RunShooterToRPMCommand;
 import frc.robot.commands.FireShooterPistonCommand;
 import frc.robot.commands.LiftRunToDialHeight;
+import frc.robot.commands.ManualIntakeCommand;
 import frc.robot.commands.WinchDriveCommand;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -68,6 +69,10 @@ public class RobotContainer {
 	private JoystickButton scissorLowDial;
 	private JoystickButton scissorMediumDial;
 	private JoystickButton scissorHighDial;
+
+	private JoystickButton toggleIntakeBelt; 
+	private JoystickButton reverseIntakeBelt; 
+	private JoystickButton deployIntake; 
 
 
 	public RobotContainer() {
@@ -136,6 +141,10 @@ public class RobotContainer {
 		scissorPositionButton = new JoystickButton(buttonPanel, 6);
 		runWinchButton = new JoystickButton(buttonPanel, 8);
 
+		toggleIntakeBelt = new JoystickButton(throttle, 5); 
+		reverseIntakeBelt = new JoystickButton(throttle, 6); 
+		deployIntake = new JoystickButton(throttle, 7); 
+
 		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(0.7)));
 		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
 
@@ -145,6 +154,10 @@ public class RobotContainer {
 		scissorPositionButton.whenPressed(new LiftRunToDialHeight(liftSubsystem, 0.5));
 
 		runWinchButton.whileHeld(new WinchDriveCommand(liftSubsystem, 0.5));
+
+		toggleIntakeBelt.toggleWhenPressed(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0.3))); 
+		reverseIntakeBelt.whenHeld(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(-0.3))); 
+		deployIntake.whenPressed(new ManualIntakeCommand(intakeStorageSubsystem)); 
 	}
 
 	public LiftHeights getDialHeight() {
