@@ -1,5 +1,7 @@
 package frc.robot.cv;
 
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.SerialPort;
 
 public class Jetson extends SerialPort {
@@ -7,13 +9,11 @@ public class Jetson extends SerialPort {
 	private static String START = "S";
 	private static String END = "E";
 
-	private double d_x;
-	private double d_y;
-	private double alpha;
+	private CVData cvData;
+	private BallData[] balls;
+	private ObstacleData obstacleData;
 
 	private boolean first = true;
-
-	private boolean canSeeTarget;
 
 	private String buffer = "";
 
@@ -39,33 +39,38 @@ public class Jetson extends SerialPort {
 				
 				buffer = buffer.substring(buffer.lastIndexOf(END) + 1);
 
-				if (rawData.length() == 22) {
+				if (rawData.length() == 87) {
 					// System.out.println("right length");
 					System.out.println(rawData);
 
-					String dxString = rawData.substring(2, 7);
-					String dyString = rawData.substring(8, 13);
+					String[] split = rawData.split(" ");
 
-					String alphaString = rawData.substring(14, 19);
+					boolean canSeeTarget;
 
-					if (dxString.equals("+9999") || dyString.equals("+9999") || alphaString.equals("+9999")) {
+					if (split[0].equals("+9999")) {
 						canSeeTarget = false;
-						d_x = 99.99;
-						d_y = 99.99;
-						alpha = 999.9;
 					} else {
 						canSeeTarget = true;
-
-						d_x = Integer.parseInt(dxString) / 100.0;
-						d_y = Integer.parseInt(dyString) / 100.0;
-
-						d_y -= 0.1;
-
-
-						alpha = Integer.parseInt(alphaString) / 10.0;
-						alpha *= -1;
 					}
-					// System.out.printf("dX: %f\ndY: %f\na: %f\n\n", d_x, d_y, alpha);
+
+					double d_x = Integer.parseInt(split[0]) / 100.0;
+					double d_y = Integer.parseInt(split[1]) / 100.0;
+					double alpha = Integer.parseInt(split[2]) / 10.0;
+
+					cvData = new CVData(canSeeTarget, d_x, d_y, alpha);
+
+					for (int i = 0; i < 5; i++) {
+						double ball_dist = Integer.parseInt(split[2*i + 3]) / 100.0;
+						double ball_angle = Integer.parseInt(split[2*i + 4]) / 10.0;
+
+						balls[i] = new BallData(ball_dist, ball_angle);
+					}
+
+					Arrays.sort(balls); // sort the balls with closest distance first, then closest angle to 0
+
+					double obstacle_dist = Integer.parseInt(split[13]) / 100.0;
+
+					obstacleData = new ObstacleData(obstacle_dist);
 				}
 			}
 		} catch (Exception e) {
@@ -75,16 +80,16 @@ public class Jetson extends SerialPort {
 		}
 	}
 
-	public boolean canSeeTarget() {
-		return canSeeTarget;
-	}
-
 	public CVData getCVData() {
-		return new CVData(canSeeTarget, d_x, d_y, alpha);
+		return cvData;
 	}
 
-	public DepthData getClosestBallData() {
-		return null;
+	public BallData getClosestBallData() {
+		return balls[0];
+	}
+
+	public ObstacleData getObstacleData() {
+		return obstacleData;
 	}
 
 }

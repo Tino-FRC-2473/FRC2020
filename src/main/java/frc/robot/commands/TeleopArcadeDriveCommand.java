@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.cv.BallData;
 import frc.robot.cv.CVDriveCommand;
-import frc.robot.cv.DepthData;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopArcadeDriveCommand extends CommandBase {
@@ -38,12 +38,14 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 				end(true);
 			} else if (Robot.robotContainer.getDepthBallPickupButton().get()) {
 				if (Robot.robotContainer.getIntakeStorageSubsystem().isIntakeDown()) {
-					double basePower = 0.1;
-					double k = 0.1;
 					
-					DepthData depthData = Robot.jetson.getClosestBallData();
+					double basePower = 0.1;
+					double k = 0.05;
+					double maxDeltaPower = 0.3;
+					
+					BallData depthData = Robot.jetson.getClosestBallData();
 
-					double deltaPower = k*depthData.getBallAngle();
+					double deltaPower = Math.min(k * Math.abs(depthData.getBallAngle()), maxDeltaPower);
 					double leftPower = basePower;
 					double rightPower = basePower;
 
