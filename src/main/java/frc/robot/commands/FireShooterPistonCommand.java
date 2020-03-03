@@ -8,11 +8,11 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class FireShooterPistonCommand extends SequentialCommandGroup {
 
     public FireShooterPistonCommand(ShooterSubsystem shooterSubsystem) {
-        
-       addCommands(new RunShooterToRPMCommand(shooterSubsystem),
-           new InstantCommand(() -> shooterSubsystem.extendFeeder()), 
-                    new WaitCommand(0.1),
-                    new InstantCommand(() -> shooterSubsystem.retractFeeder()),
-                    new WaitCommand(1));
+        addCommands(
+            new RunShooterToRPMCommand(shooterSubsystem),
+            new InstantCommand(() -> shooterSubsystem.extendFeeder()),
+            new WaitCommand(0.1),
+            new InstantCommand(() -> shooterSubsystem.retractFeeder()),
+            new WaitCommand(1));
     }
 }

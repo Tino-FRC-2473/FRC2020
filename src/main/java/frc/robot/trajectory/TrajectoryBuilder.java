@@ -63,28 +63,34 @@ public class TrajectoryBuilder {
 		this(type, Position.RELATIVE_TO_ROBOT, Direction.FORWARD);
 	}
 
-	public void setInitialWaypoint(Waypoint waypoint) {
+	public TrajectoryBuilder setInitialWaypoint(Waypoint waypoint) {
 		if (type == Type.CLAMPED_CUBIC) {
 			startClampedCubicPose = waypoint.convertToPose2d();
 		} else {
 			throw new IllegalArgumentException("Cannot set initial waypoint of quintic trajectory");
 		}
+		
+		return this;
 	}
 
-	public void add(Waypoint waypoint) {
+	public TrajectoryBuilder add(Waypoint waypoint) {
 		if (type == Type.CLAMPED_CUBIC) {
 			clampedCubicTranslationArray.add(waypoint.convertToTranslation2d());
 		} else {
 			quinticPoseArray.add(waypoint.convertToPose2d());
 		}
+
+		return this;
 	}
 
-	public void setFinalWaypoint(Waypoint waypoint) {
+	public TrajectoryBuilder setFinalWaypoint(Waypoint waypoint) {
 		if (type == Type.CLAMPED_CUBIC) {
 			endClampedCubicPose = waypoint.convertToPose2d();
 		} else {
 			throw new IllegalArgumentException("Cannot set final waypoint of quintic trajectory");
 		}
+
+		return this;
 	}
 
 	public RamseteCommand getRamseteCommand() {
