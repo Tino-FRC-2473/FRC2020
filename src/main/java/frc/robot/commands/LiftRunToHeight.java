@@ -20,6 +20,7 @@ public class LiftRunToHeight extends CommandBase {
     public double goHeight; 
     public double initHeight; 
     public double power; 
+    
     public LiftRunToHeight(LiftMechanism liftMech, double goHeight, double power) {
         addRequirements();
         this.liftMech = liftMech; 

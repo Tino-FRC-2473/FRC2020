@@ -51,7 +51,7 @@ public class DriveSubsystem extends SubsystemBase {
 		rightSpeedControllerGroup.setInverted(true);
 
 		gyro = new AHRS(SPI.Port.kMXP);
-		differentialDrive = new DifferentialDrive(leftSpeedControllerGroup, rightSpeedControllerGroup); 
+		differentialDrive = new DifferentialDrive(leftSpeedControllerGroup, rightsSpeedControllerGroup); 
 		odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), new Pose2d(0, 0, new Rotation2d(0)));
 
 		differentialDrive.setSafetyEnabled(false);
