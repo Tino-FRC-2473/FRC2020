@@ -42,7 +42,7 @@ public final class Constants {
 		public static final int FORWARD_SOLENOID_PORT = 0;
 		public static final int REVERSE_SOLENOID_PORT = 7;
 
-		public static final double SHOOTER_RPM = 5975;
+		public static final double SHOOTER_RPM = 5985; // 5975
   }
 
 	public static final class ClimberConstants {
