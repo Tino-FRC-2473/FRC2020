@@ -7,6 +7,8 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.IntakeStorageSubsystem;
@@ -14,28 +16,26 @@ import frc.robot.subsystems.IntakeStorageSubsystem;
 public class AutoIntakeStorageCommand extends SequentialCommandGroup {
 
   IntakeStorageSubsystem intakeStorageSubsystem;
-  boolean isRunForward;
 
   /**
    * Creates a new AutoIntakeMoveCommand.
    */
-  public AutoIntakeStorageCommand(IntakeStorageSubsystem intakeStorageSubsystem, boolean isRunForward) {
+  public AutoIntakeStorageCommand(IntakeStorageSubsystem intakeStorageSubsystem) {
     this.intakeStorageSubsystem = intakeStorageSubsystem;
-    this.isRunForward = isRunForward;
     // Use addRequirements() here to declare subsystem dependencies.
 
-    addCommands(new AutoIntakePistonCommand(intakeStorageSubsystem, true),
+    addCommands(new InstantCommand(() -> intakeStorageSubsystem.extendIntakePistons()),
                 new WaitCommand(1),
-                new AutoIntakeMotorCommand(intakeStorageSubsystem, 0.7).withTimeout(3),
+                new RunCommand(() -> intakeStorageSubsystem.runIntakeMotor(0.7), intakeStorageSubsystem).withTimeout(3),
                 new WaitCommand(1),
-                new AutoIntakeMotorCommand(intakeStorageSubsystem, 0),
+                new InstantCommand(() -> intakeStorageSubsystem.runIntakeMotor(0)),
                 new WaitCommand(1),
-                new AutoIntakePistonCommand(intakeStorageSubsystem, false),
+                new InstantCommand(() -> intakeStorageSubsystem.retractIntakePistons()),
                 new WaitCommand(1),
-                new AutoStorageMotorCommand(intakeStorageSubsystem, 0.7));
+                new RunCommand(() -> intakeStorageSubsystem.runStorageMotor(0.7), intakeStorageSubsystem).withTimeout(3));
   }
 
-  // Called when the command is initially scheduled.
+  // Called when the command is initially scheduled.8
   @Override
   public void initialize() {
   }

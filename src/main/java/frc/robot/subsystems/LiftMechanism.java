@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ClimberConstants;
 
@@ -11,7 +12,7 @@ import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 
 
 
-public class LiftMechanism {
+public class LiftMechanism extends SubsystemBase {
 
     private CANSparkMax liftMotor;
     public CANSparkMax winchMotor; 
