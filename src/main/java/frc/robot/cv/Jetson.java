@@ -26,15 +26,19 @@ public class Jetson extends SerialPort {
 		// get values from serial, store them into the three variables
 		try {
 			buffer += readString();
+			// System.out.println(buffer.length());
 			if (first) {
 				if (buffer.contains(START)) {
 					System.out.println("has start");
 					buffer = buffer.substring(buffer.indexOf(START));
 					first = false;
 				}
-			} else if (buffer.contains(END)) {
-				String rawData = buffer.substring(0, buffer.lastIndexOf(END) + 1).substring(buffer.lastIndexOf(START));
+			} else if (buffer.contains(END) && buffer.contains(START)) {
+				String rawData = buffer.substring(0, buffer.lastIndexOf(END) + 1);
+				rawData = rawData.substring(rawData.lastIndexOf(START)); // last index of start is sometimes -1
 				
+				// System.out.println(rawData + "//" + buffer.lastIndexOf(END) + "//" + buffer.lastIndexOf(START));
+
 				// System.out.println(rawData + "/// " + rawData.length() + "///_" + rawData.charAt(18) + "///");
 				
 				buffer = buffer.substring(buffer.lastIndexOf(END) + 1);
@@ -43,7 +47,7 @@ public class Jetson extends SerialPort {
 					// System.out.println("right length");
 					System.out.println(rawData);
 
-					String[] split = rawData.split(" ");
+					String[] split = rawData.substring(2, rawData.length()-2).split(" ");
 
 					boolean canSeeTarget;
 
@@ -56,8 +60,11 @@ public class Jetson extends SerialPort {
 					double d_x = Integer.parseInt(split[0]) / 100.0;
 					double d_y = Integer.parseInt(split[1]) / 100.0;
 					double alpha = Integer.parseInt(split[2]) / 10.0;
+					alpha *= -1;
 
 					cvData = new CVData(canSeeTarget, d_x, d_y, alpha);
+
+					balls = new BallData[5];
 
 					for (int i = 0; i < 5; i++) {
 						double ball_dist = Integer.parseInt(split[2*i + 3]) / 100.0;
@@ -71,6 +78,8 @@ public class Jetson extends SerialPort {
 					double obstacle_dist = Integer.parseInt(split[13]) / 100.0;
 
 					obstacleData = new ObstacleData(obstacle_dist);
+				} else {
+					// System.out.println("not right length///" + rawData + "///" + rawData.length());
 				}
 			}
 		} catch (Exception e) {
