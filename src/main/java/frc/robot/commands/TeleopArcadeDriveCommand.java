@@ -57,7 +57,9 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 						}
 	
 						driveSubsystem.powerDrive(leftPower, rightPower);
-					}					
+					} else {
+						driveSubsystem.powerDrive(basePower, basePower);
+					}				
 				}
 			} else {
 				driveSubsystem.arcadeDrive();
