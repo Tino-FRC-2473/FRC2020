@@ -16,10 +16,10 @@ import frc.robot.trajectory.TrajectoryBuilder.Type;
 public class ShootThreePickUpThreeFromTrenchAutonomous extends SequentialCommandGroup {
 	public ShootThreePickUpThreeFromTrenchAutonomous() {
 		Waypoint start = new Waypoint(0, 0, 0);
-		Waypoint inFrontOfTargetZone = new Waypoint(Units.feetToMeters(9), 0, 0);
-		Waypoint onInitiationLineFacingRight = new Waypoint(0, Units.feetToMeters(5), -90);
+		Waypoint inFrontOfTargetZone = new Waypoint(Units.feetToMeters(5), 0, 0); // x = 9 ft
+		Waypoint onInitiationLineFacingRight = new Waypoint(0, Units.feetToMeters(2), -90); // y = 5 ft
 		Waypoint facingTrenchRunBalls = new Waypoint(Units.feetToMeters(-4), Units.inchesToMeters(-66.91), -180);
-		Waypoint collectedTrenchRunBalls = new Waypoint(Units.inchesToMeters(-194.63), Units.inchesToMeters(-66.91), -180);
+		Waypoint collectedTrenchRunBalls = new Waypoint(Units.inchesToMeters(-144.63), Units.inchesToMeters(-66.91), -180); // x = -194.63 inches
 
 		addCommands(
 			new InstantCommand(() -> Robot.robotContainer.getDriveSubsystem().resetPose()),
@@ -72,6 +72,7 @@ public class ShootThreePickUpThreeFromTrenchAutonomous extends SequentialCommand
 					new FireShooterPistonCommand(Robot.robotContainer.getShooterSubsystem()),
 					new FireShooterPistonCommand(Robot.robotContainer.getShooterSubsystem())
 				)),
+				
 			new InstantCommand(() -> Robot.robotContainer.getDriveSubsystem().stop())
 		);
 	}
