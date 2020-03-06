@@ -136,7 +136,7 @@ public class RobotContainer {
 		scissorPositionButton = new JoystickButton(buttonPanel, 6);
 		runWinchButton = new JoystickButton(buttonPanel, 8);
 
-		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(0.7)));
+		intakeButton.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(-0.7)));
 		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
 
 		shooterPistonButton.whileHeld(new FireShooterPistonCommand(shooterSubsystem));
