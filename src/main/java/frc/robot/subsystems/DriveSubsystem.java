@@ -78,7 +78,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void arcadeDriveWithInputs(double forward, double steer) {
-		differentialDrive.arcadeDrive(forward, steer);
+		differentialDrive.arcadeDrive(-forward, steer);
 	}
 
 	public void arcadeDrive() {

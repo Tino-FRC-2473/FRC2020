@@ -39,26 +39,26 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 			} else if (Robot.robotContainer.getDepthBallPickupButton().get()) {
 				if (Robot.robotContainer.getIntakeStorageSubsystem().isIntakeDown()) {
 					
-					double basePower = 0.07;
+					double basePower = 0.2;
 					double k = 0.02;
-					double maxDeltaPower = 0.3;
+					// double maxDeltaPower = 0.3;
 					
 					BallData depthData = Robot.jetson.getClosestBallData();
 
 					if (depthData.getBallDistance() < 99) { // we can see a ball
-						double deltaPower = Math.min(k * Math.abs(depthData.getBallAngle()), maxDeltaPower);
-						double leftPower = basePower;
-						double rightPower = basePower;
+						// double deltaPower = Math.min(k * Math.abs(depthData.getBallAngle()), maxDeltaPower);
+						// double leftPower = basePower;
+						// double rightPower = basePower;
 	
-						if (depthData.getBallAngle() > 0) {
-							leftPower += deltaPower;
-						} else {
-							rightPower += deltaPower;
-						}
+						// if (depthData.getBallAngle() > 0) {
+						// 	leftPower += deltaPower;
+						// } else {
+						// 	rightPower += deltaPower;
+						// }
 
-						// driveSubsystem.arcadeDriveWithInputs(-basePower, k * depthData.getBallAngle());
+						driveSubsystem.arcadeDriveWithInputs(basePower, k * depthData.getBallAngle());
 	
-						driveSubsystem.powerDrive(leftPower, rightPower);
+						// driveSubsystem.powerDrive(leftPower, rightPower);
 					} else {
 						driveSubsystem.powerDrive(basePower, basePower);
 					}				
