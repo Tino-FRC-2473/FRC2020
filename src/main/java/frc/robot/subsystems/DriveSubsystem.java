@@ -77,6 +77,10 @@ public class DriveSubsystem extends SubsystemBase {
 		// differentialDrive.tankDrive(Robot.robotContainer.getJoystick1().getY(), Robot.robotContainer.getJoystick2().getY(), true);
 	}
 
+	public void arcadeDriveWithInputs(double forward, double steer) {
+		differentialDrive.arcadeDrive(forward, steer);
+	}
+
 	public void arcadeDrive() {
 		double throttle = -Robot.robotContainer.getThrottle().getY();
 		double sign = (throttle < 0) ? -1 : 1;

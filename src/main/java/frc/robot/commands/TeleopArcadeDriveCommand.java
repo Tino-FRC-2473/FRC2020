@@ -25,7 +25,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 		Robot.robotContainer.getIntakeStorageSubsystem().retractIntake();
 		(new LiftRunDownCommand(Robot.robotContainer.getLiftSubsystem(), 0.1)).schedule();
 
-		Robot.robotContainer.getIntakeStorageSubsystem().runStorageMotor(0.5);
+		Robot.robotContainer.getIntakeStorageSubsystem().runStorageMotor(0.7);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 			} else if (Robot.robotContainer.getDepthBallPickupButton().get()) {
 				if (Robot.robotContainer.getIntakeStorageSubsystem().isIntakeDown()) {
 					
-					double basePower = 0.12;
+					double basePower = 0.07;
 					double k = 0.02;
 					double maxDeltaPower = 0.3;
 					
@@ -55,6 +55,8 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 						} else {
 							rightPower += deltaPower;
 						}
+
+						// driveSubsystem.arcadeDriveWithInputs(-basePower, k * depthData.getBallAngle());
 	
 						driveSubsystem.powerDrive(leftPower, rightPower);
 					} else {
