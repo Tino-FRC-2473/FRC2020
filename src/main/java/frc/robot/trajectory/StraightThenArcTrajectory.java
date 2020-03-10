@@ -1,6 +1,7 @@
 package frc.robot.trajectory;
 
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 public class StraightThenArcTrajectory implements TrajectoryContainer {
@@ -16,7 +17,7 @@ public class StraightThenArcTrajectory implements TrajectoryContainer {
 	}
 
 	@Override
-	public RamseteCommand getCommand() {
+	public Command getCommand() {
 		return trajectory.getRamseteCommand();
 	}
 

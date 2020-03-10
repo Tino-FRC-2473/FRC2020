@@ -18,6 +18,7 @@ import frc.robot.commands.RunShooterToRPMCommand;
 import frc.robot.commands.FireShooterPistonCommand;
 import frc.robot.commands.LiftRunToDialHeight;
 import frc.robot.commands.WinchDriveCommand;
+import frc.robot.commands.auto.ShootThreePickUpThreeFromTrenchAutonomous;
 import frc.robot.commands.TeleopArcadeDriveCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -169,7 +170,6 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		driveSubsystem.resetPose();
-		return null;
+		return new ShootThreePickUpThreeFromTrenchAutonomous();
 	}
 }

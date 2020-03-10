@@ -84,7 +84,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void stop() {
-		differentialDrive.stopMotor();
+		powerDrive(0, 0);
 	}
 
 	public double getLeftEncoderDistance() {

@@ -11,10 +11,12 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Robot;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class TrajectoryBuilder {
 
@@ -93,7 +95,7 @@ public class TrajectoryBuilder {
 		return this;
 	}
 
-	public RamseteCommand getRamseteCommand() {
+	public SequentialCommandGroup getRamseteCommand() {
 		var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
@@ -145,7 +147,7 @@ public class TrajectoryBuilder {
 
 		System.out.println(quinticPoseArray);
 
-		return ramseteCommand;
+		return new SequentialCommandGroup(ramseteCommand, new InstantCommand(() -> Robot.robotContainer.getDriveSubsystem().stop()));
 	}
 
 
