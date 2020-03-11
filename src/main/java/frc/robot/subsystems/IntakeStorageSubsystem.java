@@ -24,6 +24,8 @@ public class IntakeStorageSubsystem extends SubsystemBase {
 
 	private boolean isIntakeDown;
 
+	private long lastExtendTime;
+
 	/**
 	 * Creates a new ServoSubsystem.
 	 */
@@ -60,6 +62,7 @@ public class IntakeStorageSubsystem extends SubsystemBase {
 		intakePistons.set(Value.kForward);
 
 		isIntakeDown = true;
+		lastExtendTime = System.currentTimeMillis();
 	}
 
 	public void retractIntakePistons() {
@@ -74,6 +77,6 @@ public class IntakeStorageSubsystem extends SubsystemBase {
 	}
 
 	public boolean isIntakeDown() {
-		return isIntakeDown;
+		return isIntakeDown && System.currentTimeMillis() - lastExtendTime > 1000;
 	}
 }

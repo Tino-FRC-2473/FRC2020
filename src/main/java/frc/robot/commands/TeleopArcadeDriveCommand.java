@@ -1,11 +1,14 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.cv.BallData;
 import frc.robot.cv.CVDriveCommand;
+import frc.robot.cv.ObstacleData;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopArcadeDriveCommand extends CommandBase {
@@ -36,31 +39,48 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 				new CVDriveCommand(DriveConstants.CAMERA_TO_FRONT_DISTANCE_INCHES,
 						Robot.robotContainer.getDriveSubsystem()).schedule();
 				end(true);
-			} else if (Robot.robotContainer.getDepthBallPickupButton().get()) {
+			}
+
+			if (Robot.robotContainer.getIntakeStorageSubsystem().isIntakeDown()) {
+				// System.out.println("INTAKE DOWN")
+				ObstacleData obstacleData = Robot.jetson.getObstacleData();
+
+				if (obstacleData != null && obstacleData.getObstacleDistance() < 1.3 && obstacleData.getObstacleDistance() > 0.7) {
+					new InstantCommand(() -> Robot.robotContainer.getIntakeStorageSubsystem().retractIntake()).schedule();
+				}
+			}
+			
+			if (Robot.robotContainer.getDepthBallPickupButton().get()) {
 				if (Robot.robotContainer.getIntakeStorageSubsystem().isIntakeDown()) {
 					
 					double basePower = 0.2;
-					double k = 0.02;
-					// double maxDeltaPower = 0.3;
+					double k = 0.01;
+					double maxDeltaPower = 0.3;
 					
 					BallData depthData = Robot.jetson.getClosestBallData();
 
-					if (depthData.getBallDistance() < 99) { // we can see a ball
-						// double deltaPower = Math.min(k * Math.abs(depthData.getBallAngle()), maxDeltaPower);
-						// double leftPower = basePower;
-						// double rightPower = basePower;
-	
-						// if (depthData.getBallAngle() > 0) {
-						// 	leftPower += deltaPower;
-						// } else {
-						// 	rightPower += deltaPower;
-						// }
+					if (depthData != null && depthData.getBallDistance() < 99) { // we can see a ball
+						double deltaPower = Math.min(k * Math.abs(depthData.getBallAngle()), maxDeltaPower);
+						double leftPower = basePower;
+						double rightPower = basePower;
 
-						driveSubsystem.arcadeDriveWithInputs(basePower, k * depthData.getBallAngle());
+						double diffK = 2.0/3.0;
 	
-						// driveSubsystem.powerDrive(leftPower, rightPower);
+						if (depthData.getBallAngle() > 0) {
+							leftPower += deltaPower * diffK;
+							rightPower -= deltaPower * (1-diffK);
+						} else {
+							rightPower += deltaPower * diffK;
+							leftPower -= deltaPower * (1-diffK);
+						}
+
+						// driveSubsystem.arcadeDriveWithInputs(basePower, k * depthData.getBallAngle());
+	
+						driveSubsystem.powerDrive(leftPower, rightPower);
 					} else {
-						driveSubsystem.powerDrive(basePower, basePower);
+						// driveSubsystem.arcadeDriveWithInputs(0.2, 0);
+						// driveSubsystem.powerDrive(basePower, basePower);
+						driveSubsystem.powerDrive(0, 0);
 					}				
 				}
 			} else {

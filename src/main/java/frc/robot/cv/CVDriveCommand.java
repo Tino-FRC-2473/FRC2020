@@ -27,7 +27,7 @@ public class CVDriveCommand extends SequentialCommandGroup {
 		
 		cvData = Robot.jetson.getCVData();
 
-		if (!cvData.canSeeTarget()) {
+		if (cvData == null || !cvData.canSeeTarget()) {
 			addCommands(new PerpetualCommand(new InstantCommand(driveSubsystem::stop, driveSubsystem))); // wait for driver to release CV button
 			System.out.println("---------------CANNOT SEE TARGETS--------------");
 		} else {

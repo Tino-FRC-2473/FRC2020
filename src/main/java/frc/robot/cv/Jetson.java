@@ -2,6 +2,7 @@ package frc.robot.cv;
 
 import java.util.Arrays;
 
+import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj.SerialPort;
 
 public class Jetson extends SerialPort {
@@ -10,12 +11,14 @@ public class Jetson extends SerialPort {
 	private static String END = "E";
 
 	private CVData cvData;
-	private BallData[] balls;
+	private BallData[] balls = new BallData[5];
 	private ObstacleData obstacleData;
 
 	private boolean first = true;
 
 	private String buffer = "";
+
+	private LinearFilter obstacleFilter = LinearFilter.movingAverage(5);
 
 	public Jetson(int baudRate, Port port) {
 		super(baudRate, port);
@@ -76,7 +79,6 @@ public class Jetson extends SerialPort {
 					Arrays.sort(balls); // sort the balls with closest distance first, then closest angle to 0
 
 					double obstacle_dist = Integer.parseInt(split[13]) / 100.0;
-
 					obstacleData = new ObstacleData(obstacle_dist);
 				} else {
 					// System.out.println("not right length///" + rawData + "///" + rawData.length());
@@ -94,7 +96,11 @@ public class Jetson extends SerialPort {
 	}
 
 	public BallData getClosestBallData() {
-		return balls[0];
+		if (balls.length == 0) {
+			return null;
+		} else {
+			return balls[0];
+		}
 	}
 
 	public ObstacleData getObstacleData() {
