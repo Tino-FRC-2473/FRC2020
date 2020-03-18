@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,6 +28,8 @@ public class Robot extends TimedRobot {
 	public static RobotContainer robotContainer;
 	public static Jetson jetson;
 
+	public static UsbCamera driveCamera;
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -37,6 +41,10 @@ public class Robot extends TimedRobot {
 		// autonomous chooser on the dashboard.
 		jetson = new Jetson(9600, Port.kUSB);
 		robotContainer = new RobotContainer();
+
+		driveCamera = CameraServer.getInstance().startAutomaticCapture("Intake Camera", 0);
+		driveCamera.setFPS(30);
+		driveCamera.setResolution(320, 240);
 	}
 
 	/**

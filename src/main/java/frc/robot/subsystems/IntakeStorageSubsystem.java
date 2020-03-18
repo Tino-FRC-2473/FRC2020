@@ -22,6 +22,10 @@ public class IntakeStorageSubsystem extends SubsystemBase {
 
 	private DoubleSolenoid intakePistons;
 
+	private boolean isIntakeDown;
+
+	private long lastExtendTime;
+
 	/**
 	 * Creates a new ServoSubsystem.
 	 */
@@ -30,6 +34,8 @@ public class IntakeStorageSubsystem extends SubsystemBase {
 		storageMotor = new CANSparkMax(IntakeStorageConstants.SPARK_STORAGE, MotorType.kBrushless);
 
 		intakePistons = new DoubleSolenoid(IntakeStorageConstants.INTAKE_PISTON_FORWARD_PORT, IntakeStorageConstants.INTAKE_PISTON_REVERSE_PORT);
+	
+		isIntakeDown = false;
 	}
 
 	@Override
@@ -54,14 +60,23 @@ public class IntakeStorageSubsystem extends SubsystemBase {
 	public void extendIntakePistons() {
 		intakePistons.set(Value.kOff);
 		intakePistons.set(Value.kForward);
+
+		isIntakeDown = true;
+		lastExtendTime = System.currentTimeMillis();
 	}
 
 	public void retractIntakePistons() {
 		intakePistons.set(Value.kOff);
 		intakePistons.set(Value.kReverse);
+
+		isIntakeDown = false;
 	}
 
 	public void runStorageMotor(double power) {
 		storageMotor.set(power);
+	}
+
+	public boolean isIntakeDown() {
+		return isIntakeDown && System.currentTimeMillis() - lastExtendTime > 1000;
 	}
 }
