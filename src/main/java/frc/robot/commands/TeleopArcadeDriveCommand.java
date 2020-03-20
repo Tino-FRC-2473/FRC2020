@@ -19,7 +19,8 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 
 	@Override
 	public void initialize() {
-		driveSubsystem.resetPose();
+		// driveSubsystem.resetPose();
+		Robot.robotContainer.getLiftSubsystem().resetWinchEncoder();
 		Robot.robotContainer.getShooterSubsystem().retractFeeder();
 		Robot.robotContainer.getIntakeStorageSubsystem().retractIntake();
 		(new LiftRunDownCommand(Robot.robotContainer.getLiftSubsystem(), 0.1)).schedule();
@@ -40,7 +41,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
 
 		}
 
-		// System.out.println(driveSubsystem.getHeading());
+		// System.out.println("HEADING: " + driveSubsystem.getHeading());
 		// System.out.println(driveSubsystem.getLeftEncoderDistance() + " " +
 		// driveSubsystem.getRightEncoderDistance());
 		// System.out.println(driveSubsystem.getWheelSpeeds());

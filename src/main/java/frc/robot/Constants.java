@@ -70,15 +70,19 @@ public final class Constants {
 		public static final double GEAR_RATIO = 10.1111;
 		public static final double DRIVE_METERS_PER_ROTATION = Units.inchesToMeters(DRIVE_WHEEL_CIRCUMFRENCE_INCHES / GEAR_RATIO);
 		
-		public static final double KS_VOLTS = 0.173; // 0.139
-		public static final double KV_VOLT_SECONDS_PER_METER = 2.04; // 2.02
-		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.467; // 0.321
+		public static final double KS_VOLTS = 0.173; // 0.173
+		public static final double KV_VOLT_SECONDS_PER_METER = 2.04; // 2.04
+		public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.467; // 0.467
 
-		public static final double KP_DRIVE_VEL = 0.003861;
-		public static final double KI_DRIVE_VEL = 0.000149;
-		public static final double KD_DRIVE_VEL = 0.024936;
+		// public static final double KP_DRIVE_VEL = 0.003861; // 16.3
+		// public static final double KI_DRIVE_VEL = 0.000149; // 0
+		// public static final double KD_DRIVE_VEL = 0.024936; // 0
 
-		public static final double K_TRACK_WIDTH_METERS = 0.447675;
+		public static final double KP_DRIVE_VEL = 8; // 5
+		public static final double KI_DRIVE_VEL = 0;
+		public static final double KD_DRIVE_VEL = 0;
+
+		public static final double K_TRACK_WIDTH_METERS = 0.447675; // 0.447675
 		public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(
 				K_TRACK_WIDTH_METERS);
 	}

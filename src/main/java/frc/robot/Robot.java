@@ -95,6 +95,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		// System.out.println(robotContainer.driveSubsystem.getPose());
+		// System.out.println("HEADING: " + robotContainer.getDriveSubsystem().getHeading());
 	}
 
 	@Override
@@ -124,6 +125,7 @@ public class Robot extends TimedRobot {
 		// System.out.println("left:  " + robotContainer.getShooterSubsystem().getLeftVelocity());
 		// System.out.println("right: " + robotContainer.getShooterSubsystem().getRightVelocity());
 		// System.out.println();
+		System.out.println(robotContainer.getLiftSubsystem().getWinchEncoder());
 	}
 
 	@Override

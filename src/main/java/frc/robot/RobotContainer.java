@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -28,6 +29,10 @@ import frc.robot.subsystems.IntakeStorageSubsystem;
 import frc.robot.subsystems.LiftMechanism;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.LiftMechanism.LiftHeights;
+import frc.robot.trajectory.TrajectoryBuilder;
+import frc.robot.trajectory.Waypoint;
+import frc.robot.trajectory.TrajectoryBuilder.Position;
+import frc.robot.trajectory.TrajectoryBuilder.Type;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -143,7 +148,7 @@ public class RobotContainer {
 		shooterPistonButton.whileHeld(new FireShooterPistonCommand(shooterSubsystem));
 		shooterPistonButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooterRPM(0)));
 
-		scissorPositionButton.whenPressed(new LiftRunToDialHeight(liftSubsystem, 0.5));
+		scissorPositionButton.whenPressed(new LiftRunToDialHeight(liftSubsystem, 0.75));
 
 		runWinchButton.whileHeld(new WinchDriveCommand(liftSubsystem, 0.5));
 	}
@@ -170,6 +175,12 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		return new ShootThreePickUpThreeFromTrenchAutonomous();
+		driveSubsystem.resetPose();
+		// return new ShootThreePickUpThreeFromTrenchAutonomous();
+		// return new TrajectoryBuilder(Type.QUINTIC, Position.ABSOLUTE, TrajectoryBuilder.Direction.FORWARD)
+		// 	.add(new Waypoint(0,0,0))
+		// 	.add(new Waypoint(2,-1,0))
+		// 	.getRamseteCommand();
+		return null;
 	}
 }

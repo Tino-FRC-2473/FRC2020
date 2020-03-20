@@ -20,7 +20,7 @@ public class LiftMechanism {
     public JoystickButton winchStop; 
 
     public enum LiftHeights {
-        DOWN(0), LOW(-108.76), MEDIUM(-229.581146), HIGH(-400); // -533.91
+        DOWN(-10), LOW(-108.76), MEDIUM(-229.581146), HIGH(-400); // -533.91
 
         private final double value;
 
@@ -58,13 +58,14 @@ public class LiftMechanism {
     }
 
     public void setPower(double power) {
-        if (power == 0) {
-            liftMotor.set(0);
-        } else if (liftMotor.getEncoder().getPosition() >= -10 && power > 0) {
-            liftMotor.set(0.1);
-        } else {
-            liftMotor.set(power);
-        }
+        // if (power == 0) {
+        //     liftMotor.set(0);
+        // } else if (liftMotor.getEncoder().getPosition() >= -10 && power > 0) {
+        //     liftMotor.set(0.2);
+        // } else {
+        //     liftMotor.set(power);
+        // }
+        liftMotor.set(power);
         
         System.out.println(liftMotor.getEncoder().getPosition());
     }
@@ -77,6 +78,14 @@ public class LiftMechanism {
 
         }
 
+    }
+
+    public double getWinchEncoder() {
+        return winchMotor.getEncoder().getPosition();
+    }
+
+    public void resetWinchEncoder() {
+        winchMotor.getEncoder().setPosition(0);
     }
 
     public boolean isRunDown(){
