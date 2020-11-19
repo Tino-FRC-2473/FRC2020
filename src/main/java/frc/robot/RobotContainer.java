@@ -60,6 +60,7 @@ public class RobotContainer {
 	private Joystick buttonPanel;
 
 	private JoystickButton intakeButton;
+	private JoystickButton intakeButton2; 
 	private JoystickButton shooterPistonButton;
 	private JoystickButton scissorPositionButton;
 	private JoystickButton runWinchButton;
@@ -141,7 +142,7 @@ public class RobotContainer {
 		intakeButton.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake()));
 
 		intakeButton2.whenPressed(new InstantCommand(() -> intakeStorageSubsystem.deployIntake(-0.2))); 
-		intakeButton2.whenReleased(() -> intakeStorageSubsystem.retractIntake())); 
+		intakeButton2.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake())); 
 
 
 		//shooterPistonButton.whileHeld(new FireShooterPistonCommand(shooterSubsystem));
