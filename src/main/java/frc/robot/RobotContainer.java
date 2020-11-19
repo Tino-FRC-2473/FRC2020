@@ -133,7 +133,7 @@ public class RobotContainer {
 		scissorHighDial = new JoystickButton(buttonPanel, 7);
 
 		intakeButton = new JoystickButton(buttonPanel, 2);
-		//shooterPistonButton = new JoystickButton(buttonPanel, 4);
+		shooterPistonButton = new JoystickButton(buttonPanel, 4);
 		intakeButton2 = new JoystickButton(buttonPanel, 4); 
 		scissorPositionButton = new JoystickButton(buttonPanel, 6);
 		runWinchButton = new JoystickButton(buttonPanel, 8);
@@ -145,8 +145,8 @@ public class RobotContainer {
 		intakeButton2.whenReleased(new InstantCommand(() -> intakeStorageSubsystem.retractIntake())); 
 
 
-		//shooterPistonButton.whileHeld(new FireShooterPistonCommand(shooterSubsystem));
-		//shooterPistonButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooterRPM(0)));
+		shooterPistonButton.whileHeld(new FireShooterPistonCommand(shooterSubsystem));
+		shooterPistonButton.whenReleased(new InstantCommand(() -> shooterSubsystem.runShooterRPM(0)));
 
 		scissorPositionButton.whenPressed(new LiftRunToDialHeight(liftSubsystem, 0.5));
 
