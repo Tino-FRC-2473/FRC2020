@@ -170,6 +170,11 @@ public class RobotContainer {
 		}
 	}
 
+	public void resetShooter(){
+		shooterSubsystem.runShooterRPM(0);
+
+	}
+
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
 	 *
