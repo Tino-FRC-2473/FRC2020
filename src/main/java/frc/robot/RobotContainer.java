@@ -27,6 +27,7 @@ import frc.robot.subsystems.IntakeStorageSubsystem;
 import frc.robot.subsystems.LiftMechanism;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.LiftMechanism.LiftHeights;
+import frc.robot.commands.FireShooter2Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -175,7 +176,7 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		driveSubsystem.resetPose();
-		return null;
+		//driveSubsystem.resetPose();
+		return new FireShooter2Command(shooterSubsystem, intakeStorageSubsystem);
 	}
 }
