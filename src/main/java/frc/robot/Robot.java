@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
 		}
 
 		robotContainer.setCVLight(true);
+		
 
 		/*
 		 * TeleopArcadeDriveCommand is the default command of DriveSubsystem, so it will
