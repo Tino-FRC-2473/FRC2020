@@ -11,10 +11,11 @@ public class FireShooter2Command extends SequentialCommandGroup {
         
         System.out.println("Running shooter auto"); 
 
-        addCommands(new RunShooterToRPMCommand(shooterSubsystem), 
-                    new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(-0.1)),
-                     new WaitCommand(3),     
-                    new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)), 
+        addCommands(new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(-0.1)),
+                     new WaitCommand(3),  
+                     new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0)), 
+                     new WaitCommand(1),
+                     new RunShooterToRPMCommand(shooterSubsystem),  
                     new InstantCommand(() -> intakeStorageSubsystem.runStorageMotor(0.3)), 
                     new WaitCommand(1));
     }
