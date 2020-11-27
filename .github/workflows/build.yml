@@ -13,7 +13,16 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: ls
-      run: ls
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+        restore-keys: ${{ runner.os }}-gradle
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Save built output
+      uses: actions/upload-artifact@v2
+      with:
+        name: Package
+        path: build/libs
